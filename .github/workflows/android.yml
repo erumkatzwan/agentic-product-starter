@@ -79,7 +79,8 @@ jobs:
 
   unit-tests:
     name: Android unit tests and coverage
-    needs: [lint, typos]
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -102,7 +103,8 @@ jobs:
 
   ui-tests:
     name: Android UI tests
-    needs: [lint, typos]
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
