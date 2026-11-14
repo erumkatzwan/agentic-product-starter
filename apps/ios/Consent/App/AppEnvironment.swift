@@ -22,7 +22,16 @@ enum LaunchArguments {
     /// Runs the app against bundled fixture data instead of the real backend.
     static let uiTesting = "uiTesting"
 
+    /// XCUITest passes `-uiTesting`; Maestro passes `uiTesting` with the value as a string ("true").
     static var isUITesting: Bool {
-        ProcessInfo.processInfo.arguments.contains("-\(uiTesting)") || UserDefaults.standard.bool(forKey: uiTesting)
+        let arguments = ProcessInfo.processInfo.arguments
+        if arguments.contains("-\(uiTesting)") || arguments.contains(uiTesting) {
+            return true
+        }
+        let value = UserDefaults.standard.object(forKey: uiTesting)
+        if let flag = value as? Bool {
+            return flag
+        }
+        return ["true", "yes", "1"].contains((value as? String)?.lowercased() ?? "")
     }
 }
