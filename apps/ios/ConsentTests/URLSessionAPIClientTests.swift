@@ -16,10 +16,15 @@ final class URLSessionAPIClientTests: XCTestCase {
         client = nil
     }
 
+    private static func response(for request: URLRequest, status: Int) throws -> HTTPURLResponse {
+        let url = try XCTUnwrap(request.url)
+        return try XCTUnwrap(HTTPURLResponse(url: url, statusCode: status, httpVersion: nil, headerFields: nil))
+    }
+
     func testDecodesSuccessfulResponse() async throws {
         let client = try XCTUnwrap(client)
         StubURLProtocol.handler = { request in
-            let response = try XCTUnwrap(HTTPURLResponse(url: try XCTUnwrap(request.url), statusCode: 200, httpVersion: nil, headerFields: nil))
+            let response = try Self.response(for: request, status: 200)
             return (response, Data(#"[{"id":"1","title":"Title","subtitle":"Subtitle"}]"#.utf8))
         }
 
@@ -31,7 +36,7 @@ final class URLSessionAPIClientTests: XCTestCase {
     func testThrowsServerErrorForNon2xxStatus() async throws {
         let client = try XCTUnwrap(client)
         StubURLProtocol.handler = { request in
-            let response = try XCTUnwrap(HTTPURLResponse(url: try XCTUnwrap(request.url), statusCode: 500, httpVersion: nil, headerFields: nil))
+            let response = try Self.response(for: request, status: 500)
             return (response, Data())
         }
 
@@ -46,7 +51,7 @@ final class URLSessionAPIClientTests: XCTestCase {
     func testThrowsDecodingErrorForInvalidJSON() async throws {
         let client = try XCTUnwrap(client)
         StubURLProtocol.handler = { request in
-            let response = try XCTUnwrap(HTTPURLResponse(url: try XCTUnwrap(request.url), statusCode: 200, httpVersion: nil, headerFields: nil))
+            let response = try Self.response(for: request, status: 200)
             return (response, Data("not json".utf8))
         }
 

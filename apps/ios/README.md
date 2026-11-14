@@ -73,7 +73,7 @@ Every feature can be switched on or off:
 
 ### Push notifications
 
-Settings → Enable notifications asks for permission and registers for push. To receive real pushes you need an Apple Developer account, the Push Notifications capability on the App ID, and the device token sent to the backend (marked TODO in `PushNotificationService`).
+Settings → Enable notifications asks for permission and registers for push. To receive real pushes you need an Apple Developer account, the Push Notifications capability on the App ID, and the device token sent to the backend (see the note in `PushNotificationService`).
 
 ### Google sign-in
 

@@ -23,7 +23,7 @@ jobs:
     name: iOS lint
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: brew install swiftlint
       - run: swiftlint --strict --reporter github-actions-logging
 
@@ -31,7 +31,7 @@ jobs:
     name: iOS spelling
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: crate-ci/typos@v1
         with:
           files: apps/ios
@@ -42,7 +42,7 @@ jobs:
     needs: [lint, typos]
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: brew install xcodegen
       - run: make test-unit
       - uses: actions/upload-artifact@v4
@@ -56,7 +56,7 @@ jobs:
     needs: [lint, typos]
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: brew install xcodegen
       - run: make test-ui
       - uses: actions/upload-artifact@v4
@@ -70,7 +70,7 @@ jobs:
     needs: [unit-tests, ui-tests]
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: brew install xcodegen
       - run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash

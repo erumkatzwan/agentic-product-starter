@@ -2,7 +2,7 @@ import UIKit
 import UserNotifications
 
 /// Push notification skeleton: permission, device token and foreground presentation.
-/// TODO: send the device token to the backend once the endpoint exists.
+/// Next step: send the device token to the backend once the endpoint exists.
 final class PushNotificationService: NSObject, UNUserNotificationCenterDelegate {
     static let shared = PushNotificationService()
 
