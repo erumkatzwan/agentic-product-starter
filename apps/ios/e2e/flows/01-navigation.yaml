@@ -1,11 +1,13 @@
-# End-to-end: home -> detail -> back, on the simulator with fixture data.
+# End-to-end: sign in, home -> detail -> back, on the simulator with fixture data.
 appId: com.agentic.app.syst
-name: Navigate home, detail and back
+name: Sign in and navigate
 ---
 - launchApp:
     clearState: true
     arguments:
       uiTesting: true
+- tapOn:
+    id: "signIn.submit"
 - assertVisible:
     id: "home.item.1"
 - tapOn:

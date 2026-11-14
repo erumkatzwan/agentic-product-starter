@@ -1,26 +1,59 @@
-# Backend
+# Backend (.NET)
 
-Cloud setup, APIs and infrastructure as code for all apps.
+ASP.NET Core API for every app: accounts, profiles, customer administration and feature flags. Part of the [Agentic Product Starter](../README.md).
 
-**Status:** planned. This folder holds the agent setup; the project itself is added later.
+## Run it
 
-## Planned setup
+Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download).
 
-- REST APIs used by the apps, including `/feature-flags`
-- Infrastructure as code for Dev, SYST and Prod
-- Push notification delivery
+```bash
+cd backend
+dotnet run --project src/AgenticProduct.Api --launch-profile Dev   # http://localhost:5080
+dotnet test                                                          # unit + integration tests
+```
 
-Like the iOS app, it will have:
+In Dev and SYST two accounts are created at start-up:
 
-- Dev, SYST and Prod environments
-- A swappable design system or shared conventions
-- A REST API layer and feature flags
-- Unit, UI and end-to-end tests that must pass before merging
+| Account | Email | Password |
+|---|---|---|
+| Admin (back office) | `admin@example.com` | `Admin123!` |
+| Demo customer | `customer@example.com` | `Customer123!` |
 
-## Agents
+## API
 
-- `AGENTS.md` – rules for agents working in this folder
-- `.agents/skills/` – skills for this component
-- Shared rules and skills live at the repository root.
+| Method | Path | Who | What |
+|---|---|---|---|
+| POST | `/api/auth/signup` | anyone | Create an account, returns a token |
+| POST | `/api/auth/signin` | anyone | Sign in, returns a token |
+| POST | `/api/auth/signout` | signed in | Invalidates every token for the user |
+| GET / PUT / DELETE | `/api/me` | signed in | Read, update or delete your profile |
+| GET | `/api/items` | anyone | Sample content for the home screens |
+| GET | `/api/feature-flags` | anyone | `{ "flags": { "profile": true } }` |
+| GET | `/api/admin/users?search=` | admin | Find customers |
+| GET / PUT / DELETE | `/api/admin/users/{id}` | admin | View, edit (name, role, disabled) or delete a customer |
+| GET / PUT | `/api/admin/feature-flags[/{key}]` | admin | List or switch feature flags |
+| GET | `/health` | anyone | Health check |
 
-See the [iOS app](../apps/ios/README.md) for a working example.
+Tokens: send `Authorization: Bearer <accessToken>`. Errors use standard problem details; validation errors list each field.
+
+## Structure
+
+```
+backend/
+├── src/AgenticProduct.Api/
+│   ├── Program.cs        # Wiring: services, auth, CORS, endpoints
+│   ├── Domain/           # User, FeatureFlag, Item
+│   ├── Data/             # Repository interfaces + in-memory implementations, seed data
+│   ├── Auth/             # AccountService (rules), tokens, current-user filter
+│   ├── Endpoints/        # Auth, Profile, Admin, Public
+│   └── Contracts/        # Request and response records
+└── tests/AgenticProduct.Api.Tests/   # xUnit: unit tests + in-memory API integration tests
+```
+
+## Environments
+
+`Dev`, `Syst` and `Prod`, set with `ASPNETCORE_ENVIRONMENT`. Each has its own `appsettings.<Env>.json` (CORS origins, seeding). Prod never seeds accounts.
+
+## Storage
+
+Data is kept in memory behind `IUserRepository` and `IFeatureFlagRepository`, so it resets on restart. To use a database, implement those two interfaces (for example with EF Core and PostgreSQL) and change the two registrations in `Program.cs`. See `docs/adr/0004-backend-and-web-stack.md`.

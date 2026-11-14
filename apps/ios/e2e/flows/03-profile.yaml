@@ -1,0 +1,19 @@
+# End-to-end: sign in, edit the profile, sign out.
+appId: com.agentic.app.syst
+name: Profile and sign out
+---
+- launchApp:
+    clearState: true
+    arguments:
+      uiTesting: true
+- tapOn:
+    id: "signIn.submit"
+- tapOn:
+    id: "home.profileButton"
+- tapOn:
+    id: "profile.save"
+- assertVisible: "Profile saved."
+- tapOn:
+    id: "profile.signOut"
+- assertVisible:
+    id: "signIn.submit"

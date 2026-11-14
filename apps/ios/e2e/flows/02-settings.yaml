@@ -1,14 +1,13 @@
-# End-to-end: open settings and see the Google sign-in placeholder.
+# End-to-end: sign in and open settings.
 appId: com.agentic.app.syst
-name: Settings and sign-in placeholder
+name: Settings
 ---
 - launchApp:
     clearState: true
     arguments:
       uiTesting: true
 - tapOn:
+    id: "signIn.submit"
+- tapOn:
     id: "home.settingsButton"
 - assertVisible: "Settings"
-- tapOn:
-    id: "settings.googleSignIn"
-- assertVisible: "Google sign-in is not implemented yet."

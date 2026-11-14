@@ -1,3 +1,5 @@
 # Website skills
 
-Skills for page design, SEO and performance. Shared skills live in the root `.agents/skills/`.
+| Skill | Use it when |
+|---|---|
+| `website-content` | Changing copy, sections or styling of the landing page |

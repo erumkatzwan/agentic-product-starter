@@ -1,25 +1,18 @@
 # Website
 
-One-page marketing website for the product.
+One-page landing site for the Agentic Product Starter. Plain HTML and CSS, no build step. Part of the [Agentic Product Starter](../../README.md).
 
-**Status:** planned. This folder holds the agent setup; the project itself is added later.
+## Run it
 
-## Planned setup
+Open `index.html` in a browser, or serve the folder with any static server.
 
-- Static site, fast and SEO-friendly
-- Deployed per environment
+## Commands
 
-Like the iOS app, it will have:
+| Command | What it does |
+|---|---|
+| `npm run validate` | HTML validation |
+| `npm run e2e` | Smoke tests (Playwright): sections, call to action, shared tokens |
 
-- Dev, SYST and Prod environments
-- A swappable design system or shared conventions
-- A REST API layer and feature flags
-- Unit, UI and end-to-end tests that must pass before merging
+## Design
 
-## Agents
-
-- `AGENTS.md` – rules for agents working in this folder
-- `.agents/skills/` – skills for this component
-- Shared rules and skills live at the repository root.
-
-See the [iOS app](../ios/README.md) for a working example.
+`tokens.css` is generated from `design/tokens.json`; `styles.css` uses only those tokens, so the site matches every app.

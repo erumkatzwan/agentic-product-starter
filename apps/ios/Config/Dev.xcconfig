@@ -2,5 +2,5 @@
 APP_ENVIRONMENT = dev
 APP_DISPLAY_NAME = Agentic Dev
 APP_BUNDLE_ID = com.agentic.app.dev
-API_BASE_URL = https:/$()/api-dev.agentic.example
+API_BASE_URL = http:/$()/localhost:5080
 APS_ENVIRONMENT = development

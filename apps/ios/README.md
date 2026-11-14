@@ -2,7 +2,7 @@
 
 Part of the [Agentic Product Starter](../../README.md).
 
-A plain, production-ready starter: SwiftUI, a swappable design system, navigation, a REST API layer, feature flags, push notifications, a Google sign-in skeleton, and unit, UI and end-to-end tests gated by CI.
+SwiftUI app with sign up, sign in, profile and sign out against the .NET backend, the shared design tokens, navigation, a REST API layer, feature flags, push notifications, a Google sign-in skeleton, and unit, UI and end-to-end tests gated by CI.
 
 ## 1. One-time setup (Mac)
 
@@ -20,9 +20,10 @@ The Xcode project is generated from `project.yml` and is not committed. Run `mak
 
 ## 2. Run the app
 
-- In Xcode pick the `AgenticApp` scheme and an iPhone simulator, then press Run.
+- Start the backend first: `cd backend && dotnet run --project src/AgenticProduct.Api --launch-profile Dev`.
+- In Xcode pick the `AgenticApp` scheme and an iPhone simulator, then press Run. Sign in with `customer@example.com` / `Customer123!` or create an account.
 - `Run` uses the **Dev** environment. Tests use **SYST**. Archives use **Prod**.
-- To try it with test data, edit the scheme → Run → Arguments → add `-uiTesting`.
+- To try it without the backend, edit the scheme → Run → Arguments → add `-uiTesting`. The app then uses the JSON fixtures and any sign-in works.
 
 ## 3. What's inside
 
@@ -37,8 +38,9 @@ apps/ios/
 │   │   ├── Networking/      # APIClient, Endpoint, Endpoints, FixtureAPIClient
 │   │   ├── FeatureFlags/    # FeatureFlag, FeatureFlagService, FeatureGate
 │   │   ├── Navigation/      # Route, Router
-│   │   └── Services/        # Repositories, AuthService (Google skeleton), push notifications
-│   ├── Features/            # Home, Detail, Settings (View + ViewModel)
+│   │   ├── Auth/            # SessionStore (who is signed in), TokenStore (Keychain)
+│   │   └── Services/        # Repositories, AuthService, push notifications
+│   ├── Features/            # Auth (sign in/up), Home, Detail, Profile, Settings (View + ViewModel)
 │   └── Resources/Fixtures/  # Test data JSON
 ├── AgenticAppTests/            # Unit tests
 ├── AgenticAppUITests/          # UI tests (XCUITest)
@@ -50,11 +52,15 @@ apps/ios/
 
 ### Environments
 
-Each environment has its own app name, bundle ID, API URL and push setting in `Config/*.xcconfig`, so Dev, SYST and Prod apps can sit side by side on one phone. Change `API_BASE_URL` there when the backend exists.
+Each environment has its own app name, bundle ID, API URL and push setting in `Config/*.xcconfig`, so Dev, SYST and Prod apps can sit side by side on one phone. Dev points at the local backend (`http://localhost:5080`); set the SYST and Prod URLs when you deploy the backend.
 
 ### Design system
 
-Change colors, fonts, spacing and corner radius in `AgenticApp/DesignSystem/Theme.swift` and the whole app follows. Screens never hard-code styles.
+Colours and spacing come from `design/tokens.json` at the repo root, shared with the web app, back office and website. Edit that file and run `node design/build.mjs`; `DesignTokens.swift` is regenerated and the whole app follows. Screens never hard-code styles.
+
+### Accounts
+
+Sign up, sign in, profile (edit name, delete account) and sign out use the backend's `/api/auth` and `/api/me` endpoints. The token is kept in the Keychain and the session is restored on launch. The flow matches the web app.
 
 ### Navigation
 
@@ -79,7 +85,7 @@ Settings → Enable notifications asks for permission and registers for push. To
 
 ### Google sign-in
 
-`AuthService` and a disabled-by-default `google_sign_in` flag are in place. `PlaceholderAuthService` returns "not implemented". Later: add the GoogleSignIn package, implement `AuthService`, swap it in `AppContainer`.
+The "Sign in with Google" button sits on the sign-in screen behind the `google_sign_in` flag (off by default). `RemoteAuthService.signInWithGoogle()` returns "not implemented" for now. Later: add the GoogleSignIn package, get a Google token, and exchange it with a backend endpoint for an access token.
 
 ## 4. Run the tests
 
@@ -88,7 +94,7 @@ make lint        # SwiftLint, warnings fail
 make typos       # spelling in code and docs
 make test-unit   # unit tests + coverage gate (70% of logic)
 make test-ui     # UI tests on the simulator
-make e2e         # Maestro end-to-end flows on the simulator
+make e2e         # Maestro end-to-end flows on the simulator (sign in, navigation, settings, profile)
 make ci          # all of the above
 ```
 

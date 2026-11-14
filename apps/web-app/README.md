@@ -1,25 +1,50 @@
 # Web app
 
-Signed-in web app where users use the product in the browser.
+The signed-in web app for customers: sign up, sign in, home, profile and sign out, the same flow as the iOS app. Part of the [Agentic Product Starter](../../README.md).
 
-**Status:** planned. This folder holds the agent setup; the project itself is added later.
+React + TypeScript (Vite). Uses the shared colour palette from `design/tokens.json` and the .NET backend.
 
-## Planned setup
+## Run it
 
-- Web framework to be decided
-- Shared design tokens with the mobile apps where possible
+Requires Node 22 and the [.NET 10 SDK](https://dotnet.microsoft.com/download) for the backend.
 
-Like the iOS app, it will have:
+```bash
+# terminal 1: backend
+cd backend && dotnet run --project src/AgenticProduct.Api --launch-profile Dev
 
-- Dev, SYST and Prod environments
-- A swappable design system or shared conventions
-- A REST API layer and feature flags
-- Unit, UI and end-to-end tests that must pass before merging
+# terminal 2: Web app
+cd apps/web-app
+npm install
+npm run dev            # http://localhost:5173
+```
 
-## Agents
+Sign in with the demo customer (`customer@example.com` / `Customer123!`) or create an account.
 
-- `AGENTS.md` – rules for agents working in this folder
-- `.agents/skills/` – skills for this component
-- Shared rules and skills live at the repository root.
+## Commands
 
-See the [iOS app](../ios/README.md) for a working example.
+| Command | What it does |
+|---|---|
+| `npm run dev` | Dev environment on port 5173 |
+| `npm run lint` | ESLint, warnings fail |
+| `npm run typecheck` | TypeScript strict mode |
+| `npm test` | Unit tests (Vitest + Testing Library) |
+| `npm run test:coverage` | Unit tests with the 70% line coverage gate |
+| `npm run e2e` | End-to-end tests (Playwright): starts the backend in SYST and the built app on port 4173 |
+| `npm run build` | Production build (Prod environment) |
+
+## Structure
+
+```
+src/
+├── api/            # client.ts (fetch, errors) + endpoints.ts (every backend call)
+├── auth/           # Session state and token storage
+├── features/       # One folder per screen
+├── ui/             # Design-system components: Button, TextField, Card, Alert, Page
+├── styles/         # tokens.css (generated) + global.css (built only from tokens)
+└── test/           # Test setup and a fake API
+e2e/                # Playwright end-to-end tests
+```
+
+## Environments
+
+`src/config/env.ts` holds the backend URL per environment (`VITE_API_BASE_URL` can override it at build time). `npm run dev` uses Dev, end-to-end tests use SYST, `npm run build` uses Prod.

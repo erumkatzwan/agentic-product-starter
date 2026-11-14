@@ -82,4 +82,40 @@ final class URLSessionAPIClientTests: XCTestCase {
         XCTAssertEqual(request.value(forHTTPHeaderField: "X-Trace"), "abc")
         XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
     }
+
+    func testAddsBearerTokenForSignedInEndpoints() throws {
+        let client = try XCTUnwrap(client)
+
+        let request = try client.makeRequest(for: Endpoints.profile(token: "abc"))
+
+        XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer abc")
+        XCTAssertEqual(request.url?.path, "/api/me")
+    }
+
+    func testReturnsEmptyResponseFor204() async throws {
+        let client = try XCTUnwrap(client)
+        StubURLProtocol.handler = { request in
+            (try Self.response(for: request, status: 204), Data())
+        }
+
+        let result = try await client.send(Endpoints.signOut(token: "t"))
+
+        XCTAssertEqual(result, EmptyResponse())
+    }
+
+    func testReadsProblemDetailsWithFieldErrors() {
+        let body = Data(#"{"title":"Invalid","errors":{"email":["Enter a valid email address."]}}"#.utf8)
+
+        let error = URLSessionAPIClient.error(statusCode: 400, data: body)
+
+        XCTAssertEqual(error, .problem(statusCode: 400, message: "Invalid", fieldErrors: ["email": "Enter a valid email address."]))
+        XCTAssertEqual(error.userMessage, "Invalid")
+        XCTAssertEqual(error.fieldErrors["email"], "Enter a valid email address.")
+    }
+
+    func testUserMessages() {
+        XCTAssertEqual(APIError.transport("x").userMessage, "Cannot reach the server. Check your connection and try again.")
+        XCTAssertEqual(APIError.server(statusCode: 500).userMessage, "Something went wrong. Please try again.")
+        XCTAssertTrue(APIError.server(statusCode: 500).fieldErrors.isEmpty)
+    }
 }

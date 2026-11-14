@@ -1,16 +1,17 @@
 # Website
 
-One-page marketing website.
+One-page landing site (HTML + CSS).
 
 ## Skills
 
-- Follow the root `AGENTS.md` first. Shared skills in the root `.agents/skills/` are used for refinement, planning, defining tasks and code review.
-- Skills for this component live in `apps/website/.agents/skills/` and cover page design, SEO and performance.
+- Follow the root `AGENTS.md` first.
+- Website skills live in `apps/website/.agents/skills/`: `website-content` for copy, structure and styling.
 
-## Environments
+## Commands
 
-`dev`, `syst`, `prod`.
+Run from `apps/website`: `npm run validate`, `npm run e2e`.
 
-## Conventions
+## Definition of done
 
-To be added.
+- HTML validates and the smoke tests pass.
+- Styles use only design tokens.

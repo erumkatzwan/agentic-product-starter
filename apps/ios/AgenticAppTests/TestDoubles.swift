@@ -59,3 +59,46 @@ final class StubURLProtocol: URLProtocol {
 extension Item {
     static let sample = Item(id: "1", title: "Title", subtitle: "Subtitle")
 }
+
+extension UserProfile {
+    static let sample = UserProfile(id: "1", email: "ada@example.com", displayName: "Ada", role: "Customer")
+}
+
+/// Auth service whose results are set per test.
+final class StubAuthService: AuthService {
+    var signInResult: Result<UserSession, Error> = .success(UserSession(token: "token", profile: .sample))
+    var signUpResult: Result<UserSession, Error> = .success(UserSession(token: "token", profile: .sample))
+    var restoreResult: Result<UserSession, Error> = .success(UserSession(token: "token", profile: .sample))
+    var updateResult: Result<UserProfile, Error>?
+    var deleteError: Error?
+    private(set) var signedOutTokens: [String] = []
+
+    func signIn(email: String, password: String) async throws -> UserSession { try signInResult.get() }
+
+    func signUp(email: String, password: String, displayName: String) async throws -> UserSession { try signUpResult.get() }
+
+    func restore(token: String) async throws -> UserSession { try restoreResult.get() }
+
+    func signOut(token: String) async { signedOutTokens.append(token) }
+
+    func updateProfile(token: String, displayName: String) async throws -> UserProfile {
+        if let updateResult {
+            return try updateResult.get()
+        }
+        return UserProfile(id: "1", email: "ada@example.com", displayName: displayName, role: "Customer")
+    }
+
+    func deleteAccount(token: String) async throws {
+        if let deleteError {
+            throw deleteError
+        }
+    }
+
+    func signInWithGoogle() async throws -> UserSession { throw AuthError.notImplemented }
+}
+
+extension APIError {
+    static func invalid(_ fields: [String: String]) -> APIError {
+        .problem(statusCode: 400, message: "Invalid", fieldErrors: fields)
+    }
+}
