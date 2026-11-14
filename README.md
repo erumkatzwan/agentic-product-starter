@@ -70,14 +70,23 @@ flowchart TB
 
 ```
 /
-├── AGENTS.md              # Shared agent rules; points to each component's AGENTS.md
-├── CLAUDE.md              # Loads AGENTS.md for Claude Code
-├── .agents/skills/        # Shared skills: idea → spec → tickets → build → review → retro
-├── design/                # tokens.json (single source of truth) + generator
-├── docs/                  # product/, architecture/, adr/, agents/
+├── AGENTS.md                # Shared agent rules; points to each component's AGENTS.md
+├── CLAUDE.md                # Loads AGENTS.md for Claude Code
+├── .agents/skills/          # Shared skills: idea → spec → tickets → build → review → retro
+├── .github/                 # CI workflows, issue templates
 ├── apps/
-│   ├── ios/  android/  web-app/  back-office/  website/
-└── backend/
+│   ├── ios/                 # Customer app for iPhone (SwiftUI)
+│   ├── android/             # Customer app for Android (Jetpack Compose)
+│   ├── web-app/             # Customer web app (React)
+│   ├── back-office/         # Admin and support tool (React)
+│   └── website/             # One-page landing site
+├── backend/                 # API for every app (.NET)
+├── design/                  # tokens.json (single source of truth) + generator
+└── docs/
+    ├── product/             # Vision, roadmap, personas
+    ├── architecture/        # Architecture overview (arc42 + C4 diagrams)
+    ├── adr/                 # Architecture decision records (MADR)
+    └── agents/              # How the shared skills use this repo
 ```
 
 Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
