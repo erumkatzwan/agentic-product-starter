@@ -56,7 +56,6 @@ const light = Object.fromEntries(leaves(tokens.light.color).map(([p, v]) => [p.j
 const dark = Object.fromEntries(leaves(tokens.dark.color).map(([p, v]) => [p.join('.'), v]));
 const px = (group, key) => parseFloat(resolve(tokens.core[group][key].$value));
 const swift = `// ${header}
-// swiftlint:disable all
 import UIKit
 
 enum DesignTokens {

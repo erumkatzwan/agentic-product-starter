@@ -1,5 +1,4 @@
 // Generated from design/tokens.json by design/build.mjs. Do not edit by hand.
-// swiftlint:disable all
 import UIKit
 
 enum DesignTokens {
