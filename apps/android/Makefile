@@ -3,7 +3,6 @@ GRADLE = sh ./gradlew
 COVERAGE_MIN ?= 70
 APK = app/build/outputs/apk/syst/debug/app-syst-debug.apk
 OUT ?= build/screenshots
-DEMO = adb shell am broadcast -a com.android.systemui.demo -e command
 
 .PHONY: help bootstrap build lint typos test-unit test-ui test e2e screenshots ci run clean
 
@@ -41,15 +40,11 @@ e2e: ## End-to-end tests with Maestro on the running emulator
 screenshots: ## Screenshots of the main screens (SYST, fixture data) into OUT, on the running emulator
 	$(GRADLE) assembleSystDebug
 	adb install -r $(APK)
-	adb shell settings put global sysui_demo_allowed 1
-	$(DEMO) enter
-	$(DEMO) clock -e hhmm 0941
-	$(DEMO) battery -e level 100 -e plugged false
-	$(DEMO) network -e wifi show -e level 4
-	$(DEMO) notifications -e visible false
-	mkdir -p $(OUT)
-	maestro test -e OUT=$(abspath $(OUT)) e2e/screenshots
-	$(DEMO) exit
+	mkdir -p $(OUT) && rm -f $(OUT)/android-*.png
+	rm -rf $(OUT)/maestro
+	maestro test --test-output-dir $(abspath $(OUT))/maestro e2e/screenshots
+	find $(OUT)/maestro -name 'android-*.png' -exec cp {} $(OUT)/ \;
+	ls $(OUT)/*.png
 
 ci: lint typos build test e2e ## Everything the pull request checks run
 

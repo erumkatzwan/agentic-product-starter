@@ -1,5 +1,5 @@
 # Screenshots of the main screens for the README. Not a test: run by the Screenshots workflow
-# (or `make screenshots`). OUT is the output folder, passed with `-e OUT=...`.
+# (or `make screenshots`). Images land in Maestro's output folder; the Makefile copies them to OUT.
 appId: com.agentic.app.syst
 name: Screenshots
 ---
@@ -10,27 +10,27 @@ name: Screenshots
 - extendedWaitUntil:
     visible:
       id: "signIn.submit"
-    timeout: 15000
-- takeScreenshot: ${OUT}/android-sign-in
+    timeout: 60000
+- takeScreenshot: android-sign-in
 - tapOn:
     id: "signIn.submit"
 - extendedWaitUntil:
     visible:
       id: "home.item.1"
-    timeout: 15000
-- takeScreenshot: ${OUT}/android-home
+    timeout: 60000
+- takeScreenshot: android-home
 - tapOn:
     id: "home.item.1"
 - assertVisible:
     id: "detail.title"
-- takeScreenshot: ${OUT}/android-detail
+- takeScreenshot: android-detail
 - tapOn:
     id: "detail.backToHome"
 - tapOn:
     id: "home.profileButton"
 - assertVisible:
     id: "profile.save"
-- takeScreenshot: ${OUT}/android-profile
+- takeScreenshot: android-profile
 - launchApp:
     clearState: true
     arguments:
@@ -40,4 +40,4 @@ name: Screenshots
 - tapOn:
     id: "home.settingsButton"
 - assertVisible: "Settings"
-- takeScreenshot: ${OUT}/android-settings
+- takeScreenshot: android-settings
