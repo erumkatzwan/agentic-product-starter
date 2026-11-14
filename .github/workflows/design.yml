@@ -2,13 +2,31 @@ name: Design tokens
 
 on:
   pull_request:
-    paths: ["design/**", "apps/*/src/styles/tokens.css", "apps/website/tokens.css", "apps/ios/AgenticApp/DesignSystem/DesignTokens.swift", ".github/workflows/design.yml"]
   push:
     branches: [main]
-    paths: ["design/**", ".github/workflows/design.yml"]
 
 jobs:
+  changes:
+    name: Design tokens changes
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            run:
+              - 'design/**'
+              - 'apps/*/src/styles/tokens.css'
+              - 'apps/website/tokens.css'
+              - 'apps/ios/AgenticApp/DesignSystem/DesignTokens.swift'
+              - '.github/workflows/design.yml'
+
   tokens:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: Design tokens in sync
     runs-on: ubuntu-latest
     steps:

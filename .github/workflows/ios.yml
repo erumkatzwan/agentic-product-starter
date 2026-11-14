@@ -2,10 +2,8 @@ name: iOS
 
 on:
   pull_request:
-    paths: ["apps/ios/**", ".github/workflows/ios.yml"]
   push:
     branches: [main]
-    paths: ["apps/ios/**", ".github/workflows/ios.yml"]
 
 concurrency:
   group: ios-${{ github.ref }}
@@ -16,7 +14,25 @@ defaults:
     working-directory: apps/ios
 
 jobs:
+  changes:
+    name: iOS changes
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            run:
+              - 'apps/ios/**'
+              - 'design/**'
+              - '.github/workflows/ios.yml'
+
   lint:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: iOS lint
     runs-on: macos-15
     steps:
@@ -25,6 +41,8 @@ jobs:
       - run: swiftlint --strict --reporter github-actions-logging
 
   typos:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: iOS spelling
     runs-on: ubuntu-latest
     steps:

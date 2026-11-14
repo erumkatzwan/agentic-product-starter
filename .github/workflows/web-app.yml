@@ -2,10 +2,8 @@ name: Web app
 
 on:
   pull_request:
-    paths: ["apps/web-app/**", "backend/**", ".github/workflows/web-app.yml"]
   push:
     branches: [main]
-    paths: ["apps/web-app/**", "backend/**", ".github/workflows/web-app.yml"]
 
 concurrency:
   group: web-app-${{ github.ref }}
@@ -16,7 +14,26 @@ defaults:
     working-directory: apps/web-app
 
 jobs:
+  changes:
+    name: Web app changes
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            run:
+              - 'apps/web-app/**'
+              - 'backend/**'
+              - 'design/**'
+              - '.github/workflows/web-app.yml'
+
   checks:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: Web app lint, types and unit tests
     runs-on: ubuntu-latest
     steps:

@@ -2,10 +2,8 @@ name: Back office
 
 on:
   pull_request:
-    paths: ["apps/back-office/**", "backend/**", ".github/workflows/back-office.yml"]
   push:
     branches: [main]
-    paths: ["apps/back-office/**", "backend/**", ".github/workflows/back-office.yml"]
 
 concurrency:
   group: back-office-${{ github.ref }}
@@ -16,7 +14,26 @@ defaults:
     working-directory: apps/back-office
 
 jobs:
+  changes:
+    name: Back office changes
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            run:
+              - 'apps/back-office/**'
+              - 'backend/**'
+              - 'design/**'
+              - '.github/workflows/back-office.yml'
+
   checks:
+    needs: changes
+    if: needs.changes.outputs.run == 'true'
     name: Back office lint, types and unit tests
     runs-on: ubuntu-latest
     steps:
