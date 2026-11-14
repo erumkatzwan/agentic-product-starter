@@ -98,7 +98,7 @@ make e2e         # Maestro end-to-end flows on the simulator (sign in, navigatio
 make ci          # all of the above
 ```
 
-If your Mac has a different simulator: `make test-ui SIMULATOR="iPhone 15"`.
+The tests use the newest iPhone simulator installed. To pick one: `make test-ui SIM_ID=<udid>` (see `xcrun simctl list devices`).
 
 ## 5. Daily workflow for a story
 

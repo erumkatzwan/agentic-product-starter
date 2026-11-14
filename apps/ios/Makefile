@@ -1,6 +1,7 @@
 # Run `make help` to see all commands.
-SIMULATOR ?= iPhone 16
-DESTINATION ?= platform=iOS Simulator,name=$(SIMULATOR)
+# Uses the newest installed iPhone simulator. Override with: make test-ui SIM_ID=<udid>
+SIM_ID ?= $(shell xcrun simctl list devices available --json | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for r in sorted(d, reverse=True) for x in d[r] if x["name"].startswith("iPhone")))')
+DESTINATION ?= platform=iOS Simulator,id=$(SIM_ID)
 COVERAGE_MIN ?= 70
 XCODEBUILD = xcodebuild -project AgenticApp.xcodeproj -scheme AgenticApp -destination '$(DESTINATION)'
 
@@ -38,8 +39,8 @@ test: test-unit test-ui ## Unit and UI tests
 
 e2e: generate ## End-to-end tests with Maestro on a booted simulator
 	$(XCODEBUILD) -configuration Syst -derivedDataPath build/DerivedData build
-	xcrun simctl boot "$(SIMULATOR)" || true
-	xcrun simctl install booted build/DerivedData/Build/Products/Syst-iphonesimulator/AgenticApp.app
+	xcrun simctl boot $(SIM_ID) || true
+	xcrun simctl install $(SIM_ID) build/DerivedData/Build/Products/Syst-iphonesimulator/AgenticApp.app
 	maestro test e2e/flows
 
 ci: lint typos test e2e ## Everything the pull request checks run

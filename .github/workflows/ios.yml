@@ -15,9 +15,6 @@ defaults:
   run:
     working-directory: apps/ios
 
-env:
-  SIMULATOR: iPhone 16
-
 jobs:
   lint:
     name: iOS lint
