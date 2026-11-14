@@ -3,7 +3,8 @@
 | Folder / file | What goes here | Written by |
 |---|---|---|
 | `product/` | Vision, roadmap, personas | You, with `grill-me` / `research` |
-| `adr/` | Architecture decision records | `domain-modeling`, `grill-with-docs` |
+| `architecture/` | Architecture overview: arc42 sections with C4 diagrams | `architecture-decisions` |
+| `adr/` | Architecture decision records in MADR 4 format, with an index | `architecture-decisions`, `domain-modeling`, `grill-with-docs` |
 | `agents/` | How the shared skills use this repo (issue tracker, labels, domain docs) | `setup-matt-pocock-skills` |
 | `../GLOSSARY.md` | The project's domain language | `domain-modeling` (created when needed) |
 

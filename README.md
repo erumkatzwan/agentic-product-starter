@@ -15,7 +15,7 @@ Copy it for each new product, rename it, and start shaping your first feature.
 | [`backend`](backend/README.md) | Accounts, profiles, admin and feature flag APIs | .NET 10, ASP.NET Core | Ready |
 | [`apps/website`](apps/website/README.md) | One-page landing site ([live](https://erumkatzwan.github.io/agentic-product-starter/)) | HTML, CSS | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
-| `docs/` | Product context, decisions (ADRs), agent setup | Markdown | Ready |
+| [`docs/`](docs/README.md) | Product context, [architecture overview](docs/architecture/README.md) (arc42 + C4), [decisions](docs/adr/README.md) (MADR), agent setup | Markdown | Ready |
 | `.agents/skills/` | 27 shared skills covering the whole SDLC | Agent Skills | Ready |
 
 ```
@@ -24,7 +24,7 @@ Copy it for each new product, rename it, and start shaping your first feature.
 ├── CLAUDE.md              # Loads AGENTS.md for Claude Code
 ├── .agents/skills/        # Shared skills: idea → spec → tickets → build → review → retro
 ├── design/                # tokens.json (single source of truth) + generator
-├── docs/                  # product/, adr/, agents/
+├── docs/                  # product/, architecture/, adr/, agents/
 ├── apps/
 │   ├── ios/  android/  web-app/  back-office/  website/
 └── backend/
@@ -66,10 +66,10 @@ All of them talk to the same backend endpoints and read the same feature flags.
 | Stage | Shared skills | Where it lands |
 |---|---|---|
 | 1. Shape the idea | `grill-me`, `wayfinder`, `research`, `prototype` | `docs/product/`, decision notes |
-| 2. Refine | `grill-with-docs`, `domain-modeling` | `GLOSSARY.md`, `docs/adr/` |
+| 2. Refine | `grill-with-docs`, `domain-modeling`, `architecture-decisions` | `GLOSSARY.md`, MADR ADRs in `docs/adr/`, `docs/architecture/` |
 | 3. Specify | `to-spec` | A spec in GitHub Issues |
 | 4. Plan | `to-tickets`, `triage` | Agent-ready tickets with labels |
-| 5. Build | `implement` / `implement-spec`, `tdd` + platform skills | A branch with code and tests |
+| 5. Build | `architecture-decisions` (read first), `implement` / `implement-spec`, `tdd` + platform skills | A branch with code and tests |
 | 6. Review | `code-review`, `pr` | A pull request; all checks must be green |
 | 7. Fix and improve | `diagnosing-bugs`, `improve-codebase-architecture` | Fixes and refactor proposals |
 | 8. Learn | `retro`, `handoff` | Better skills, checks and `AGENTS.md` |
@@ -116,6 +116,7 @@ Then open the repo in Claude Code and run `/grill-me` on your first idea.
 - **Agentic Product Starter** by [Erum Awan](https://github.com/erumkatzwan): the product starter, apps, backend, design system, quality gates and how they fit together.
 - **Shared agent skills** by [Matt Pocock](https://github.com/mattpocock), from [mattpocock/skills](https://github.com/mattpocock/skills) ([aihero.dev/skills](https://www.aihero.dev/skills)), used under the MIT licence. See `.agents/skills/LICENSE-mattpocock-skills`.
 - **iOS community skills** by [Antoine van der Lee](https://github.com/AvdLee) (SwiftUI, Swift Concurrency, Swift Testing), used under the MIT licence.
+- **Architecture formats:** [MADR](https://adr.github.io/madr/) (MIT / CC0), [arc42](https://arc42.org) and the [C4 model](https://c4model.com). Interactive diagrams with the optional [Archify](https://github.com/tt-a1i/archify) skill by tt-a1i (Apache 2.0), installed on demand.
 - **Android skills** by Google, from [android/skills](https://github.com/android/skills) (Navigation 3, edge-to-edge, Compose performance, testing, AGP 9, R8, Credential Manager, security), used under the Apache 2.0 licence.
 
 ## License
