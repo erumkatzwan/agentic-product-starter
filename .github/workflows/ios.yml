@@ -20,8 +20,8 @@ jobs:
     outputs:
       run: ${{ steps.filter.outputs.run }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: dorny/paths-filter@v3
+      - uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
         id: filter
         with:
           filters: |
@@ -36,7 +36,7 @@ jobs:
     name: iOS lint
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: brew install swiftlint
       - run: swiftlint --strict --reporter github-actions-logging
 
@@ -46,7 +46,7 @@ jobs:
     name: iOS spelling
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: crate-ci/typos@v1
         with:
           files: apps/ios
@@ -57,10 +57,10 @@ jobs:
     needs: [lint, typos]
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: brew install xcodegen
       - run: make test-unit
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: unit-tests
@@ -71,10 +71,10 @@ jobs:
     needs: [lint, typos]
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: brew install xcodegen
       - run: make test-ui
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: ui-tests
@@ -85,7 +85,7 @@ jobs:
     needs: [unit-tests, ui-tests]
     runs-on: macos-15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: brew install xcodegen
       - run: |
           curl -Ls "https://get.maestro.mobile.dev" | bash

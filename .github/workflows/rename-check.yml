@@ -1,0 +1,100 @@
+name: Rename check
+
+# Keeps `scripts/rename.mjs` working, so anyone can turn the starter into their own product.
+# Every pull request: rename a copy and fail if an old identifier is left behind (fast).
+# When the script changes, weekly and on demand: build and test the renamed copy on every platform.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '41 4 * * 3' # Wednesdays 04:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NAME: Rename Check
+  APP_ID: com.renamecheck.app
+
+jobs:
+  leftovers:
+    name: Rename check
+    runs-on: ubuntu-latest
+    outputs:
+      full: ${{ steps.filter.outputs.full }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            full:
+              - 'scripts/rename.mjs'
+              - '.github/workflows/rename-check.yml'
+      - name: Rename a copy
+        run: node scripts/rename.mjs --name "$NAME" --id "$APP_ID" --repo acme/rename-check --force
+      - name: No old names left
+        run: node scripts/rename.mjs --check
+
+  build-backend-web:
+    name: Renamed copy builds (backend and web)
+    needs: leftovers
+    if: needs.leftovers.outputs.full == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - run: node scripts/rename.mjs --name "$NAME" --id "$APP_ID" --force
+      - run: node design/build.mjs --check
+      - name: Backend
+        working-directory: backend
+        run: dotnet test
+      - name: Web app
+        working-directory: apps/web-app
+        run: npm ci && npm run lint && npm run typecheck && npm test
+      - name: Back office
+        working-directory: apps/back-office
+        run: npm ci && npm run lint && npm run typecheck && npm test
+
+  build-android:
+    name: Renamed copy builds (Android)
+    needs: leftovers
+    if: needs.leftovers.outputs.full == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: node scripts/rename.mjs --name "$NAME" --id "$APP_ID" --force
+      - name: Android
+        working-directory: apps/android
+        run: chmod +x gradlew && ./gradlew assembleDevDebug testSystDebugUnitTest
+
+  build-ios:
+    name: Renamed copy builds (iOS)
+    needs: leftovers
+    if: needs.leftovers.outputs.full == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/rename.mjs --name "$NAME" --id "$APP_ID" --force
+      - run: brew install xcodegen
+      - name: iOS
+        working-directory: apps/ios
+        run: make test-unit

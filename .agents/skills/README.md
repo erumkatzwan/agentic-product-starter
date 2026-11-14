@@ -15,6 +15,7 @@ These are part of the Agentic Product Starter, not Matt Pocock's set:
 | `architecture-decisions` | Before building; when a decision is hard to reverse. Keeps `docs/architecture/` (arc42 + C4) and `docs/adr/` ([MADR 4](https://adr.github.io/madr/)) consistent. Explains how to add [Archify](https://github.com/tt-a1i/archify) by tt-a1i (Apache 2.0) for interactive diagrams |
 | `security-audit` | Setting up a new product, before a release, when a security check is red, or for a vulnerability overview across all apps |
 | `update-dependencies` | Major updates, toolchains, or a failing Dependabot pull request |
+| `rename-product` | Turning the starter into your own named product (name, app ID, repository) |
 
 ## The agentic SDLC, stage by stage
 
