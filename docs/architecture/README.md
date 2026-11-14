@@ -253,7 +253,7 @@ Every pull request runs the checks of the parts it touches, and the `main` rules
 
 ## 12. Glossary
 
-Domain terms live in [`GLOSSARY.md`](../../GLOSSARY.md), created by the `domain-modeling` skill when the first term is settled.
+Domain terms live in `GLOSSARY.md` at the repo root, created by the `domain-modeling` skill when the first term is settled.
 
 ## Diagrams
 

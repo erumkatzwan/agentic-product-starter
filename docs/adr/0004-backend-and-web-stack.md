@@ -51,4 +51,4 @@ CI runs `dotnet format`, a build with warnings as errors, xUnit tests with 70% c
 
 ## More Information
 
-See [`backend/README.md`](../../backend/README.md) and [Architecture overview](../architecture/README.md#52-containers). Adding a database deserves its own ADR.
+See [`backend/README.md`](../../backend/README.md) and [Architecture overview](../architecture/README.md#52-containers-c4-level-2). Adding a database deserves its own ADR.
