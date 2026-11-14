@@ -8,6 +8,9 @@ updates:
     schedule: { interval: weekly, day: monday }
     cooldown: { default-days: 5 }
     labels: [dependencies, area:web-app]
+    ignore:
+      # typescript-eslint 8 does not support TypeScript 7 yet. Remove when it does.
+      - { dependency-name: typescript, update-types: ["version-update:semver-major"] }
     commit-message: { prefix: "chore(deps)" }
     groups:
       minor-and-patch: { update-types: [minor, patch] }
@@ -18,6 +21,9 @@ updates:
     schedule: { interval: weekly, day: monday }
     cooldown: { default-days: 5 }
     labels: [dependencies, area:back-office]
+    ignore:
+      # typescript-eslint 8 does not support TypeScript 7 yet. Remove when it does.
+      - { dependency-name: typescript, update-types: ["version-update:semver-major"] }
     commit-message: { prefix: "chore(deps)" }
     groups:
       minor-and-patch: { update-types: [minor, patch] }
