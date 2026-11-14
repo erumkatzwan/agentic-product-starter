@@ -3,9 +3,10 @@
 SIM_ID ?= $(shell xcrun simctl list devices available --json | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for r in sorted(d, reverse=True) for x in d[r] if x["name"].startswith("iPhone")))')
 DESTINATION ?= platform=iOS Simulator,id=$(SIM_ID)
 COVERAGE_MIN ?= 70
+OUT ?= build/screenshots
 XCODEBUILD = xcodebuild -project AgenticApp.xcodeproj -scheme AgenticApp -destination '$(DESTINATION)'
 
-.PHONY: help bootstrap generate open lint typos test-unit test-ui test e2e ci clean
+.PHONY: help bootstrap generate open lint typos test-unit test-ui test e2e screenshots ci clean
 
 help: ## Show this help
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-10s %s\n", $$1, $$2}'
@@ -42,6 +43,17 @@ e2e: generate ## End-to-end tests with Maestro on a booted simulator
 	xcrun simctl boot $(SIM_ID) || true
 	xcrun simctl install $(SIM_ID) build/DerivedData/Build/Products/Syst-iphonesimulator/AgenticApp.app
 	maestro test e2e/flows
+
+screenshots: generate ## Screenshots of the main screens (SYST, fixture data) into OUT, for the README
+	$(XCODEBUILD) -configuration Syst -derivedDataPath build/DerivedData build
+	xcrun simctl boot $(SIM_ID) || true
+	xcrun simctl status_bar $(SIM_ID) override --time 9:41 --batteryState charged --batteryLevel 100 --cellularBars 4 --wifiBars 3
+	xcrun simctl install $(SIM_ID) build/DerivedData/Build/Products/Syst-iphonesimulator/AgenticApp.app
+	mkdir -p $(OUT) && rm -f $(OUT)/ios-*.png
+	rm -rf $(OUT)/maestro
+	maestro test --test-output-dir $(abspath $(OUT))/maestro e2e/screenshots
+	find $(OUT)/maestro -name 'ios-*.png' -exec cp {} $(OUT)/ \;
+	ls $(OUT)/*.png
 
 ci: lint typos test e2e ## Everything the pull request checks run
 

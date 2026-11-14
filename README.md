@@ -32,6 +32,19 @@ Copy it for each new product, rename it, and start shaping your first feature.
 
 Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
 
+## Screenshots
+
+| | Sign in | Home | Detail | Profile |
+|---|---|---|---|---|
+| **iOS** | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-sign-in.png" width="170" alt="iOS sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-home.png" width="170" alt="iOS home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-detail.png" width="170" alt="iOS detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-profile.png" width="170" alt="iOS profile"> |
+| **Android** | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-sign-in.png" width="170" alt="Android sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-home.png" width="170" alt="Android home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-detail.png" width="170" alt="Android detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-profile.png" width="170" alt="Android profile"> |
+
+| Web app | Back office |
+|---|---|
+| <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/web-app-home.png" width="420" alt="Web app home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/back-office-customers.png" width="420" alt="Back office customers"> |
+
+Same flow, same palette, every app. The pictures are taken by the [Screenshots workflow](.github/workflows/screenshots.yml) from the SYST builds with test data and refresh automatically whenever an app changes.
+
 ## One flow, every app
 
 | | iOS | Android | Web app | Back office |

@@ -2,8 +2,9 @@
 GRADLE = sh ./gradlew
 COVERAGE_MIN ?= 70
 APK = app/build/outputs/apk/syst/debug/app-syst-debug.apk
+OUT ?= build/screenshots
 
-.PHONY: help bootstrap build lint typos test-unit test-ui test e2e ci run clean
+.PHONY: help bootstrap build lint typos test-unit test-ui test e2e screenshots ci run clean
 
 help: ## Show this help
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-10s %s\n", $$1, $$2}'
@@ -35,6 +36,15 @@ e2e: ## End-to-end tests with Maestro on the running emulator
 	$(GRADLE) assembleSystDebug
 	adb install -r $(APK)
 	maestro test e2e/flows
+
+screenshots: ## Screenshots of the main screens (SYST, fixture data) into OUT, on the running emulator
+	$(GRADLE) assembleSystDebug
+	adb install -r $(APK)
+	mkdir -p $(OUT) && rm -f $(OUT)/android-*.png
+	rm -rf $(OUT)/maestro
+	maestro test --test-output-dir $(abspath $(OUT))/maestro e2e/screenshots
+	find $(OUT)/maestro -name 'android-*.png' -exec cp {} $(OUT)/ \;
+	ls $(OUT)/*.png
 
 ci: lint typos build test e2e ## Everything the pull request checks run
 

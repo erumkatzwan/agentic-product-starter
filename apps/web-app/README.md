@@ -4,6 +4,14 @@ The signed-in web app for customers: sign up, sign in, home, profile and sign ou
 
 React + TypeScript (Vite). Uses the shared colour palette from `design/tokens.json` and the .NET backend.
 
+## Screenshots
+
+| Sign in | Home | Profile |
+|---|---|---|
+| <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/web-app-sign-in.png" width="280" alt="Sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/web-app-home.png" width="280" alt="Home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/web-app-profile.png" width="280" alt="Profile"> |
+
+Taken automatically by the [Screenshots workflow](../../.github/workflows/screenshots.yml) from the SYST build with test data; they refresh whenever the app changes.
+
 ## Run it
 
 Requires Node 22 and the [.NET 10 SDK](https://dotnet.microsoft.com/download) for the backend.
