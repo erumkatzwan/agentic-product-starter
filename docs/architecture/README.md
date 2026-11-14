@@ -63,6 +63,7 @@ Dotted lines are skeletons: the code paths exist but need an account and keys be
 | Look and feel | One `design/tokens.json`, generated per platform | [ADR-0003](../adr/0003-shared-design-tokens.md) |
 | Backend and web | ASP.NET Core minimal APIs; React + TypeScript web apps | [ADR-0004](../adr/0004-backend-and-web-stack.md) |
 | Documentation | MADR, arc42 and C4, next to the code | [ADR-0006](../adr/0006-architecture-documentation.md) |
+| Dependencies | GitHub security features, an OSV report and Dependabot updates | [ADR-0007](../adr/0007-dependency-security-and-updates.md) |
 
 ## 5. Building blocks
 
@@ -233,13 +234,20 @@ The API returns problem details; validation errors list each field. Apps show fi
 
 Each app has unit, UI and end-to-end tests. Mobile UI and end-to-end tests run on bundled JSON fixtures (the same files on iOS and Android) with the same test IDs. Web end-to-end tests run against the real backend in SYST.
 
+### 8.6 Security and dependencies
+
+* **On every pull request:** dependency review blocks new high or critical vulnerabilities; CodeQL scans the code; secret push protection blocks leaked keys.
+* **Weekly and on demand:** `scripts/security-audit.mjs` reports known vulnerabilities in every app against OSV, with the fixed version for each.
+* **Updates:** Dependabot opens grouped patch and minor updates per app, which merge automatically when CI is green; majors are reviewed by hand.
+* **Reporting:** private vulnerability reporting is on; see `SECURITY.md`.
+
 ## 9. Decisions
 
 All decisions are in [`docs/adr`](../adr/README.md). Each one names the check that enforces it under **Confirmation**.
 
 ## 10. Quality gates
 
-Every pull request runs the checks of the parts it touches, and the `main` ruleset blocks merging until all pass: lint and spelling, unit tests with 70% coverage, UI tests, end-to-end tests, and design tokens in sync. See the [README](../../README.md#quality-gates).
+Every pull request runs the checks of the parts it touches, and the `main` ruleset blocks merging until all pass: lint and spelling, unit tests with 70% coverage, UI tests, end-to-end tests, design tokens in sync, and dependency review. See the [README](../../README.md#quality-gates).
 
 ## 11. Risks and technical debt
 

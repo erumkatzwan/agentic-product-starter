@@ -1,0 +1,60 @@
+name: Security
+
+# Pull requests: block new dependencies with known high or critical vulnerabilities.
+# Weekly, on demand, and when the audit itself changes: one report of known vulnerabilities across every app (see the job summary).
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+    paths: ['scripts/security-audit.mjs', '.github/workflows/security.yml']
+  schedule:
+    - cron: '17 5 * * 1' # Mondays 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    name: Dependency review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+          comment-summary-in-pr: on-failure
+
+  audit:
+    name: Vulnerability report
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x apps/android/gradlew
+      - name: Scan every app against OSV
+        run: node scripts/security-audit.mjs --out security-report.md --fail-on high
+      - name: Publish the report
+        if: always()
+        run: test -f security-report.md && cat security-report.md >> "$GITHUB_STEP_SUMMARY" || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-report
+          path: security-report.md
+          if-no-files-found: ignore
