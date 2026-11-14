@@ -1,6 +1,0 @@
-// Dev environment: local development against the dev backend.
-APP_ENVIRONMENT = dev
-APP_DISPLAY_NAME = Consent Dev
-APP_BUNDLE_ID = com.consent.app.dev
-API_BASE_URL = https:/$()/api-dev.consent.example
-APS_ENVIRONMENT = development

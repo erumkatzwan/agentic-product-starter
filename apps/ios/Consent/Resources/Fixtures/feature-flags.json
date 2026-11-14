@@ -1,8 +1,0 @@
-{
-  "flags": {
-    "settings": true,
-    "item_detail": true,
-    "push_prompt": true,
-    "google_sign_in": true
-  }
-}

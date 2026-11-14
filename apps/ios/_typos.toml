@@ -1,2 +1,0 @@
-[files]
-extend-exclude = ["build/", "DerivedData/", "*.xcresult", "Consent.xcodeproj/"]

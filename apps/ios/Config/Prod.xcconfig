@@ -1,6 +1,0 @@
-// Prod environment: App Store builds.
-APP_ENVIRONMENT = prod
-APP_DISPLAY_NAME = Consent
-APP_BUNDLE_ID = com.consent.app
-API_BASE_URL = https:/$()/api.consent.example
-APS_ENVIRONMENT = production
