@@ -44,6 +44,13 @@ jobs:
           name: screenshots-ios
           path: shots/*.png
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: maestro-debug-ios
+          path: |
+            ~/.maestro/tests/
+            shots/maestro/
 
   android:
     name: Android screenshots
@@ -83,6 +90,13 @@ jobs:
           name: screenshots-android
           path: shots/*.png
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: maestro-debug-android
+          path: |
+            ~/.maestro/tests/
+            shots/maestro/
 
   web:
     name: Web app and back office screenshots
