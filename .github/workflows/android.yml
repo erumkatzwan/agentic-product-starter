@@ -52,9 +52,12 @@ jobs:
           curl -sSLo /tmp/ktlint "https://github.com/pinterest/ktlint/releases/download/${KTLINT_VERSION}/ktlint"
           chmod +x /tmp/ktlint
           /tmp/ktlint --reporter=plain "app/src/**/*.kt" "*.kts" "app/*.kts"
+      # Run Android Lint and the build even when ktlint fails, so one run shows every problem.
       - name: Android Lint (warnings fail)
+        if: ${{ !cancelled() }}
         run: ./gradlew lintSystDebug
       - name: Build every environment
+        if: ${{ !cancelled() }}
         run: ./gradlew assembleDevDebug assembleSystDebug assembleProdRelease
       - uses: actions/upload-artifact@v4
         if: failure()
