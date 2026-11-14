@@ -112,3 +112,4 @@ Then open the repo in Claude Code and run `/grill-me` on your first idea.
 - 🐛 **Found a bug or something unclear?** [Open an issue](https://github.com/erumkatzwan/agentic-product-starter/issues/new/choose) with the **Bug report** template.
 - 💡 **Have a suggestion?** [Open an issue](https://github.com/erumkatzwan/agentic-product-starter/issues/new/choose) with the **Suggestion** template.
 - 🤝 **Want to contribute or swap ideas?** Say hello in [Discussions](https://github.com/erumkatzwan/agentic-product-starter/discussions). Pull requests are closed for now, so start there and we can take it from there.
+- 👋 **Connect with me** on [LinkedIn](https://www.linkedin.com/in/erumkatzwan/).
