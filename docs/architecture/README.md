@@ -64,6 +64,7 @@ Dotted lines are skeletons: the code paths exist but need an account and keys be
 | Backend and web | ASP.NET Core minimal APIs; React + TypeScript web apps | [ADR-0004](../adr/0004-backend-and-web-stack.md) |
 | Documentation | MADR, arc42 and C4, next to the code | [ADR-0006](../adr/0006-architecture-documentation.md) |
 | Dependencies | GitHub security features, an OSV report and Dependabot updates | [ADR-0007](../adr/0007-dependency-security-and-updates.md) |
+| Observability | OpenTelemetry to Grafana for the backend, Sentry for app crashes | [ADR-0008](../adr/0008-observability.md) |
 
 ## 5. Building blocks
 
@@ -241,13 +242,21 @@ Each app has unit, UI and end-to-end tests. Mobile UI and end-to-end tests run o
 * **Updates:** Dependabot opens grouped patch and minor updates per app, which merge automatically when CI is green; majors are reviewed by hand.
 * **Reporting:** private vulnerability reporting is on; see `SECURITY.md`.
 
+### 8.7 Observability
+
+* **Backend:** OpenTelemetry traces, metrics and logs, exported over OTLP only when `OTEL_EXPORTER_OTLP_ENDPOINT` is set ([ADR-0008](../adr/0008-observability.md)).
+* **Where it goes:** a local Grafana LGTM stack in Dev (`observability/docker-compose.yml`), Grafana Cloud in SYST and Prod. Dashboards live as JSON in `observability/grafana/dashboards/`.
+* **Product metrics:** `AppMetrics` counts sign-ups and sign-ins by result. New features add their own counters there.
+* **Apps:** crash and error reporting with Sentry, one DSN per environment, off when no DSN is set.
+* **Rule:** no personal data in spans, metric tags or logs.
+
 ## 9. Decisions
 
 All decisions are in [`docs/adr`](../adr/README.md). Each one names the check that enforces it under **Confirmation**.
 
 ## 10. Quality gates
 
-Every pull request runs the checks of the parts it touches, and the `main` ruleset blocks merging until all pass: lint and spelling, unit tests with 70% coverage, UI tests, end-to-end tests, design tokens in sync, and dependency review. See the [README](../../README.md#quality-gates).
+Every pull request runs the checks of the parts it touches, and the `main` ruleset blocks merging until all pass: lint and spelling, unit tests with 70% coverage, UI tests, end-to-end tests, design tokens in sync, dependency review, the rename check, and an observability smoke test that proves telemetry reaches Grafana. See the [README](../../README.md#quality-gates).
 
 ## 11. Risks and technical debt
 

@@ -50,6 +50,10 @@ backend/
 └── tests/AgenticProduct.Api.Tests/   # xUnit: unit tests + in-memory API integration tests
 ```
 
+## Observability
+
+Traces, metrics and logs go out through OpenTelemetry (`src/AgenticProduct.Api/Observability/`). The Dev launch profile sends them to the local Grafana stack; SYST and Prod send them wherever `OTEL_EXPORTER_OTLP_ENDPOINT` points. Without an endpoint nothing is exported. Product metrics live in `AppMetrics`. See [observability/README.md](../observability/README.md).
+
 ## Environments
 
 `Dev`, `Syst` and `Prod`, set with `ASPNETCORE_ENVIRONMENT`. Each has its own `appsettings.<Env>.json` (CORS origins, seeding). Prod never seeds accounts.

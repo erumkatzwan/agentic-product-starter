@@ -10,15 +10,16 @@ Click **Use this template**, rename it with one command, and start shaping your 
 |---|---|
 | **Apps** | iOS, Android, web app, back office, .NET 10 backend and landing website, all on one backend and one sign-in flow |
 | **Design** | One token file generates Swift, Kotlin and CSS; CI blocks any app that drifts from the palette |
-| **Way of working** | 31 shared skills from idea to retro, platform skills for every app, `AGENTS.md` rules for any coding agent |
+| **Way of working** | 32 shared skills from idea to retro, platform skills for every app, `AGENTS.md` rules for any coding agent |
 | **Architecture** | arc42 overview with C4 diagrams and MADR decision records, read before every change |
 | **Quality gates** | Lint, types, spelling, unit, UI and end-to-end tests with 70% coverage on every pull request; `main` only changes through green pull requests |
 | **Environments** | Dev, SYST and Prod in every app, plus feature flags to ship unfinished work safely |
 | **Security** | CodeQL, dependency review, secret push protection, private vulnerability reporting and a weekly vulnerability report across all apps |
 | **Dependencies** | Dependabot every week; patch and minor updates merge themselves when CI is green, major ones are reviewed |
+| **Observability** | OpenTelemetry traces, metrics and logs from the backend into Grafana dashboards, with a one-command local stack; CI proves the data arrives |
 | **Make it yours** | One command renames every app, ID, package and folder; CI proves the renamed copy still builds |
 | **Screenshots** | Taken from the real apps and refreshed automatically |
-| **Coming next** | Observability (crash reporting, OpenTelemetry, Grafana dashboards) and a DORA metrics dashboard |
+| **Coming next** | Crash reporting in the apps (Sentry) and a DORA metrics dashboard |
 
 ## Architecture at a glance
 
@@ -80,9 +81,10 @@ flowchart TB
 | [`apps/back-office`](apps/back-office/README.md) | Admin and customer support: find, edit, disable, delete customers; feature flags | React, TypeScript, Vite | Ready |
 | [`backend`](backend/README.md) | Accounts, profiles, admin and feature flag APIs | .NET 10, ASP.NET Core | Ready |
 | [`apps/website`](apps/website/README.md) | One-page landing site ([live](https://erumkatzwan.github.io/agentic-product-starter/)) | HTML, CSS | Ready |
+| [`observability`](observability/README.md) | Local Grafana stack, dashboards and how to connect Grafana Cloud | OpenTelemetry, Grafana | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
 | [`docs/`](docs/README.md) | Product context, [architecture overview](docs/architecture/README.md) (arc42 + C4), [decisions](docs/adr/README.md) (MADR), agent setup | Markdown | Ready |
-| `.agents/skills/` | 31 shared skills covering the whole SDLC | Agent Skills | Ready |
+| `.agents/skills/` | 32 shared skills covering the whole SDLC | Agent Skills | Ready |
 
 ```
 /
@@ -98,6 +100,7 @@ flowchart TB
 │   └── website/             # One-page landing site
 ├── backend/                 # API for every app (.NET)
 ├── design/                  # tokens.json (single source of truth) + generator
+├── observability/           # Local Grafana stack and dashboards (OpenTelemetry)
 └── docs/
     ├── product/             # Vision, roadmap, personas
     ├── architecture/        # Architecture overview (arc42 + C4 diagrams)
@@ -164,6 +167,7 @@ Every pull request runs the checks for the parts it touches:
 | Website | HTML validation, spelling, smoke tests |
 | Design tokens | Generated files in sync with `design/tokens.json` |
 | Security | Dependency review on every pull request, CodeQL, secret push protection, weekly vulnerability report across all apps ([SECURITY.md](SECURITY.md)) |
+| Observability | Starts Grafana in CI, sends traffic to the API, and fails if metrics, traces or any dashboard query come back empty |
 | Dependencies | Dependabot: grouped patch and minor updates per app merge automatically when CI is green |
 
 ## Environments
@@ -192,6 +196,9 @@ cd apps/web-app && npm install && npm run dev          # http://localhost:5173
 
 # 3. Back office (new terminal)
 cd apps/back-office && npm install && npm run dev      # http://localhost:5174
+
+# Optional: dashboards at http://localhost:3000
+docker compose -f observability/docker-compose.yml up -d
 
 # 4. iOS: see apps/ios/README.md
 # 5. Android: see apps/android/README.md
