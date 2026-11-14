@@ -1,0 +1,6 @@
+// Dev environment: local development against the dev backend.
+APP_ENVIRONMENT = dev
+APP_DISPLAY_NAME = Agentic Dev
+APP_BUNDLE_ID = com.agentic.app.dev
+API_BASE_URL = https:/$()/api-dev.agentic.example
+APS_ENVIRONMENT = development

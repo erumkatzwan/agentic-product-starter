@@ -1,0 +1,6 @@
+// SYST environment: system testing. Used by CI, UI tests and end-to-end tests.
+APP_ENVIRONMENT = syst
+APP_DISPLAY_NAME = Agentic SYST
+APP_BUNDLE_ID = com.agentic.app.syst
+API_BASE_URL = https:/$()/api-syst.agentic.example
+APS_ENVIRONMENT = development

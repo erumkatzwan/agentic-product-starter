@@ -1,0 +1,26 @@
+included:
+  - AgenticApp
+  - AgenticAppTests
+  - AgenticAppUITests
+excluded:
+  - build
+  - DerivedData
+opt_in_rules:
+  - force_unwrapping
+  - empty_count
+  - closure_spacing
+  - explicit_init
+  - first_where
+  - modifier_order
+  - redundant_nil_coalescing
+  - sorted_imports
+  - vertical_whitespace_closing_braces
+line_length:
+  warning: 140
+  error: 180
+identifier_name:
+  excluded: [id, xs, s, m, l, xl]
+type_body_length:
+  warning: 300
+file_length:
+  warning: 400

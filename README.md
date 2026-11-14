@@ -1,6 +1,6 @@
-# Consent
+# Agentic Product Starter
 
-Monorepo for the whole product. The root holds the shared context (product, stories, decisions) and the shared agent skills. Each app or service has its own folder with its own agent rules and skills.
+Starter monorepo for building a product with AI agents. Copy it for each new product. The root holds the shared context (product, stories, decisions) and the shared agent skills. Each app or service has its own folder with its own agent rules and skills.
 
 ```
 /

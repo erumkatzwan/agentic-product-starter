@@ -1,0 +1,6 @@
+// Prod environment: App Store builds.
+APP_ENVIRONMENT = prod
+APP_DISPLAY_NAME = Agentic
+APP_BUNDLE_ID = com.agentic.app
+API_BASE_URL = https:/$()/api.agentic.example
+APS_ENVIRONMENT = production

@@ -1,0 +1,93 @@
+name: AgenticApp
+options:
+  bundleIdPrefix: com.agentic
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  defaultConfig: Dev
+configs:
+  Dev: debug
+  Syst: debug
+  Prod: release
+configFiles:
+  Dev: Config/Dev.xcconfig
+  Syst: Config/Syst.xcconfig
+  Prod: Config/Prod.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+targets:
+  AgenticApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: AgenticApp
+    info:
+      path: AgenticApp/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: $(APP_DISPLAY_NAME)
+        APP_ENVIRONMENT: $(APP_ENVIRONMENT)
+        API_BASE_URL: $(API_BASE_URL)
+        UILaunchScreen: {}
+        UIBackgroundModes: [remote-notification]
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+    entitlements:
+      path: AgenticApp/Resources/AgenticApp.entitlements
+      properties:
+        aps-environment: $(APS_ENVIRONMENT)
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(APP_BUNDLE_ID)
+        TARGETED_DEVICE_FAMILY: "1"
+    postCompileScripts:
+      - name: SwiftLint
+        basedOnDependencyAnalysis: false
+        script: |
+          export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+          if which swiftlint >/dev/null; then
+            swiftlint --config "${SRCROOT}/.swiftlint.yml"
+          else
+            echo "warning: SwiftLint not installed. Run: make bootstrap"
+          fi
+  AgenticAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [AgenticAppTests]
+    dependencies:
+      - target: AgenticApp
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.agentic.tests
+  AgenticAppUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [AgenticAppUITests]
+    dependencies:
+      - target: AgenticApp
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.agentic.uitests
+        TEST_TARGET_NAME: AgenticApp
+schemes:
+  AgenticApp:
+    build:
+      targets:
+        AgenticApp: all
+    run:
+      config: Dev
+    test:
+      config: Syst
+      gatherCoverageData: true
+      coverageTargets: [AgenticApp]
+      targets: [AgenticAppTests, AgenticAppUITests]
+    profile:
+      config: Prod
+    analyze:
+      config: Dev
+    archive:
+      config: Prod

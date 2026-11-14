@@ -1,0 +1,18 @@
+# End-to-end: home -> detail -> back, on the simulator with fixture data.
+appId: com.agentic.app.syst
+name: Navigate home, detail and back
+---
+- launchApp:
+    clearState: true
+    arguments:
+      uiTesting: true
+- assertVisible:
+    id: "home.item.1"
+- tapOn:
+    id: "home.item.1"
+- assertVisible:
+    id: "detail.title"
+- tapOn:
+    id: "detail.backToHome"
+- assertVisible:
+    id: "home.item.1"

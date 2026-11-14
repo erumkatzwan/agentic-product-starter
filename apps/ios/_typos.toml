@@ -1,0 +1,2 @@
+[files]
+extend-exclude = ["build/", "DerivedData/", "*.xcresult", "AgenticApp.xcodeproj/"]
