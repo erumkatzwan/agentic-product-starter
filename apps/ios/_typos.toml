@@ -9,3 +9,7 @@ extend-exclude = [
   "swift-concurrency/",
   "swift-testing-expert/",
 ]
+
+[default.extend-words]
+# Apple's simulator/device identifier
+udid = "udid"
