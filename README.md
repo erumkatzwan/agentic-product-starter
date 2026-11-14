@@ -2,7 +2,23 @@
 
 A complete, end-to-end business starter for building a product with AI coding agents: **iOS app, Android app, web app, back office, .NET backend and landing website** in one repository, with one design system, one way of working from idea to retro, and quality gates on every change.
 
-Copy it for each new product, rename it, and start shaping your first feature.
+Click **Use this template**, rename it with one command, and start shaping your first feature.
+
+## Production-ready from day one
+
+| Area | What you get |
+|---|---|
+| **Apps** | iOS, Android, web app, back office, .NET 10 backend and landing website, all on one backend and one sign-in flow |
+| **Design** | One token file generates Swift, Kotlin and CSS; CI blocks any app that drifts from the palette |
+| **Way of working** | 31 shared skills from idea to retro, platform skills for every app, `AGENTS.md` rules for any coding agent |
+| **Architecture** | arc42 overview with C4 diagrams and MADR decision records, read before every change |
+| **Quality gates** | Lint, types, spelling, unit, UI and end-to-end tests with 70% coverage on every pull request; `main` only changes through green pull requests |
+| **Environments** | Dev, SYST and Prod in every app, plus feature flags to ship unfinished work safely |
+| **Security** | CodeQL, dependency review, secret push protection, private vulnerability reporting and a weekly vulnerability report across all apps |
+| **Dependencies** | Dependabot every week; patch and minor updates merge themselves when CI is green, major ones are reviewed |
+| **Make it yours** | One command renames every app, ID, package and folder; CI proves the renamed copy still builds |
+| **Screenshots** | Taken from the real apps and refreshed automatically |
+| **Coming next** | Observability (crash reporting, OpenTelemetry, Grafana dashboards) and a DORA metrics dashboard |
 
 ## Architecture at a glance
 
@@ -66,7 +82,7 @@ flowchart TB
 | [`apps/website`](apps/website/README.md) | One-page landing site ([live](https://erumkatzwan.github.io/agentic-product-starter/)) | HTML, CSS | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
 | [`docs/`](docs/README.md) | Product context, [architecture overview](docs/architecture/README.md) (arc42 + C4), [decisions](docs/adr/README.md) (MADR), agent setup | Markdown | Ready |
-| `.agents/skills/` | 27 shared skills covering the whole SDLC | Agent Skills | Ready |
+| `.agents/skills/` | 31 shared skills covering the whole SDLC | Agent Skills | Ready |
 
 ```
 /
