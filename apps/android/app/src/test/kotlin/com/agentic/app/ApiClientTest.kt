@@ -6,6 +6,8 @@ import com.agentic.app.core.network.FixtureApiClient
 import com.agentic.app.core.network.OkHttpApiClient
 import com.agentic.app.core.services.RemoteAuthService
 import com.agentic.app.core.services.RemoteItemsRepository
+import java.io.File
+import java.io.IOException
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import okhttp3.Interceptor
@@ -20,8 +22,6 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
-import java.io.File
-import java.io.IOException
 
 class ApiClientTest {
     private val requests = mutableListOf<Request>()
