@@ -154,6 +154,17 @@ Every pull request runs the checks for the parts it touches:
 
 Every component uses **Dev**, **SYST** (system test) and **Prod**. Dev and SYST seed two accounts: `admin@example.com` / `Admin123!` and `customer@example.com` / `Customer123!`.
 
+## Make it yours
+
+Turn the starter into your product in one command. It renames every app, bundle ID, package, namespace and folder, and keeps the credits:
+
+```bash
+node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app --dry-run   # preview
+node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app             # apply
+```
+
+Or ask your agent: "Rename this product to Fashion Girl" (the `rename-product` skill). Start from **Use this template** on GitHub to get your own copy first.
+
 ## Getting started
 
 ```bash
