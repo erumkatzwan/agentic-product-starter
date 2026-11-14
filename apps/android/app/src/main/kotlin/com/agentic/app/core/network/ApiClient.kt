@@ -89,7 +89,7 @@ class OkHttpApiClient(
                 null
             }
             val message = problem?.detail ?: problem?.title ?: return ApiError.Server(statusCode)
-            val fields = problem.errors.orEmpty().mapNotNull { (key, values) -> values.firstOrNull()?.let { key to it } }.toMap()
+            val fields = problem?.errors.orEmpty().mapNotNull { (key, values) -> values.firstOrNull()?.let { key to it } }.toMap()
             return ApiError.Problem(statusCode, message, fields)
         }
     }
