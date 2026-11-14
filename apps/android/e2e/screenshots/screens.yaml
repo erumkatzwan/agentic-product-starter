@@ -1,0 +1,43 @@
+# Screenshots of the main screens for the README. Not a test: run by the Screenshots workflow
+# (or `make screenshots`). OUT is the output folder, passed with `-e OUT=...`.
+appId: com.agentic.app.syst
+name: Screenshots
+---
+- launchApp:
+    clearState: true
+    arguments:
+      uiTesting: true
+- extendedWaitUntil:
+    visible:
+      id: "signIn.submit"
+    timeout: 15000
+- takeScreenshot: ${OUT}/android-sign-in
+- tapOn:
+    id: "signIn.submit"
+- extendedWaitUntil:
+    visible:
+      id: "home.item.1"
+    timeout: 15000
+- takeScreenshot: ${OUT}/android-home
+- tapOn:
+    id: "home.item.1"
+- assertVisible:
+    id: "detail.title"
+- takeScreenshot: ${OUT}/android-detail
+- tapOn:
+    id: "detail.backToHome"
+- tapOn:
+    id: "home.profileButton"
+- assertVisible:
+    id: "profile.save"
+- takeScreenshot: ${OUT}/android-profile
+- launchApp:
+    clearState: true
+    arguments:
+      uiTesting: true
+- tapOn:
+    id: "signIn.submit"
+- tapOn:
+    id: "home.settingsButton"
+- assertVisible: "Settings"
+- takeScreenshot: ${OUT}/android-settings

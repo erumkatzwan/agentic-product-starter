@@ -4,6 +4,14 @@ Part of the [Agentic Product Starter](../../README.md).
 
 SwiftUI app with sign up, sign in, profile and sign out against the .NET backend, the shared design tokens, navigation, a REST API layer, feature flags, push notifications, a Google sign-in skeleton, and unit, UI and end-to-end tests gated by CI.
 
+## Screenshots
+
+| Sign in | Home | Detail | Profile | Settings |
+|---|---|---|---|---|
+| <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-sign-in.png" width="150" alt="Sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-home.png" width="150" alt="Home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-detail.png" width="150" alt="Detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-profile.png" width="150" alt="Profile"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-settings.png" width="150" alt="Settings"> |
+
+Taken automatically by the [Screenshots workflow](../../.github/workflows/screenshots.yml) from the SYST build with test data; they refresh whenever the app changes.
+
 ## 1. One-time setup (Mac)
 
 1. Install Xcode 16 or newer from the App Store and open it once.

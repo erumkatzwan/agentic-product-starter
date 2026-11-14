@@ -4,6 +4,14 @@ Part of the [Agentic Product Starter](../../README.md).
 
 Jetpack Compose app with sign up, sign in, profile and sign out against the .NET backend, the shared design tokens, Navigation 3, a REST API layer, feature flags, push notifications, a Google sign-in skeleton, and unit, UI and end-to-end tests gated by CI. It mirrors the [iOS app](../ios/README.md) screen for screen.
 
+## Screenshots
+
+| Sign in | Home | Detail | Profile | Settings |
+|---|---|---|---|---|
+| <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-sign-in.png" width="150" alt="Sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-home.png" width="150" alt="Home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-detail.png" width="150" alt="Detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-profile.png" width="150" alt="Profile"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-settings.png" width="150" alt="Settings"> |
+
+Taken automatically by the [Screenshots workflow](../../.github/workflows/screenshots.yml) from the SYST build with test data; they refresh whenever the app changes.
+
 ## 1. One-time setup
 
 1. Install [Android Studio](https://developer.android.com/studio) (latest stable) and open it once. It installs the Android SDK and JDK.

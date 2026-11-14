@@ -4,6 +4,14 @@ Internal tool for administrators and customer support: find, edit, disable and d
 
 React + TypeScript (Vite). Uses the shared colour palette from `design/tokens.json` and the .NET backend.
 
+## Screenshots
+
+| Sign in | Customers | Feature flags |
+|---|---|---|
+| <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/back-office-sign-in.png" width="280" alt="Sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/back-office-customers.png" width="280" alt="Customers"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/back-office-feature-flags.png" width="280" alt="Feature flags"> |
+
+Taken automatically by the [Screenshots workflow](../../.github/workflows/screenshots.yml) from the SYST build with test data; they refresh whenever the app changes.
+
 ## Run it
 
 Requires Node 22 and the [.NET 10 SDK](https://dotnet.microsoft.com/download) for the backend.
