@@ -1,0 +1,20 @@
+# End-to-end: sign in, home -> detail -> back, on the emulator with fixture data.
+appId: com.agentic.app.syst
+name: Sign in and navigate
+---
+- launchApp:
+    clearState: true
+    arguments:
+      uiTesting: true
+- tapOn:
+    id: "signIn.submit"
+- assertVisible:
+    id: "home.item.1"
+- tapOn:
+    id: "home.item.1"
+- assertVisible:
+    id: "detail.title"
+- tapOn:
+    id: "detail.backToHome"
+- assertVisible:
+    id: "home.item.1"

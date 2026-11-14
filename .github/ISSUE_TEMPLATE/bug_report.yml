@@ -12,6 +12,7 @@ body:
       label: Which part?
       options:
         - iOS app
+        - Android app
         - Web app
         - Back office
         - Backend

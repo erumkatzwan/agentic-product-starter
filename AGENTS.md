@@ -26,11 +26,11 @@ When a shared skill and a platform skill disagree on *how to build*, the platfor
 | Folder | What it is | Agent guide |
 |---|---|---|
 | `apps/ios` | Native iOS app (SwiftUI) | `apps/ios/AGENTS.md` |
+| `apps/android` | Native Android app (Jetpack Compose) | `apps/android/AGENTS.md` |
 | `apps/web-app` | Customer web app (React) | `apps/web-app/AGENTS.md` |
 | `apps/back-office` | Admin and support tool (React) | `apps/back-office/AGENTS.md` |
 | `apps/website` | One-page landing website | `apps/website/AGENTS.md` |
 | `backend` | .NET API for every app | `backend/AGENTS.md` |
-| `apps/android` | Native Android app (planned) | `apps/android/AGENTS.md` |
 | `design` | Design tokens for every app | `design/README.md` |
 
 ## Shared rules

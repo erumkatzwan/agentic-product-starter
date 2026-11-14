@@ -85,11 +85,40 @@ extension UIColor {
 }
 `;
 
+// Kotlin: light and dark colour sets and the scale values for the Android Compose theme.
+const argb = (v) => `0xFF${v.replace('#', '').toUpperCase()}`;
+const kotlinColors = (mode) => Object.keys(light).map((k) => `        val ${k} = Color(${argb(mode[k])})`).join('\n');
+const kotlin = `// ${header}
+package com.agentic.app.designsystem
+
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+
+object DesignTokens {
+    object Light {
+${kotlinColors(light)}
+    }
+
+    object Dark {
+${kotlinColors(dark)}
+    }
+
+    object Space {
+${Object.keys(tokens.core.space).map((k) => `        val ${k} = ${px('space', k)}.dp`).join('\n')}
+    }
+
+    object Radius {
+${Object.keys(tokens.core.radius).filter((k) => k !== 'pill').map((k) => `        val ${k} = ${px('radius', k)}.dp`).join('\n')}
+    }
+}
+`;
+
 const outputs = [
   ['apps/web-app/src/styles/tokens.css', css],
   ['apps/back-office/src/styles/tokens.css', css],
   ['apps/website/tokens.css', css],
   ['apps/ios/AgenticApp/DesignSystem/DesignTokens.swift', swift],
+  ['apps/android/app/src/main/kotlin/com/agentic/app/designsystem/DesignTokens.kt', kotlin],
 ];
 
 let stale = [];

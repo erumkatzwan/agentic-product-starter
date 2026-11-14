@@ -1,0 +1,13 @@
+# End-to-end: sign in and open settings.
+appId: com.agentic.app.syst
+name: Settings
+---
+- launchApp:
+    clearState: true
+    arguments:
+      uiTesting: true
+- tapOn:
+    id: "signIn.submit"
+- tapOn:
+    id: "home.settingsButton"
+- assertVisible: "Settings"
