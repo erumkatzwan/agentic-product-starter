@@ -147,6 +147,8 @@ Every pull request runs the checks for the parts it touches:
 | Backend | Format, build with warnings as errors, unit + integration tests, 70% coverage |
 | Website | HTML validation, spelling, smoke tests |
 | Design tokens | Generated files in sync with `design/tokens.json` |
+| Security | Dependency review on every pull request, CodeQL, secret push protection, weekly vulnerability report across all apps ([SECURITY.md](SECURITY.md)) |
+| Dependencies | Dependabot: grouped patch and minor updates per app merge automatically when CI is green |
 
 ## Environments
 

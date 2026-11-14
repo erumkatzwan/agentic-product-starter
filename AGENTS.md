@@ -43,7 +43,8 @@ When a shared skill and a platform skill disagree on *how to build*, the platfor
 - Architecture first: before coding, read `docs/architecture/README.md` and the accepted ADRs in the area. Never silently work around an ADR; a change that alters a decision adds a new ADR (superseding the old one) and updates the overview and diagrams in the same pull request.
 - Colours, spacing and type come only from `design/tokens.json`. Change it there and run `node design/build.mjs`.
 - One flow across apps: a change to accounts, profile or feature flags updates the backend and every app that uses it in the same pull request.
-- Never commit secrets, keys or customer data. This repository is public.
+- Never commit secrets, keys or customer data. This repository is public. Secret push protection blocks known key formats.
+- Dependencies: new ones must pass **Dependency review**; fix vulnerabilities with the `security-audit` skill and update with the `update-dependencies` skill. Stable versions only.
 
 ## Agent skills
 
