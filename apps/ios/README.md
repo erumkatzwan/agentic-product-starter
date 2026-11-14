@@ -1,5 +1,7 @@
 # iOS app – tutorial
 
+Part of the [Agentic Product Starter](../../README.md).
+
 A plain, production-ready starter: SwiftUI, a swappable design system, navigation, a REST API layer, feature flags, push notifications, a Google sign-in skeleton, and unit, UI and end-to-end tests gated by CI.
 
 ## 1. One-time setup (Mac)
