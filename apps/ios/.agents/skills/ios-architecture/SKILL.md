@@ -16,7 +16,8 @@ MVVM with a composition root, a router and protocol-based services. SwiftUI + Ob
 | `AgenticApp/Core/Networking` | `APIClient`, `Endpoint`, `Endpoints` | Foundation only |
 | `AgenticApp/Core/FeatureFlags` | `FeatureFlag`, `FeatureFlagService`, `FeatureGate` | Networking |
 | `AgenticApp/Core/Navigation` | `Route`, `Router` | Models |
-| `AgenticApp/Core/Services` | Repositories, auth, push | Networking |
+| `AgenticApp/Core/Auth` | `SessionStore` (who is signed in), `TokenStore` (Keychain) | Services |
+| `AgenticApp/Core/Services` | Repositories, `AuthService`, push | Networking |
 | `AgenticApp/DesignSystem` | `Theme` tokens and `DS*` components | SwiftUI only |
 
 ## Rules
@@ -24,6 +25,7 @@ MVVM with a composition root, a router and protocol-based services. SwiftUI + Ob
 - Views are thin: layout and bindings only. Logic lives in an `@MainActor @Observable` view model.
 - View models depend on protocols (`ItemsRepository`, `AuthService`), never on `URLSession` or concrete clients.
 - Only `AppContainer` creates concrete implementations.
+- `RootView` shows the sign-in flow when signed out and the app when signed in; screens read the user from `SessionStore`.
 - Navigate only through `Router` (`router.push(.route)`, `pop()`, `popToRoot()`). Add new screens as a `Route` case and map it in `RootView`.
 - Every tappable or asserted element gets an `accessibilityIdentifier` named `<screen>.<element>`.
 - No force unwrapping, no hard-coded colors or fonts, no `print`.

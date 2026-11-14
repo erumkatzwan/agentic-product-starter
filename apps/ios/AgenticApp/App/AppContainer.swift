@@ -8,33 +8,35 @@ final class AppContainer {
     let apiClient: APIClient
     let itemsRepository: ItemsRepository
     let featureFlags: FeatureFlagService
-    let authService: AuthService
+    let session: SessionStore
     let pushService: PushNotificationService
     let theme: Theme
 
     init(
         apiClient: APIClient,
         featureFlags: FeatureFlagService,
-        authService: AuthService,
+        session: SessionStore,
         pushService: PushNotificationService,
         theme: Theme
     ) {
         self.apiClient = apiClient
         self.itemsRepository = RemoteItemsRepository(apiClient: apiClient)
         self.featureFlags = featureFlags
-        self.authService = authService
+        self.session = session
         self.pushService = pushService
         self.theme = theme
     }
 
     static func make() -> AppContainer {
-        let apiClient: APIClient = LaunchArguments.isUITesting
+        let isUITesting = LaunchArguments.isUITesting
+        let apiClient: APIClient = isUITesting
             ? FixtureAPIClient()
             : URLSessionAPIClient(baseURL: AppEnvironment.apiBaseURL)
+        let tokenStore: TokenStore = isUITesting ? InMemoryTokenStore() : KeychainTokenStore()
         return AppContainer(
             apiClient: apiClient,
             featureFlags: FeatureFlagService(apiClient: apiClient),
-            authService: PlaceholderAuthService(),
+            session: SessionStore(authService: RemoteAuthService(apiClient: apiClient), tokenStore: tokenStore),
             pushService: .shared,
             theme: .standard
         )

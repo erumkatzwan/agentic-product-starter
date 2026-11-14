@@ -1,0 +1,62 @@
+name: Back office
+
+on:
+  pull_request:
+    paths: ["apps/back-office/**", "backend/**", ".github/workflows/back-office.yml"]
+  push:
+    branches: [main]
+    paths: ["apps/back-office/**", "backend/**", ".github/workflows/back-office.yml"]
+
+concurrency:
+  group: back-office-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: apps/back-office
+
+jobs:
+  checks:
+    name: Back office lint, types and unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/back-office/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Unit tests with coverage gate (70%)
+        run: npm run test:coverage
+      - uses: crate-ci/typos@v1
+        with:
+          files: apps/back-office/src
+
+  e2e:
+    name: Back office end-to-end tests
+    needs: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/back-office/package-lock.json
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: End-to-end against the backend (SYST)
+        run: npm run e2e
+        env:
+          CI: "true"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: back-office-playwright-report
+          path: apps/back-office/playwright-report

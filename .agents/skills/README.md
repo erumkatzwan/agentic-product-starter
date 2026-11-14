@@ -1,6 +1,8 @@
 # Shared skills
 
-Skills used across every app and service, from idea to retro. They come from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT licence, see `LICENSE-mattpocock-skills`). Browse them at [aihero.dev/skills](https://www.aihero.dev/skills).
+Skills used across every app and service, from idea to retro.
+
+**Credit:** these skills are written by [Matt Pocock](https://github.com/mattpocock) and come from [mattpocock/skills](https://github.com/mattpocock/skills) (browse them at [aihero.dev/skills](https://www.aihero.dev/skills)). They are used unchanged under the MIT licence; see `LICENSE-mattpocock-skills`. How they are wired into this starter (`docs/agents/`, `AGENTS.md`, the platform skills) is part of the Agentic Product Starter.
 
 Platform skills (how to build for iOS, Android, web…) live in each component's own `.agents/skills/`.
 

@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 /// The design system. Screens only read tokens from `Theme`; change the values here
 /// (or inject a different `Theme`) to restyle the whole app.
@@ -9,25 +8,33 @@ struct Theme {
     var spacing: SpacingTokens
     var radius: RadiusTokens
 
+    /// Built from `DesignTokens`, which is generated from `design/tokens.json`: the same palette as every other app.
     static let standard = Theme(
         colors: ColorTokens(
-            primary: Color(light: UIColor(red: 0.18, green: 0.33, blue: 0.85, alpha: 1),
-                           dark: UIColor(red: 0.45, green: 0.58, blue: 1.00, alpha: 1)),
-            onPrimary: .white,
-            background: Color(uiColor: .systemBackground),
-            surface: Color(uiColor: .secondarySystemBackground),
-            textPrimary: Color(uiColor: .label),
-            textSecondary: Color(uiColor: .secondaryLabel),
-            error: Color(uiColor: .systemRed)
+            primary: Color(uiColor: DesignTokens.primary),
+            onPrimary: Color(uiColor: DesignTokens.onPrimary),
+            background: Color(uiColor: DesignTokens.background),
+            surface: Color(uiColor: DesignTokens.surface),
+            border: Color(uiColor: DesignTokens.border),
+            textPrimary: Color(uiColor: DesignTokens.textPrimary),
+            textSecondary: Color(uiColor: DesignTokens.textSecondary),
+            success: Color(uiColor: DesignTokens.success),
+            error: Color(uiColor: DesignTokens.error)
         ),
         typography: TypographyTokens(
-            title: .system(.largeTitle, design: .rounded).weight(.bold),
-            headline: .system(.headline, design: .rounded),
+            title: .system(.largeTitle, design: .default).weight(.bold),
+            headline: .system(.headline),
             body: .system(.body),
             caption: .system(.caption)
         ),
-        spacing: SpacingTokens(xs: 4, s: 8, m: 16, l: 24, xl: 32),
-        radius: RadiusTokens(s: 8, m: 12, l: 20)
+        spacing: SpacingTokens(
+            xs: DesignTokens.Space.xs,
+            s: DesignTokens.Space.s,
+            m: DesignTokens.Space.m,
+            l: DesignTokens.Space.l,
+            xl: DesignTokens.Space.xl
+        ),
+        radius: RadiusTokens(s: DesignTokens.Radius.s, m: DesignTokens.Radius.m, l: DesignTokens.Radius.l)
     )
 }
 
@@ -36,8 +43,10 @@ struct ColorTokens {
     var onPrimary: Color
     var background: Color
     var surface: Color
+    var border: Color
     var textPrimary: Color
     var textSecondary: Color
+    var success: Color
     var error: Color
 }
 
@@ -70,12 +79,5 @@ extension EnvironmentValues {
     var theme: Theme {
         get { self[ThemeKey.self] }
         set { self[ThemeKey.self] = newValue }
-    }
-}
-
-extension Color {
-    /// A color that adapts to light and dark mode.
-    init(light: UIColor, dark: UIColor) {
-        self.init(uiColor: UIColor { $0.userInterfaceStyle == .dark ? dark : light })
     }
 }

@@ -24,19 +24,6 @@ struct SettingsView: View {
                 }
             }
 
-            FeatureGate(.googleSignIn) {
-                Section("Account") {
-                    Button("Sign in with Google") {
-                        Task { await viewModel.signInWithGoogle() }
-                    }
-                    .accessibilityIdentifier("settings.googleSignIn")
-                    if let message = viewModel.signInMessage {
-                        Text(message)
-                            .accessibilityIdentifier("settings.signInMessage")
-                    }
-                }
-            }
-
             if viewModel.canEditFeatureFlags {
                 Section("Feature flags (this device)") {
                     ForEach(FeatureFlag.allCases) { flag in

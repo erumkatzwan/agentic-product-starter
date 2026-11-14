@@ -14,14 +14,25 @@ struct HomeView: View {
         content
             .navigationTitle("Home")
             .toolbar {
-                FeatureGate(.settings) {
-                    Button {
-                        router.push(.settings)
-                    } label: {
-                        Image(systemName: "gearshape")
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    FeatureGate(.profile) {
+                        Button {
+                            router.push(.profile)
+                        } label: {
+                            Image(systemName: "person.crop.circle")
+                        }
+                        .accessibilityLabel("Profile")
+                        .accessibilityIdentifier("home.profileButton")
                     }
-                    .accessibilityLabel("Settings")
-                    .accessibilityIdentifier("home.settingsButton")
+                    FeatureGate(.settings) {
+                        Button {
+                            router.push(.settings)
+                        } label: {
+                            Image(systemName: "gearshape")
+                        }
+                        .accessibilityLabel("Settings")
+                        .accessibilityIdentifier("home.settingsButton")
+                    }
                 }
             }
             .task {

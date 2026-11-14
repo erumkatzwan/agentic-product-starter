@@ -5,13 +5,10 @@ import Observation
 @Observable
 final class SettingsViewModel {
     private(set) var pushStatus = "Not requested"
-    private(set) var signInMessage: String?
 
-    private let authService: AuthService
     private let pushService: PushNotificationService
 
-    init(authService: AuthService, pushService: PushNotificationService) {
-        self.authService = authService
+    init(pushService: PushNotificationService) {
         self.pushService = pushService
     }
 
@@ -21,16 +18,5 @@ final class SettingsViewModel {
     func enablePush() async {
         let granted = await pushService.requestPermissionAndRegister()
         pushStatus = granted ? "Enabled" : "Not allowed"
-    }
-
-    func signInWithGoogle() async {
-        do {
-            let session = try await authService.signInWithGoogle()
-            signInMessage = "Signed in as \(session.displayName)"
-        } catch AuthError.notImplemented {
-            signInMessage = "Google sign-in is not implemented yet."
-        } catch {
-            signInMessage = "Sign-in failed. Please try again."
-        }
     }
 }

@@ -1,7 +1,25 @@
 import SwiftUI
 
-/// Hosts the navigation stack and maps every `Route` to its screen.
+/// Shows the sign-in flow or the signed-in app, and maps every `Route` to its screen.
 struct RootView: View {
+    @Environment(AppContainer.self) private var container
+
+    var body: some View {
+        switch container.session.state {
+        case .restoring:
+            DSLoadingView()
+                .task { await container.session.restore() }
+        case .signedOut:
+            NavigationStack {
+                SignInView(viewModel: SignInViewModel(session: container.session))
+            }
+        case .signedIn:
+            SignedInRootView()
+        }
+    }
+}
+
+private struct SignedInRootView: View {
     @Environment(AppContainer.self) private var container
     @State private var router = Router()
 
@@ -20,11 +38,10 @@ struct RootView: View {
         switch route {
         case .itemDetail(let item):
             DetailView(item: item)
+        case .profile:
+            ProfileView(viewModel: ProfileViewModel(session: container.session))
         case .settings:
-            SettingsView(viewModel: SettingsViewModel(
-                authService: container.authService,
-                pushService: container.pushService
-            ))
+            SettingsView(viewModel: SettingsViewModel(pushService: container.pushService))
         }
     }
 }

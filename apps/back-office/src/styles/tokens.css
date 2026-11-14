@@ -1,0 +1,65 @@
+/* Generated from design/tokens.json by design/build.mjs. Do not edit by hand. */
+:root {
+  --font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 28px;
+  --font-size-xxl: 40px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --radius-pill: 999px;
+  --color-background: #FFFFFF;
+  --color-surface: #F7F8FA;
+  --color-border: #DDE1E8;
+  --color-text-primary: #14171F;
+  --color-text-secondary: #5B6475;
+  --color-primary: #3F5BD9;
+  --color-primary-hover: #3249B8;
+  --color-on-primary: #FFFFFF;
+  --color-success: #1F8A4C;
+  --color-warning: #B86E00;
+  --color-error: #C93636;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-background: #0C0E13;
+    --color-surface: #14171F;
+    --color-border: #262B36;
+    --color-text-primary: #F7F8FA;
+    --color-text-secondary: #9AA3B2;
+    --color-primary: #7C93FF;
+    --color-primary-hover: #9DB0FF;
+    --color-on-primary: #0C0E13;
+    --color-success: #4CC487;
+    --color-warning: #F2B84B;
+    --color-error: #F27474;
+  }
+}
+
+:root[data-theme='dark'] {
+  --color-background: #0C0E13;
+  --color-surface: #14171F;
+  --color-border: #262B36;
+  --color-text-primary: #F7F8FA;
+  --color-text-secondary: #9AA3B2;
+  --color-primary: #7C93FF;
+  --color-primary-hover: #9DB0FF;
+  --color-on-primary: #0C0E13;
+  --color-success: #4CC487;
+  --color-warning: #F2B84B;
+  --color-error: #F27474;
+}

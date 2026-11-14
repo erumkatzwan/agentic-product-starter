@@ -1,38 +1,52 @@
 # Agentic Product Starter
 
-A starter monorepo for building a product with AI coding agents. It gives you one place for the product context, shared agent skills, and an app per platform, with quality gates that keep every change tested before it reaches `main`.
+A complete, end-to-end business starter for building a product with AI coding agents: **iOS app, web app, back office, .NET backend and landing website** in one repository, with one design system, one way of working from idea to retro, and quality gates on every change.
 
-Copy it for each new product, rename it, and start writing stories.
+Copy it for each new product, rename it, and start shaping your first feature.
 
 ## What's inside
 
-| Folder | What it is | Status |
-|---|---|---|
-| `docs/` | Product context, decisions (ADRs) and agent setup | Ready |
-| `.agents/skills/` | 27 shared skills covering the whole SDLC, from idea to retro | Ready |
-| `apps/ios/` | Native iOS app (Swift, SwiftUI) | **Ready** – see [apps/ios/README.md](apps/ios/README.md) |
-| `apps/android/` | Native Android app (Kotlin, Jetpack Compose) | Planned |
-| `apps/web-app/` | Signed-in web app for users | Planned |
-| `apps/website/` | One-page marketing website | Planned |
-| `apps/back-office/` | Internal admin tool | Planned |
-| `backend/` | Cloud setup, APIs, infrastructure as code | Planned |
+| Folder | What it is | Tech | Status |
+|---|---|---|---|
+| [`apps/ios`](apps/ios/README.md) | Customer app: sign up, sign in, home, profile, sign out | Swift, SwiftUI | Ready |
+| [`apps/web-app`](apps/web-app/README.md) | The same customer flow in the browser | React, TypeScript, Vite | Ready |
+| [`apps/back-office`](apps/back-office/README.md) | Admin and customer support: find, edit, disable, delete customers; feature flags | React, TypeScript, Vite | Ready |
+| [`backend`](backend/README.md) | Accounts, profiles, admin and feature flag APIs | .NET 10, ASP.NET Core | Ready |
+| [`apps/website`](apps/website/README.md) | One-page landing site | HTML, CSS | Ready |
+| [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
+| `apps/android` | Native Android app | Kotlin, Jetpack Compose | Planned |
+| `docs/` | Product context, decisions (ADRs), agent setup | Markdown | Ready |
+| `.agents/skills/` | 27 shared skills covering the whole SDLC | Agent Skills | Ready |
 
 ```
 /
 ├── AGENTS.md              # Shared agent rules; points to each component's AGENTS.md
 ├── CLAUDE.md              # Loads AGENTS.md for Claude Code
-├── .agents/skills/        # Shared skills (idea → spec → tickets → build → review → retro)
-├── GLOSSARY.md            # Domain language (created by the agents when terms are settled)
-├── docs/
-│   ├── product/           # Vision, roadmap, personas
-│   ├── adr/               # Architecture decision records
-│   └── agents/            # How the skills use this repo: issue tracker, labels, domain docs
+├── .agents/skills/        # Shared skills: idea → spec → tickets → build → review → retro
+├── design/                # tokens.json (single source of truth) + generator
+├── docs/                  # product/, adr/, agents/
 ├── apps/
-│   ├── ios/  android/  web-app/  website/  back-office/
+│   ├── ios/  web-app/  back-office/  website/  android/
 └── backend/
 ```
 
 Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
+
+## One flow, every app
+
+| | iOS | Web app | Back office |
+|---|---|---|---|
+| Sign up | ✓ | ✓ | – |
+| Sign in / sign out | ✓ | ✓ | ✓ (admins only) |
+| Profile: edit name, delete account | ✓ | ✓ | – |
+| Find, edit, disable, delete customers | – | – | ✓ |
+| Feature flags | read | read | read and switch |
+
+All of them talk to the same backend endpoints and read the same feature flags.
+
+## One design system
+
+`design/tokens.json` holds the colour palette, spacing, type and radius. `node design/build.mjs` generates CSS variables for the web app, back office and website, and `DesignTokens.swift` for iOS. CI fails if any app drifts from the palette. The file follows the W3C Design Tokens format, so it can be linked to Figma later with Tokens Studio. See [design/README.md](design/README.md).
 
 ## The agentic SDLC
 
@@ -47,30 +61,46 @@ Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
 | 7. Fix and improve | `diagnosing-bugs`, `improve-codebase-architecture` | Fixes and refactor proposals |
 | 8. Learn | `retro`, `handoff` | Better skills, checks and `AGENTS.md` |
 
-Shared skills come from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). Platform skills live in each app, for example `apps/ios/.agents/skills/`. Details: [.agents/skills/README.md](.agents/skills/README.md).
+Platform skills tell the agent how to build on each platform: `apps/ios/.agents/skills/`, `apps/web-app/.agents/skills/`, `apps/back-office/.agents/skills/`, `backend/.agents/skills/`, `apps/website/.agents/skills/`. Details: [.agents/skills/README.md](.agents/skills/README.md).
 
-## Quality gates (iOS today, every app later)
+## Quality gates
 
-| Check | What it guards |
+Every pull request runs the checks for the parts it touches:
+
+| Component | Checks |
 |---|---|
-| Lint | Code style and common mistakes; warnings fail |
-| Spelling | Typos in code and docs |
-| Unit tests + coverage | Logic is tested; coverage must stay at or above 70% |
-| UI tests | Screens and navigation on the simulator |
-| End-to-end tests | Full user journeys on the simulator with test data |
+| iOS | Lint, spelling, unit tests + 70% coverage, UI tests, end-to-end (Maestro) |
+| Web app / back office | Lint, types, spelling, unit tests + 70% coverage, end-to-end (Playwright) against the real backend |
+| Backend | Format, build with warnings as errors, unit + integration tests, 70% coverage |
+| Website | HTML validation, spelling, smoke tests |
+| Design tokens | Generated files in sync with `design/tokens.json` |
 
 ## Environments
 
-Every component uses the same three environments: **Dev**, **SYST** (system test) and **Prod**.
-
-## Feature flags
-
-Features, screens and components can be switched on or off from the backend or on the device, so unfinished work can be merged safely behind a flag.
+Every component uses **Dev**, **SYST** (system test) and **Prod**. Dev and SYST seed two accounts: `admin@example.com` / `Admin123!` and `customer@example.com` / `Customer123!`.
 
 ## Getting started
 
-- iOS: follow the tutorial in [apps/ios/README.md](apps/ios/README.md).
-- Daily workflow: shape and specify with the shared skills, create tickets, then one branch per ticket: implement, run the checks, open a pull request, merge when green, and run a retro now and then.
+```bash
+# 1. Backend
+cd backend && dotnet run --project src/AgenticProduct.Api --launch-profile Dev
+
+# 2. Web app (new terminal)
+cd apps/web-app && npm install && npm run dev          # http://localhost:5173
+
+# 3. Back office (new terminal)
+cd apps/back-office && npm install && npm run dev      # http://localhost:5174
+
+# 4. iOS: see apps/ios/README.md
+```
+
+Then open the repo in Claude Code and run `/grill-me` on your first idea.
+
+## Credits
+
+- **Agentic Product Starter** by [Erum Awan](https://github.com/erumkatzwan): the product starter, apps, backend, design system, quality gates and how they fit together.
+- **Shared agent skills** by [Matt Pocock](https://github.com/mattpocock), from [mattpocock/skills](https://github.com/mattpocock/skills) ([aihero.dev/skills](https://www.aihero.dev/skills)), used under the MIT licence. See `.agents/skills/LICENSE-mattpocock-skills`.
+- **iOS community skills** by [Antoine van der Lee](https://github.com/AvdLee) (SwiftUI, Swift Concurrency, Swift Testing), used under the MIT licence.
 
 ## Contributions
 

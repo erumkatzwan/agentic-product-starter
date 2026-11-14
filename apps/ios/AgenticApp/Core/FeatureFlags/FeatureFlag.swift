@@ -4,6 +4,8 @@ import Foundation
 enum FeatureFlag: String, CaseIterable, Identifiable {
     case settings
     case itemDetail = "item_detail"
+    case profile
+    case signUp = "sign_up"
     case pushPrompt = "push_prompt"
     case googleSignIn = "google_sign_in"
 
@@ -12,7 +14,7 @@ enum FeatureFlag: String, CaseIterable, Identifiable {
     /// Used when the backend has not answered (offline, first launch) or does not know the flag.
     var defaultValue: Bool {
         switch self {
-        case .settings, .itemDetail:
+        case .settings, .itemDetail, .profile, .signUp:
             return true
         case .pushPrompt, .googleSignIn:
             return false

@@ -3,6 +3,7 @@ import SwiftUI
 /// Every screen you can navigate to. Add a case here and map it in `RootView`.
 enum Route: Hashable {
     case itemDetail(Item)
+    case profile
     case settings
 }
 

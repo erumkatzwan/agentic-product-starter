@@ -24,7 +24,7 @@ final class FeatureFlagServiceTests: XCTestCase {
     }
 
     func testBackendValueOverridesDefault() async {
-        api.responses["/feature-flags"] = RemoteFeatureFlags(flags: ["settings": false, "google_sign_in": true])
+        api.responses["/api/feature-flags"] = RemoteFeatureFlags(flags: ["settings": false, "google_sign_in": true])
         let service = FeatureFlagService(apiClient: api, defaults: defaults)
 
         await service.refresh()
@@ -34,7 +34,7 @@ final class FeatureFlagServiceTests: XCTestCase {
     }
 
     func testLocalOverrideWinsOverBackend() async {
-        api.responses["/feature-flags"] = RemoteFeatureFlags(flags: ["settings": true])
+        api.responses["/api/feature-flags"] = RemoteFeatureFlags(flags: ["settings": true])
         let service = FeatureFlagService(apiClient: api, defaults: defaults)
         await service.refresh()
 
@@ -52,6 +52,6 @@ final class FeatureFlagServiceTests: XCTestCase {
         await service.refresh()
 
         XCTAssertTrue(service.isEnabled(.itemDetail))
-        XCTAssertEqual(api.requestedPaths, ["/feature-flags"])
+        XCTAssertEqual(api.requestedPaths, ["/api/feature-flags"])
     }
 }

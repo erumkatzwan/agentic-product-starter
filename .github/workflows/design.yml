@@ -1,0 +1,19 @@
+name: Design tokens
+
+on:
+  pull_request:
+    paths: ["design/**", "apps/*/src/styles/tokens.css", "apps/website/tokens.css", "apps/ios/AgenticApp/DesignSystem/DesignTokens.swift", ".github/workflows/design.yml"]
+  push:
+    branches: [main]
+    paths: ["design/**", ".github/workflows/design.yml"]
+
+jobs:
+  tokens:
+    name: Design tokens in sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node design/build.mjs --check

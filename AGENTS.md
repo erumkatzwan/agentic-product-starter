@@ -25,12 +25,13 @@ When a shared skill and a platform skill disagree on *how to build*, the platfor
 
 | Folder | What it is | Agent guide |
 |---|---|---|
-| `apps/ios` | Native iOS app (ready) | `apps/ios/AGENTS.md` |
+| `apps/ios` | Native iOS app (SwiftUI) | `apps/ios/AGENTS.md` |
+| `apps/web-app` | Customer web app (React) | `apps/web-app/AGENTS.md` |
+| `apps/back-office` | Admin and support tool (React) | `apps/back-office/AGENTS.md` |
+| `apps/website` | One-page landing website | `apps/website/AGENTS.md` |
+| `backend` | .NET API for every app | `backend/AGENTS.md` |
 | `apps/android` | Native Android app (planned) | `apps/android/AGENTS.md` |
-| `apps/web-app` | Signed-in web app (planned) | `apps/web-app/AGENTS.md` |
-| `apps/website` | One-page marketing website (planned) | `apps/website/AGENTS.md` |
-| `apps/back-office` | Internal admin tool (planned) | `apps/back-office/AGENTS.md` |
-| `backend` | Cloud setup and APIs (planned) | `backend/AGENTS.md` |
+| `design` | Design tokens for every app | `design/README.md` |
 
 ## Shared rules
 
@@ -38,6 +39,8 @@ When a shared skill and a platform skill disagree on *how to build*, the platfor
 - Every feature works end to end before it ships: unit, UI and end-to-end tests.
 - Unfinished work is merged behind a feature flag that defaults to off.
 - Environments: Dev, SYST, Prod. Never point local work at Prod.
+- Colours, spacing and type come only from `design/tokens.json`. Change it there and run `node design/build.mjs`.
+- One flow across apps: a change to accounts, profile or feature flags updates the backend and every app that uses it in the same pull request.
 - Never commit secrets, keys or customer data. This repository is public.
 
 ## Agent skills
