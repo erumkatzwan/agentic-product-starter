@@ -3,7 +3,7 @@
 # The backend's Dev profile already sends traces, metrics and logs to http://localhost:4318.
 services:
   lgtm:
-    image: grafana/otel-lgtm:0.29.0
+    image: grafana/otel-lgtm:0.40.0
     ports:
       - "3000:3000" # Grafana
       - "4317:4317" # OTLP gRPC
