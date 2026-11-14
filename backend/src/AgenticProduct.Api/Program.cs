@@ -2,10 +2,14 @@ using AgenticProduct.Api.Auth;
 using AgenticProduct.Api.Data;
 using AgenticProduct.Api.Domain;
 using AgenticProduct.Api.Endpoints;
+using AgenticProduct.Api.Observability;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Traces, metrics and logs (OpenTelemetry). Exported only when OTEL_EXPORTER_OTLP_ENDPOINT is set.
+builder.AddObservability();
 
 // Storage: swap these two lines for database-backed repositories later.
 builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();

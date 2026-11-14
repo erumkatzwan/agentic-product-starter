@@ -11,6 +11,7 @@ Decisions that are hard to reverse, would surprise a future reader, and came fro
 | [0005](0005-android-app-architecture.md) | Android app: Jetpack Compose mirroring the iOS architecture | Accepted | 2026-11-14 |
 | [0006](0006-architecture-documentation.md) | Document architecture with MADR, arc42 and C4 | Accepted | 2026-11-14 |
 | [0007](0007-dependency-security-and-updates.md) | Dependency security and updates with GitHub, OSV and Dependabot | Accepted | 2026-11-14 |
+| [0008](0008-observability.md) | Observability with OpenTelemetry, Grafana and Sentry | Accepted | 2026-11-15 |
 
 ## When to write one
 
