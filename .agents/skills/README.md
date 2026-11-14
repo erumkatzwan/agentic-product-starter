@@ -6,17 +6,19 @@ Skills used across every app and service, from idea to retro.
 
 Platform skills (how to build for iOS, Android, web…) live in each component's own `.agents/skills/`.
 
+**Our own shared skill:** `architecture-decisions` is part of the Agentic Product Starter, not Matt Pocock's set. It keeps `docs/architecture/` (arc42 + C4) and `docs/adr/` ([MADR 4](https://adr.github.io/madr/)) consistent and links them to the stages below. It also explains how to add [Archify](https://github.com/tt-a1i/archify) by tt-a1i (Apache 2.0) for interactive diagrams.
+
 ## The agentic SDLC, stage by stage
 
 | Stage | Skills | Output |
 |---|---|---|
 | 0. Set up (once per repo) | `setup-matt-pocock-skills` | `docs/agents/*.md` (already done for this repo) |
 | 1. Shape the idea | `grill-me`, `wayfinder`, `research`, `prototype` | Decisions, a map of open questions, throwaway prototypes |
-| 2. Refine | `grill-with-docs`, `domain-modeling`, `to-questionnaire` | `GLOSSARY.md`, ADRs in `docs/adr/` |
+| 2. Refine | `grill-with-docs`, `domain-modeling`, `to-questionnaire`, `architecture-decisions` | `GLOSSARY.md`, MADR ADRs in `docs/adr/`, `docs/architecture/` kept current |
 | 3. Specify | `to-spec` | A spec as a GitHub issue |
 | 4. Plan | `to-tickets`, `triage` | Small, agent-ready tickets with labels |
-| 5. Build | `implement` or `implement-spec`, `tdd` + the component's platform skills | Code and tests on a branch |
-| 6. Review | `code-review`, `pr` | A reviewed pull request; CI checks must be green |
+| 5. Build | `architecture-decisions` (read first), `implement` or `implement-spec`, `tdd` + the component's platform skills | Code and tests on a branch |
+| 6. Review | `code-review`, `pr`, `architecture-decisions` checklist | A reviewed pull request; CI checks must be green |
 | 7. Fix and improve | `diagnosing-bugs`, `improve-codebase-architecture`, `codebase-design` | Bug fixes, refactor proposals |
 | 8. Learn | `retro`, `handoff` | Improvements to skills, checks and `AGENTS.md`; hand-over notes |
 
