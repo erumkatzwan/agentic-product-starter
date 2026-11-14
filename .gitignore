@@ -1,0 +1,4 @@
+# Optional Archify skill and its output (see .agents/skills/architecture-decisions)
+.archify/
+.agents/skills/archify/
+.claude/skills/archify/
