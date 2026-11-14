@@ -1,9 +1,12 @@
 name: Security
 
 # Pull requests: block new dependencies with known high or critical vulnerabilities.
-# Weekly and on demand: one report of known vulnerabilities across every app (see the job summary).
+# Weekly, on demand, and when the audit itself changes: one report of known vulnerabilities across every app (see the job summary).
 on:
   pull_request:
+  push:
+    branches-ignore: [main]
+    paths: ['scripts/security-audit.mjs', '.github/workflows/security.yml']
   schedule:
     - cron: '17 5 * * 1' # Mondays 05:17 UTC
   workflow_dispatch:
