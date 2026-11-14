@@ -102,6 +102,13 @@ Then open the repo in Claude Code and run `/grill-me` on your first idea.
 - **Shared agent skills** by [Matt Pocock](https://github.com/mattpocock), from [mattpocock/skills](https://github.com/mattpocock/skills) ([aihero.dev/skills](https://www.aihero.dev/skills)), used under the MIT licence. See `.agents/skills/LICENSE-mattpocock-skills`.
 - **iOS community skills** by [Antoine van der Lee](https://github.com/AvdLee) (SwiftUI, Swift Concurrency, Swift Testing), used under the MIT licence.
 
-## Contributions
+## License
 
-This repository is public to read, but it does not accept contributions. Only the owner can open pull requests and issues.
+[MIT](LICENSE) © Erum Awan. Use it, copy it and build on it; just keep the licence notice. The included shared skills by Matt Pocock and the iOS community skills by Antoine van der Lee keep their own MIT licences.
+
+## Like it? Found something?
+
+- ⭐ **If the setup works for you,** give the repo a star and share it with someone building products with AI agents.
+- 🐛 **Found a bug or something unclear?** [Open an issue](https://github.com/erumkatzwan/agentic-product-starter/issues/new/choose) with the **Bug report** template.
+- 💡 **Have a suggestion?** [Open an issue](https://github.com/erumkatzwan/agentic-product-starter/issues/new/choose) with the **Suggestion** template.
+- 🤝 **Want to contribute or swap ideas?** Say hello in [Discussions](https://github.com/erumkatzwan/agentic-product-starter/discussions). Pull requests are closed for now, so start there and we can take it from there.

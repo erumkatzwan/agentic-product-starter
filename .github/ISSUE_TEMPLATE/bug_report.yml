@@ -1,0 +1,50 @@
+name: Bug report
+description: Something in the starter doesn't work as described.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report this. The more detail, the faster it gets fixed.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part?
+      options:
+        - iOS app
+        - Web app
+        - Back office
+        - Backend
+        - Website
+        - Design tokens
+        - Agent skills / docs
+        - CI / quality gates
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Run ...
+        2. Open ...
+        3. See ...
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Xcode / Node / .NET version, browser, simulator, as relevant.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      render: shell
