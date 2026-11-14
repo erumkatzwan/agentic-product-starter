@@ -1,0 +1,6 @@
+// SYST environment: system testing. Used by CI, UI tests and end-to-end tests.
+APP_ENVIRONMENT = syst
+APP_DISPLAY_NAME = Consent SYST
+APP_BUNDLE_ID = com.consent.app.syst
+API_BASE_URL = https:/$()/api-syst.consent.example
+APS_ENVIRONMENT = development

@@ -9,7 +9,7 @@ Cloud setup, APIs and infrastructure as code.
 
 ## Environments
 
-`dev`, `test`, `prod`.
+`dev`, `syst`, `prod`.
 
 ## Conventions
 

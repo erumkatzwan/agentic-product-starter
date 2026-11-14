@@ -1,0 +1,78 @@
+name: iOS
+
+on:
+  pull_request:
+    paths: ["apps/ios/**", ".github/workflows/ios.yml"]
+  push:
+    branches: [main]
+    paths: ["apps/ios/**", ".github/workflows/ios.yml"]
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: apps/ios
+
+env:
+  SIMULATOR: iPhone 16
+
+jobs:
+  lint:
+    name: iOS lint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install swiftlint
+      - run: swiftlint --strict --reporter github-actions-logging
+
+  typos:
+    name: iOS spelling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: crate-ci/typos@v1
+        with:
+          files: apps/ios
+          config: apps/ios/_typos.toml
+
+  unit-tests:
+    name: iOS unit tests and coverage
+    needs: [lint, typos]
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: make test-unit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-tests
+          path: apps/ios/build/Unit.xcresult
+
+  ui-tests:
+    name: iOS UI tests
+    needs: [lint, typos]
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: make test-ui
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ui-tests
+          path: apps/ios/build/UI.xcresult
+
+  e2e:
+    name: iOS end-to-end tests
+    needs: [unit-tests, ui-tests]
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen
+      - run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - run: make e2e

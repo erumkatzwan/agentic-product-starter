@@ -22,4 +22,4 @@ Read this first, then the `AGENTS.md` in the component you are working on.
 
 - Conventional commits (`feat:`, `fix:`, `chore:`, `docs:`, `test:`).
 - Every feature works end to end before it ships: unit, UI and end-to-end tests.
-- Environments: `dev`, `test`, `prod`. Never point local work at `prod`.
+- Environments: `dev`, `syst`, `prod`. Never point local work at `prod`.

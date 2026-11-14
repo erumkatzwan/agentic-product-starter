@@ -9,7 +9,7 @@ One-page marketing website.
 
 ## Environments
 
-`dev`, `test`, `prod`.
+`dev`, `syst`, `prod`.
 
 ## Conventions
 

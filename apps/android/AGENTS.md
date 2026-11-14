@@ -9,7 +9,7 @@ Native Android app (Kotlin, Jetpack Compose).
 
 ## Environments
 
-`dev`, `test`, `prod`.
+`dev`, `syst`, `prod`.
 
 ## Conventions
 

@@ -9,7 +9,7 @@ Signed-in web app for users.
 
 ## Environments
 
-`dev`, `test`, `prod`.
+`dev`, `syst`, `prod`.
 
 ## Conventions
 

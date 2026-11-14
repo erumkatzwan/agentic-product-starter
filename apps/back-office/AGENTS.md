@@ -9,7 +9,7 @@ Internal admin tool for the team.
 
 ## Environments
 
-`dev`, `test`, `prod`.
+`dev`, `syst`, `prod`.
 
 ## Conventions
 

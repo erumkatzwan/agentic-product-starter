@@ -29,4 +29,4 @@ Each component folder has its own `AGENTS.md` and `.agents/skills/`.
 
 ## Environments
 
-All components deploy to three environments: `dev`, `test` and `prod`.
+All components deploy to three environments: `dev`, `syst` and `prod`.
