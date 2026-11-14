@@ -28,7 +28,7 @@ typos: ## Spell check code and docs
 test-unit: generate ## Unit tests with coverage check
 	rm -rf build/Unit.xcresult
 	$(XCODEBUILD) -only-testing:ConsentTests -enableCodeCoverage YES -resultBundlePath build/Unit.xcresult test
-	scripts/check-coverage.sh build/Unit.xcresult $(COVERAGE_MIN)
+	bash scripts/check-coverage.sh build/Unit.xcresult $(COVERAGE_MIN)
 
 test-ui: generate ## UI tests on the simulator
 	rm -rf build/UI.xcresult
