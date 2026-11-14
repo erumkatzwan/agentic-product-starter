@@ -1,0 +1,62 @@
+# Keeps dependencies on the latest stable versions. See .agents/skills/update-dependencies/SKILL.md.
+# Minor and patch updates are grouped per app and wait a few days after release (cooldown).
+# Major updates arrive one per pull request and are reviewed by hand.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /apps/web-app
+    schedule: { interval: weekly, day: monday }
+    cooldown: { default-days: 5 }
+    labels: [dependencies, area:web-app]
+    commit-message: { prefix: "chore(deps)" }
+    groups:
+      minor-and-patch: { update-types: [minor, patch] }
+      security: { applies-to: security-updates, patterns: ["*"] }
+
+  - package-ecosystem: npm
+    directory: /apps/back-office
+    schedule: { interval: weekly, day: monday }
+    cooldown: { default-days: 5 }
+    labels: [dependencies, area:back-office]
+    commit-message: { prefix: "chore(deps)" }
+    groups:
+      minor-and-patch: { update-types: [minor, patch] }
+      security: { applies-to: security-updates, patterns: ["*"] }
+
+  - package-ecosystem: npm
+    directory: /apps/website
+    schedule: { interval: monthly }
+    cooldown: { default-days: 5 }
+    labels: [dependencies, area:website]
+    commit-message: { prefix: "chore(deps)" }
+    groups:
+      minor-and-patch: { update-types: [minor, patch] }
+      security: { applies-to: security-updates, patterns: ["*"] }
+
+  - package-ecosystem: nuget
+    directory: /backend
+    schedule: { interval: weekly, day: monday }
+    cooldown: { default-days: 5 }
+    labels: [dependencies, area:backend]
+    commit-message: { prefix: "chore(deps)" }
+    groups:
+      minor-and-patch: { update-types: [minor, patch] }
+      security: { applies-to: security-updates, patterns: ["*"] }
+
+  - package-ecosystem: gradle
+    directory: /apps/android
+    schedule: { interval: weekly, day: monday }
+    cooldown: { default-days: 7 }
+    labels: [dependencies, area:android]
+    commit-message: { prefix: "chore(deps)" }
+    groups:
+      minor-and-patch: { update-types: [minor, patch] }
+      security: { applies-to: security-updates, patterns: ["*"] }
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }
+    labels: [dependencies]
+    commit-message: { prefix: "ci(deps)" }
+    groups:
+      actions: { patterns: ["*"] }
