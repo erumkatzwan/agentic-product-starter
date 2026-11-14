@@ -1,2 +1,11 @@
 [files]
-extend-exclude = ["build/", "DerivedData/", "*.xcresult", "AgenticApp.xcodeproj/"]
+extend-exclude = [
+  "build/",
+  "DerivedData/",
+  "*.xcresult",
+  "AgenticApp.xcodeproj/",
+  # Third-party skills (MIT), kept as published upstream
+  "swiftui-expert/",
+  "swift-concurrency/",
+  "swift-testing-expert/",
+]

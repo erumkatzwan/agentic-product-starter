@@ -10,14 +10,14 @@ Skills for building the iOS app (AgenticApp). Shared skills (refinement, plannin
 | `ios-feature-flags` | Shipping something that must be switchable on or off |
 | `ios-testing` | Writing unit, UI or end-to-end tests, or fixing a red check |
 
-## Recommended community skills
+## Community skills (MIT licence, by Antoine van der Lee)
 
-Install these on top for deeper SwiftUI and Swift knowledge (MIT licence):
+| Skill | Use it when | Source |
+|---|---|---|
+| `swiftui-expert` | Writing or reviewing SwiftUI: state, navigation, performance, accessibility, Liquid Glass | [SwiftUI-Agent-Skill](https://github.com/AvdLee/SwiftUI-Agent-Skill) |
+| `swift-concurrency` | async/await, actors, `Sendable`, Swift 6 migration | [Swift-Concurrency-Agent-Skill](https://github.com/AvdLee/Swift-Concurrency-Agent-Skill) |
+| `swift-testing-expert` | Writing tests with Swift Testing (`@Test`, `#expect`) | [Swift-Testing-Agent-Skill](https://github.com/AvdLee/Swift-Testing-Agent-Skill) |
 
-```bash
-npx skills add avdlee/swiftui-agent-skill
-npx skills add avdlee/swift-concurrency-agent-skill
-npx skills add avdlee/swift-testing-agent-skill
-```
+Each folder keeps its upstream `LICENSE`. To update, copy the newer version from the source repo.
 
-Check where the tool installs them and move them into this folder if needed.
+Our own `ios-*` skills win when they disagree with a community skill, because they describe how this app is built.
