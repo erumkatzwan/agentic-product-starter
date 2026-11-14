@@ -1,6 +1,6 @@
 # Agentic Product Starter
 
-A complete, end-to-end business starter for building a product with AI coding agents: **iOS app, web app, back office, .NET backend and landing website** in one repository, with one design system, one way of working from idea to retro, and quality gates on every change.
+A complete, end-to-end business starter for building a product with AI coding agents: **iOS app, Android app, web app, back office, .NET backend and landing website** in one repository, with one design system, one way of working from idea to retro, and quality gates on every change.
 
 Copy it for each new product, rename it, and start shaping your first feature.
 
@@ -9,12 +9,12 @@ Copy it for each new product, rename it, and start shaping your first feature.
 | Folder | What it is | Tech | Status |
 |---|---|---|---|
 | [`apps/ios`](apps/ios/README.md) | Customer app: sign up, sign in, home, profile, sign out | Swift, SwiftUI | Ready |
+| [`apps/android`](apps/android/README.md) | The same customer app on Android | Kotlin, Jetpack Compose, Navigation 3 | Ready |
 | [`apps/web-app`](apps/web-app/README.md) | The same customer flow in the browser | React, TypeScript, Vite | Ready |
 | [`apps/back-office`](apps/back-office/README.md) | Admin and customer support: find, edit, disable, delete customers; feature flags | React, TypeScript, Vite | Ready |
 | [`backend`](backend/README.md) | Accounts, profiles, admin and feature flag APIs | .NET 10, ASP.NET Core | Ready |
 | [`apps/website`](apps/website/README.md) | One-page landing site ([live](https://erumkatzwan.github.io/agentic-product-starter/)) | HTML, CSS | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
-| `apps/android` | Native Android app | Kotlin, Jetpack Compose | Planned |
 | `docs/` | Product context, decisions (ADRs), agent setup | Markdown | Ready |
 | `.agents/skills/` | 27 shared skills covering the whole SDLC | Agent Skills | Ready |
 
@@ -26,7 +26,7 @@ Copy it for each new product, rename it, and start shaping your first feature.
 ├── design/                # tokens.json (single source of truth) + generator
 ├── docs/                  # product/, adr/, agents/
 ├── apps/
-│   ├── ios/  web-app/  back-office/  website/  android/
+│   ├── ios/  android/  web-app/  back-office/  website/
 └── backend/
 ```
 
@@ -34,19 +34,19 @@ Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
 
 ## One flow, every app
 
-| | iOS | Web app | Back office |
-|---|---|---|---|
-| Sign up | ✓ | ✓ | – |
-| Sign in / sign out | ✓ | ✓ | ✓ (admins only) |
-| Profile: edit name, delete account | ✓ | ✓ | – |
-| Find, edit, disable, delete customers | – | – | ✓ |
-| Feature flags | read | read | read and switch |
+| | iOS | Android | Web app | Back office |
+|---|---|---|---|---|
+| Sign up | ✓ | ✓ | ✓ | – |
+| Sign in / sign out | ✓ | ✓ | ✓ | ✓ (admins only) |
+| Profile: edit name, delete account | ✓ | ✓ | ✓ | – |
+| Find, edit, disable, delete customers | – | – | – | ✓ |
+| Feature flags | read | read | read | read and switch |
 
 All of them talk to the same backend endpoints and read the same feature flags.
 
 ## One design system
 
-`design/tokens.json` holds the colour palette, spacing, type and radius. `node design/build.mjs` generates CSS variables for the web app, back office and website, and `DesignTokens.swift` for iOS. CI fails if any app drifts from the palette. The file follows the W3C Design Tokens format, so it can be linked to Figma later with Tokens Studio. See [design/README.md](design/README.md).
+`design/tokens.json` holds the colour palette, spacing, type and radius. `node design/build.mjs` generates CSS variables for the web app, back office and website, `DesignTokens.swift` for iOS and `DesignTokens.kt` for Android. CI fails if any app drifts from the palette. The file follows the W3C Design Tokens format, so it can be linked to Figma later with Tokens Studio. See [design/README.md](design/README.md).
 
 ## The agentic SDLC
 
@@ -61,7 +61,7 @@ All of them talk to the same backend endpoints and read the same feature flags.
 | 7. Fix and improve | `diagnosing-bugs`, `improve-codebase-architecture` | Fixes and refactor proposals |
 | 8. Learn | `retro`, `handoff` | Better skills, checks and `AGENTS.md` |
 
-Platform skills tell the agent how to build on each platform: `apps/ios/.agents/skills/`, `apps/web-app/.agents/skills/`, `apps/back-office/.agents/skills/`, `backend/.agents/skills/`, `apps/website/.agents/skills/`. Details: [.agents/skills/README.md](.agents/skills/README.md).
+Platform skills tell the agent how to build on each platform: `apps/ios/.agents/skills/`, `apps/android/.agents/skills/`, `apps/web-app/.agents/skills/`, `apps/back-office/.agents/skills/`, `backend/.agents/skills/`, `apps/website/.agents/skills/`. Details: [.agents/skills/README.md](.agents/skills/README.md).
 
 ## Quality gates
 
@@ -70,6 +70,7 @@ Every pull request runs the checks for the parts it touches:
 | Component | Checks |
 |---|---|
 | iOS | Lint, spelling, unit tests + 70% coverage, UI tests, end-to-end (Maestro) |
+| Android | ktlint + Android Lint, spelling, build of every environment, unit tests + 70% coverage, Compose UI tests and end-to-end (Maestro) on an emulator |
 | Web app / back office | Lint, types, spelling, unit tests + 70% coverage, end-to-end (Playwright) against the real backend |
 | Backend | Format, build with warnings as errors, unit + integration tests, 70% coverage |
 | Website | HTML validation, spelling, smoke tests |
@@ -92,6 +93,7 @@ cd apps/web-app && npm install && npm run dev          # http://localhost:5173
 cd apps/back-office && npm install && npm run dev      # http://localhost:5174
 
 # 4. iOS: see apps/ios/README.md
+# 5. Android: see apps/android/README.md
 ```
 
 Then open the repo in Claude Code and run `/grill-me` on your first idea.
@@ -101,10 +103,11 @@ Then open the repo in Claude Code and run `/grill-me` on your first idea.
 - **Agentic Product Starter** by [Erum Awan](https://github.com/erumkatzwan): the product starter, apps, backend, design system, quality gates and how they fit together.
 - **Shared agent skills** by [Matt Pocock](https://github.com/mattpocock), from [mattpocock/skills](https://github.com/mattpocock/skills) ([aihero.dev/skills](https://www.aihero.dev/skills)), used under the MIT licence. See `.agents/skills/LICENSE-mattpocock-skills`.
 - **iOS community skills** by [Antoine van der Lee](https://github.com/AvdLee) (SwiftUI, Swift Concurrency, Swift Testing), used under the MIT licence.
+- **Android skills** by Google, from [android/skills](https://github.com/android/skills) (Navigation 3, edge-to-edge, Compose performance, testing, AGP 9, R8, Credential Manager, security), used under the Apache 2.0 licence.
 
 ## License
 
-[MIT](LICENSE) © Erum Awan. Use it, copy it and build on it; just keep the licence notice. The included shared skills by Matt Pocock and the iOS community skills by Antoine van der Lee keep their own MIT licences.
+[MIT](LICENSE) © Erum Awan. Use it, copy it and build on it; just keep the licence notice. The included shared skills by Matt Pocock and the iOS community skills by Antoine van der Lee keep their own MIT licences, and Google's Android skills keep their Apache 2.0 licence.
 
 ## Like it? Found something?
 

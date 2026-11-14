@@ -1,0 +1,10 @@
+{
+  "flags": {
+    "settings": true,
+    "item_detail": true,
+    "profile": true,
+    "sign_up": true,
+    "push_prompt": true,
+    "google_sign_in": true
+  }
+}

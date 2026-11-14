@@ -1,0 +1,18 @@
+[files]
+extend-exclude = [
+  "build/",
+  ".gradle/",
+  "gradlew",
+  "gradlew.bat",
+  "*.jar",
+  # Google's Android skills (Apache 2.0), kept as published upstream
+  "agp-9-upgrade/",
+  "android-intent-security/",
+  "android-permissions-security/",
+  "edge-to-edge/",
+  "jetpack-compose-performance/",
+  "navigation-3/",
+  "r8-analyzer/",
+  "restore-credentials/",
+  "testing-setup/",
+]

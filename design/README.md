@@ -1,6 +1,6 @@
 # Design tokens
 
-One colour palette and one set of spacing, type and radius values for every app in the starter: iOS, web app, back office and website.
+One colour palette and one set of spacing, type and radius values for every app in the starter: iOS, Android, web app, back office and website.
 
 ## The palette
 
@@ -30,6 +30,7 @@ Spacing: 4, 8, 16, 24, 32, 48. Radius: 8, 12, 20, pill. Font: Inter with system 
 | `apps/back-office/src/styles/tokens.css` | Back office (CSS variables) |
 | `apps/website/tokens.css` | Landing website (CSS variables) |
 | `apps/ios/AgenticApp/DesignSystem/DesignTokens.swift` | iOS `Theme` |
+| `apps/android/app/src/main/kotlin/com/agentic/app/designsystem/DesignTokens.kt` | Android `AppTheme` |
 
 ## Change a colour
 
