@@ -41,6 +41,7 @@ When a shared skill and a platform skill disagree on *how to build*, the platfor
 - Unfinished work is merged behind a feature flag that defaults to off.
 - Environments: Dev, SYST, Prod. Never point local work at Prod.
 - Architecture first: before coding, read `docs/architecture/README.md` and the accepted ADRs in the area. Never silently work around an ADR; a change that alters a decision adds a new ADR (superseding the old one) and updates the overview and diagrams in the same pull request.
+- Product name: never hard-code it in a new place without teaching `scripts/rename.mjs` (the **Rename check** fails otherwise). Use the `rename-product` skill to rename.
 - Colours, spacing and type come only from `design/tokens.json`. Change it there and run `node design/build.mjs`.
 - One flow across apps: a change to accounts, profile or feature flags updates the backend and every app that uses it in the same pull request.
 - Never commit secrets, keys or customer data. This repository is public. Secret push protection blocks known key formats.
