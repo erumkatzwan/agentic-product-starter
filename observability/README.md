@@ -38,11 +38,11 @@ The backend exports wherever the standard OpenTelemetry variables point. Nothing
 
 3. Import `grafana/dashboards/api-overview.json` in Grafana Cloud (**Dashboards → New → Import**).
 
-Each data point carries `deployment.environment.name` (Dev, Syst, Prod) as a resource attribute.
+Each data point carries `deployment.environment.name` (Dev, Syst, Prod), so one dashboard can switch between environments with its **Environment** filter.
 
 ## Add your own
 
 * **A product metric:** add a counter or histogram to `backend/src/AgenticProduct.Api/Observability/AppMetrics.cs`, call it where the event happens, and add a panel to the dashboard.
-* **A dashboard:** build it in local Grafana, export it as JSON (**Share → Export**, without "external" mode) into `grafana/dashboards/`, and use `job=~"$service"` in queries.
+* **A dashboard:** build it in local Grafana, export it as JSON (**Share → Export**, without "external" mode) into `grafana/dashboards/`, and filter queries with `job=~"$service", deployment_environment_name=~"$environment"`.
 
 The **Observability** workflow starts this stack in CI, sends traffic to the API and fails if metrics, traces or any dashboard query come back empty (`scripts/smoke_test.py`). The `observability` skill (`.agents/skills/observability/`) walks an agent through instrumenting a new feature.

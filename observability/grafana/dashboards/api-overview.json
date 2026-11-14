@@ -36,6 +36,24 @@
         },
         "refresh": 2,
         "current": {}
+      },
+      {
+        "name": "environment",
+        "type": "query",
+        "label": "Environment",
+        "includeAll": true,
+        "allValue": ".*",
+        "multi": false,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "label_values(http_server_request_duration_seconds_count{job=~\"$service\"}, deployment_environment_name)",
+          "refId": "A"
+        },
+        "refresh": 2,
+        "current": {}
       }
     ]
   },
@@ -58,7 +76,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(rate(http_server_request_duration_seconds_count{job=~\"$service\"}[5m]))",
+          "expr": "sum(rate(http_server_request_duration_seconds_count{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m]))",
           "datasource": {
             "type": "prometheus",
             "uid": "${datasource}"
@@ -98,7 +116,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "(sum(rate(http_server_request_duration_seconds_count{job=~\"$service\", http_response_status_code=~\"5..\"}[5m])) or vector(0)) / clamp_min(sum(rate(http_server_request_duration_seconds_count{job=~\"$service\"}[5m])), 1e-9)",
+          "expr": "(sum(rate(http_server_request_duration_seconds_count{job=~\"$service\", deployment_environment_name=~\"$environment\", http_response_status_code=~\"5..\"}[5m])) or vector(0)) / clamp_min(sum(rate(http_server_request_duration_seconds_count{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m])), 1e-9)",
           "datasource": {
             "type": "prometheus",
             "uid": "${datasource}"
@@ -138,7 +156,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\"}[5m])))",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m])))",
           "datasource": {
             "type": "prometheus",
             "uid": "${datasource}"
@@ -178,7 +196,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(increase(app_sign_ups_total{job=~\"$service\"}[24h]))",
+          "expr": "sum(increase(app_sign_ups_total{job=~\"$service\", deployment_environment_name=~\"$environment\"}[24h]))",
           "datasource": {
             "type": "prometheus",
             "uid": "${datasource}"
@@ -218,7 +236,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum by (http_route) (rate(http_server_request_duration_seconds_count{job=~\"$service\"}[5m]))",
+          "expr": "sum by (http_route) (rate(http_server_request_duration_seconds_count{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m]))",
           "legendFormat": "{{http_route}}",
           "datasource": {
             "type": "prometheus",
@@ -257,7 +275,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum by (http_response_status_code) (rate(http_server_request_duration_seconds_count{job=~\"$service\"}[5m]))",
+          "expr": "sum by (http_response_status_code) (rate(http_server_request_duration_seconds_count{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m]))",
           "legendFormat": "{{http_response_status_code}}",
           "datasource": {
             "type": "prometheus",
@@ -296,7 +314,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "histogram_quantile(0.5, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\"}[5m])))",
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m])))",
           "legendFormat": "p50",
           "datasource": {
             "type": "prometheus",
@@ -305,7 +323,7 @@
         },
         {
           "refId": "B",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\"}[5m])))",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m])))",
           "legendFormat": "p95",
           "datasource": {
             "type": "prometheus",
@@ -314,7 +332,7 @@
         },
         {
           "refId": "C",
-          "expr": "histogram_quantile(0.99, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\"}[5m])))",
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(http_server_request_duration_seconds_bucket{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m])))",
           "legendFormat": "p99",
           "datasource": {
             "type": "prometheus",
@@ -353,7 +371,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum by (result) (increase(app_sign_ins_total{job=~\"$service\"}[5m]))",
+          "expr": "sum by (result) (increase(app_sign_ins_total{job=~\"$service\", deployment_environment_name=~\"$environment\"}[5m]))",
           "legendFormat": "{{result}}",
           "datasource": {
             "type": "prometheus",

@@ -4,7 +4,6 @@ Run after `docker compose -f observability/docker-compose.yml up -d` and some tr
 """
 import json
 import pathlib
-import re
 import sys
 import time
 import urllib.parse
@@ -53,7 +52,7 @@ def main():
         dashboard = json.loads(path.read_text())
         for panel in dashboard["panels"]:
             for target in panel.get("targets", []):
-                expr = re.sub(r"\$service", re.escape(service), target["expr"]).replace("[24h]", "[1h]")
+                expr = target["expr"].replace("$service", service).replace("$environment", ".*").replace("[24h]", "[1h]")
                 ok &= wait_for(f"{path.stem}: {panel['title']} ({target['refId']})", lambda e=expr: promql(e), 60)
 
     auth = "Basic YWRtaW46YWRtaW4="  # admin:admin, the image's local default
