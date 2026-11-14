@@ -4,6 +4,56 @@ A complete, end-to-end business starter for building a product with AI coding ag
 
 Copy it for each new product, rename it, and start shaping your first feature.
 
+## Architecture at a glance
+
+```mermaid
+flowchart TB
+    subgraph agentic["Agentic layer: how every change is made"]
+        direction LR
+        skills["Skills<br/><i>idea → spec → tickets → build → review → retro</i>"]
+        arch["Architecture and ADRs<br/><i>arc42 + C4, MADR</i>"]
+        gates["Quality gates<br/><i>CI must be green to merge</i>"]
+        skills --> arch --> gates
+    end
+
+    subgraph product["The product"]
+        direction TB
+        ios["iOS app<br/><i>SwiftUI</i>"]
+        android["Android app<br/><i>Jetpack Compose</i>"]
+        web["Web app<br/><i>React</i>"]
+        backoffice["Back office<br/><i>React, for support</i>"]
+        api["Backend API<br/><i>.NET 10</i>"]
+        store[("Data store")]
+        ios & android & web & backoffice --> api
+        api --> store
+    end
+
+    tokens["Design tokens<br/><i>one palette for every app</i>"]
+    website["Website<br/><i>GitHub Pages</i>"]
+
+    agentic ==>|"builds and checks"| product
+    tokens -.->|"styles"| product
+    tokens -.-> website
+
+    classDef agent fill:#3F5BD9,stroke:#3249B8,color:#FFFFFF
+    classDef box fill:#FFFFFF,stroke:#3F5BD9,color:#14171F
+    classDef muted fill:#F7F8FA,stroke:#DDE1E8,color:#5B6475
+    class skills,arch,gates agent
+    class ios,android,web,backoffice,api,store box
+    class tokens,website muted
+    style agentic fill:#EEF1FC,stroke:#3F5BD9,color:#14171F
+    style product fill:#F7F8FA,stroke:#DDE1E8,color:#14171F
+```
+
+- **The product:** iOS, Android and web apps for customers and a back office for support, all on one .NET API and styled from one set of design tokens.
+- **The agentic layer:** skills take every change from idea to retro. Before writing code, agents read the architecture overview and the decisions (ADRs), and CI blocks the merge until every check is green.
+
+| Read | To understand |
+|---|---|
+| [Architecture overview](docs/architecture/README.md) | The C4 diagrams, building blocks, sign-in and feature-flag flows, environments, risks |
+| [Architecture decisions](docs/adr/README.md) | Why it is built this way, one ADR per decision (MADR format) |
+| [Skills](.agents/skills/README.md) | Which skill to use at each stage, from idea to retro |
+
 ## What's inside
 
 | Folder | What it is | Tech | Status |
