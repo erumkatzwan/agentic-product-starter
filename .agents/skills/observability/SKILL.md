@@ -26,7 +26,7 @@ Ask: "How will we know this feature works and is used?" Then:
 2. **Call it** where the event happens (endpoint or service), and cover it with a test that listens with `MeterListener` (see `ObservabilityTests.cs`).
 3. **Logs:** use `ILogger` with message templates (`"Order {OrderId} placed"`), never string concatenation, never personal data.
 4. **Traces:** incoming requests and `HttpClient` calls are traced already. For a slow internal step, add an `ActivitySource` span named after the step.
-5. **Dashboard:** add a panel to `observability/grafana/dashboards/api-overview.json` (or a new dashboard), using `job=~"$service"`. Prometheus names: dots become underscores and counters end in `_total` (`app_orders_placed_total`).
+5. **Dashboard:** add a panel to `observability/grafana/dashboards/api-overview.json` (or a new dashboard), filtered with `job=~"$service", deployment_environment_name=~"$environment"`. Prometheus names: dots become underscores and counters end in `_total` (`app_orders_placed_total`).
 6. Run the stack, click through the feature, and check the panel shows data. CI's **Observability smoke test** runs every dashboard query and fails on empty ones, so add traffic for new endpoints to `.github/workflows/observability.yml`.
 
 ## 3. Connect an environment
