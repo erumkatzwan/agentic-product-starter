@@ -8,8 +8,8 @@ Copy it for each new product, rename it, and start writing stories.
 
 | Folder | What it is | Status |
 |---|---|---|
-| `docs/` | Product context: vision, stories, decisions | Structure ready |
-| `.agents/skills/` | Shared agent skills: refinement, planning, task definition, code review | Structure ready |
+| `docs/` | Product context, decisions (ADRs) and agent setup | Ready |
+| `.agents/skills/` | 27 shared skills covering the whole SDLC, from idea to retro | Ready |
 | `apps/ios/` | Native iOS app (Swift, SwiftUI) | **Ready** – see [apps/ios/README.md](apps/ios/README.md) |
 | `apps/android/` | Native Android app (Kotlin, Jetpack Compose) | Planned |
 | `apps/web-app/` | Signed-in web app for users | Planned |
@@ -21,11 +21,12 @@ Copy it for each new product, rename it, and start writing stories.
 /
 ├── AGENTS.md              # Shared agent rules; points to each component's AGENTS.md
 ├── CLAUDE.md              # Loads AGENTS.md for Claude Code
-├── .agents/skills/        # Shared skills
+├── .agents/skills/        # Shared skills (idea → spec → tickets → build → review → retro)
+├── GLOSSARY.md            # Domain language (created by the agents when terms are settled)
 ├── docs/
 │   ├── product/           # Vision, roadmap, personas
-│   ├── stories/           # Epics and user stories
-│   └── decisions/         # Architecture decision records (ADRs)
+│   ├── adr/               # Architecture decision records
+│   └── agents/            # How the skills use this repo: issue tracker, labels, domain docs
 ├── apps/
 │   ├── ios/  android/  web-app/  website/  back-office/
 └── backend/
@@ -33,11 +34,20 @@ Copy it for each new product, rename it, and start writing stories.
 
 Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
 
-## How the agents work here
+## The agentic SDLC
 
-1. **Define once, at the root.** Stories and context live in `docs/`. Shared skills in `.agents/skills/` are used to refine stories, plan, break work into tasks and review code.
-2. **Build per platform.** Each component's `AGENTS.md` and skills tell the agent how to design, build and test for that platform.
-3. **Ship only when green.** Every pull request runs the component's checks. Nothing merges into `main` unless all checks pass.
+| Stage | Shared skills | Where it lands |
+|---|---|---|
+| 1. Shape the idea | `grill-me`, `wayfinder`, `research`, `prototype` | `docs/product/`, decision notes |
+| 2. Refine | `grill-with-docs`, `domain-modeling` | `GLOSSARY.md`, `docs/adr/` |
+| 3. Specify | `to-spec` | A spec in GitHub Issues |
+| 4. Plan | `to-tickets`, `triage` | Agent-ready tickets with labels |
+| 5. Build | `implement` / `implement-spec`, `tdd` + platform skills | A branch with code and tests |
+| 6. Review | `code-review`, `pr` | A pull request; all checks must be green |
+| 7. Fix and improve | `diagnosing-bugs`, `improve-codebase-architecture` | Fixes and refactor proposals |
+| 8. Learn | `retro`, `handoff` | Better skills, checks and `AGENTS.md` |
+
+Shared skills come from [mattpocock/skills](https://github.com/mattpocock/skills) (MIT). Platform skills live in each app, for example `apps/ios/.agents/skills/`. Details: [.agents/skills/README.md](.agents/skills/README.md).
 
 ## Quality gates (iOS today, every app later)
 
@@ -60,7 +70,7 @@ Features, screens and components can be switched on or off from the backend or o
 ## Getting started
 
 - iOS: follow the tutorial in [apps/ios/README.md](apps/ios/README.md).
-- Daily workflow: branch from `main` per story, let the agent implement it, run the checks, open a pull request, merge when green.
+- Daily workflow: shape and specify with the shared skills, create tickets, then one branch per ticket: implement, run the checks, open a pull request, merge when green, and run a retro now and then.
 
 ## Contributions
 
