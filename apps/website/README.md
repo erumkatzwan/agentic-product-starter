@@ -2,6 +2,10 @@
 
 One-page landing site for the Agentic Product Starter. Plain HTML and CSS, no build step. Part of the [Agentic Product Starter](../../README.md).
 
+## Live site
+
+https://erumkatzwan.github.io/agentic-product-starter/ — deployed to GitHub Pages by `.github/workflows/pages.yml` on every change to `main`.
+
 ## Run it
 
 Open `index.html` in a browser, or serve the folder with any static server.

@@ -12,7 +12,7 @@ Copy it for each new product, rename it, and start shaping your first feature.
 | [`apps/web-app`](apps/web-app/README.md) | The same customer flow in the browser | React, TypeScript, Vite | Ready |
 | [`apps/back-office`](apps/back-office/README.md) | Admin and customer support: find, edit, disable, delete customers; feature flags | React, TypeScript, Vite | Ready |
 | [`backend`](backend/README.md) | Accounts, profiles, admin and feature flag APIs | .NET 10, ASP.NET Core | Ready |
-| [`apps/website`](apps/website/README.md) | One-page landing site | HTML, CSS | Ready |
+| [`apps/website`](apps/website/README.md) | One-page landing site ([live](https://erumkatzwan.github.io/agentic-product-starter/)) | HTML, CSS | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
 | `apps/android` | Native Android app | Kotlin, Jetpack Compose | Planned |
 | `docs/` | Product context, decisions (ADRs), agent setup | Markdown | Ready |
