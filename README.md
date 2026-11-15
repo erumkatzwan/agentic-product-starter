@@ -5,6 +5,7 @@
 [![Web app](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml)
 [![Backend](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml)
 [![Accessibility: WCAG 2.2 AA](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/accessibility.yml/badge.svg?branch=main)](docs/adr/0011-accessibility.md)
+[![Vulnerabilities](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/security/security-badge.json&cacheSeconds=3600)](https://erumkatzwan.github.io/agentic-product-starter/security/)
 [![Release](https://img.shields.io/github/v/release/erumkatzwan/agentic-product-starter?label=release&cacheSeconds=3600)](https://github.com/erumkatzwan/agentic-product-starter/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3F5BD9)](LICENSE)
 [![Use this template](https://img.shields.io/badge/use%20this-template-2EA44F?logo=github)](https://github.com/new?template_name=agentic-product-starter&template_owner=erumkatzwan)
@@ -15,7 +16,7 @@ Click **Use this template**, run two setup commands, and start shaping your firs
 
 > Built by human experience and AI together: Claude working alongside 18+ years of engineering leadership. Skip the setup, save time and tokens, and put your energy into creating value with the product you are actually building.
 
-**Live:** [Website](https://erumkatzwan.github.io/agentic-product-starter/) · [Delivery performance dashboard (DORA)](https://erumkatzwan.github.io/agentic-product-starter/dora/)
+**Live:** [Website](https://erumkatzwan.github.io/agentic-product-starter/) · [Delivery performance dashboard (DORA)](https://erumkatzwan.github.io/agentic-product-starter/dora/) · [Security dashboard](https://erumkatzwan.github.io/agentic-product-starter/security/)
 
 ![From an idea on a napkin, to spec and tickets, to web and mobile apps, to Dev, SYST and Prod, with the agentic SDLC underneath: Shape, Refine, Specify, Plan, Build, Review, Fix and Learn.](docs/images/agentic-product-starter.png)
 
@@ -54,7 +55,7 @@ Same flow, same palette, every app. The pictures are taken by the [Screenshots w
 | **Architecture** | arc42 overview with C4 diagrams and MADR decision records, read before every change |
 | **Quality gates** | Lint, types, spelling, unit, UI and end-to-end tests with 70% coverage on every pull request; `main` only changes through green pull requests |
 | **Environments** | Dev, SYST and Prod in every app, plus feature flags to ship unfinished work safely |
-| **Security** | CodeQL, dependency review, secret push protection, private vulnerability reporting and a weekly vulnerability report across all apps |
+| **Security** | CodeQL, dependency review, secret push protection, private vulnerability reporting, and a weekly scan of every app with a live [security dashboard](https://erumkatzwan.github.io/agentic-product-starter/security/) of known vulnerabilities by level (critical, high, medium, low) |
 | **Dependencies** | Dependabot every week; patch and minor updates merge themselves when CI is green, major ones are reviewed |
 | **Accessibility** | WCAG 2.2 AA in every app: colour contrast checked in the design tokens (light and dark), axe on every web screen, Apple's and Google's accessibility audits in the iOS and Android UI tests |
 | **Observability** | OpenTelemetry traces, metrics and logs from the backend into Grafana dashboards, with a one-command local stack; crash reporting in every app with Sentry; CI proves the data arrives |
@@ -82,6 +83,8 @@ node scripts/setup.mjs repo                     # apply (config/repo-settings.js
 ```
 
 **Accessibility checks are on by default** (WCAG 2.2 AA, [ADR-0011](docs/adr/0011-accessibility.md)). If you cannot meet them yet, run `node scripts/setup.mjs repo --accessibility off`, or set the repository variable `ACCESSIBILITY_CHECKS` to `off` in **Settings → Secrets and variables → Actions**. The checks then skip instead of blocking merges; set it back to `on` when you are ready.
+
+**The security dashboard is public by default**, like this one. For a private product, set the repository variable `SECURITY_DASHBOARD` to `off`: the weekly scan still runs and reports in GitHub Actions, but nothing is published.
 
 Steps GitHub refuses (for example, a feature that needs a paid plan on a private repository) are listed so you can set them by hand in **Settings**. If you later change a setting by hand, update `config/repo-settings.json` too, so the next copy gets it.
 
@@ -290,7 +293,7 @@ Every pull request runs only the checks for the parts it touches: Markdown-only 
 | Backend | Format, build with warnings as errors, unit + integration tests, 70% coverage |
 | Website | HTML validation, spelling, smoke tests |
 | Design tokens | Generated files in sync with `design/tokens.json` |
-| Security | Dependency review on every pull request, CodeQL, secret push protection, weekly vulnerability report across all apps ([SECURITY.md](SECURITY.md)) |
+| Security | Dependency review on every pull request, CodeQL, secret push protection, weekly vulnerability scan across all apps shown on the [security dashboard](https://erumkatzwan.github.io/agentic-product-starter/security/) ([SECURITY.md](SECURITY.md)) |
 | Setup | Integration list, `.env.example`, repository settings and code agree |
 | Accessibility | WCAG 2.2 AA: token contrast, axe on every web screen (unit and end-to-end, light and dark), iOS accessibility audit, Android Accessibility Test Framework ([ADR-0011](docs/adr/0011-accessibility.md)); on by default, switch off with the `ACCESSIBILITY_CHECKS` variable |
 | Observability | Starts Grafana in CI, sends traffic to the API, and fails if metrics, traces or any dashboard query come back empty |
