@@ -9,13 +9,25 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-3F5BD9)](LICENSE)
 [![Use this template](https://img.shields.io/badge/use%20this-template-2EA44F?logo=github)](https://github.com/new?template_name=agentic-product-starter&template_owner=erumkatzwan)
 
-A complete, end-to-end business starter for building a product with AI coding agents: **iOS app, Android app, web app, back office, .NET backend and landing website** in one repository, with one design system, one way of working from idea to retro, and quality gates on every change.
+**The agentic product foundation.** Mobile, web, back office and backend, with the whole agentic SDLC in one place: AI agent skills from idea to retro, quality gates, security scanning, observability, accessibility and DORA metrics. One repository holds an **iOS app, Android app, web app, back office, .NET backend and landing website**, with one design system and quality gates on every change.
 
 Click **Use this template**, run two setup commands, and start shaping your first feature with the coding agent you already use (Claude Code, Codex, Cursor, GitHub Copilot or any agent that reads `AGENTS.md`). Start at [Make it yours](#make-it-yours).
 
 > Built by human experience and AI together: Claude working alongside 18+ years of engineering leadership. Skip the setup, save time and tokens, and put your energy into creating value with the product you are actually building.
 
 **Live:** [Website](https://erumkatzwan.github.io/agentic-product-starter/) · [Delivery performance dashboard (DORA)](https://erumkatzwan.github.io/agentic-product-starter/dora/)
+
+## Built for
+
+What is ready today, and what you add on top for your business model.
+
+| Business model | Ready today | You add |
+|---|---|---|
+| **Consumer products (B2C)** | Sign up and sign in, profiles, iOS, Android and web apps, a back office for support, feature flags, Dev/SYST/Prod | Your product's features, and payments if you need them |
+| **Business products (B2B)** | Accounts, an admin back office, security scanning and quality gates | Organisations and teams, invites, roles and permissions, single sign-on (for example Entra ID), separate data per company, billing |
+| **Partner platforms (B2B2C)** | The same foundation as B2B | Everything for B2B, plus a partner layer: each partner's own branding, customers and data |
+
+**Good fits:** mobile-first apps, SaaS web apps, customer portals with an admin back office, and internal tools. **Not included yet:** payments, organisations, single sign-on and multi-tenancy. Build them with the same skills and quality gates, starting with the `to-spec` skill.
 
 ## Screenshots
 
