@@ -28,6 +28,8 @@ struct ProfileView: View {
                     Text(viewModel.email)
                         .font(theme.typography.body)
                         .foregroundStyle(theme.colors.textSecondary)
+                        .accessibilityLabel("Email")
+                        .accessibilityValue(viewModel.email)
                         .accessibilityIdentifier("profile.email")
                 }
                 DSTextField(label: "Name", text: $viewModel.displayName, error: viewModel.fieldError, identifier: "profile.name")
