@@ -45,6 +45,6 @@ jobs:
       - run: npm run validate
       - uses: crate-ci/typos@v1
         with:
-          files: apps/website/index.html
+          files: apps/website/index.html apps/website/dora
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e

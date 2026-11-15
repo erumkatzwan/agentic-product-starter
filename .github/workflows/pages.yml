@@ -28,6 +28,7 @@ jobs:
         run: |
           mkdir -p _site
           cp apps/website/index.html apps/website/styles.css apps/website/tokens.css _site/
+          cp -r apps/website/dora _site/dora
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
