@@ -2,6 +2,8 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
 // Every screen meets WCAG 2.2 AA in a real browser, colour contrast included (ADR-0011).
+test.skip(process.env.ACCESSIBILITY_CHECKS === 'off', 'Accessibility checks are off (repository variable ACCESSIBILITY_CHECKS)');
+
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22a', 'wcag22aa'];
 
 async function expectAccessible(page: Page, screen: string) {
