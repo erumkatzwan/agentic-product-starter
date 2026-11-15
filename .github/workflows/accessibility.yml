@@ -1,0 +1,63 @@
+name: Accessibility
+
+# One place to see that every app meets WCAG 2.2 AA (ADR-0011); the README badge shows this workflow.
+# The same checks also run inside each app's required pipeline: axe in the web end-to-end tests,
+# Apple's accessibility audit in the iOS UI tests and Google's checks in the Android UI tests.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '41 5 * * 1' # Mondays
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: accessibility-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Accessibility changes
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.filter.outputs.run }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
+        id: filter
+        with:
+          filters: |
+            run:
+              - 'apps/web-app/**'
+              - 'apps/back-office/**'
+              - 'apps/website/**'
+              - 'design/**'
+              - '.github/workflows/accessibility.yml'
+
+  checks:
+    needs: changes
+    if: needs.changes.outputs.run == 'true' || github.event_name != 'pull_request'
+    name: Accessibility checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Colour contrast of every design token pair (light and dark)
+        run: node design/build.mjs --check
+      - name: Web app screens (axe, WCAG 2.2 AA)
+        working-directory: apps/web-app
+        run: npm ci && npx vitest run src/accessibility.test.tsx
+      - name: Back office screens (axe, WCAG 2.2 AA)
+        working-directory: apps/back-office
+        run: npm ci && npx vitest run src/accessibility.test.tsx
+      - name: Website and delivery dashboard in a real browser (axe, contrast included)
+        working-directory: apps/website
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npx playwright test e2e/accessibility.spec.ts
