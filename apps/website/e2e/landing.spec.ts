@@ -7,8 +7,8 @@ const page = pathToFileURL(resolve(import.meta.dirname, '../index.html')).href;
 test('landing page shows every section and the call to action', async ({ page: browser }) => {
   await browser.goto(page);
 
-  await expect(browser.getByRole('heading', { level: 1 })).toHaveText('Start your next product with AI agents, end to end.');
-  for (const section of ["What's inside", 'How it works', 'Quality built in']) {
+  await expect(browser.getByRole('heading', { level: 1 })).toHaveText('The agentic product foundation.');
+  for (const section of ["What's inside", 'Built for', 'How it works', 'Quality built in']) {
     await expect(browser.getByRole('heading', { level: 2, name: section })).toBeVisible();
   }
   await expect(browser.getByRole('link', { name: 'View on GitHub' })).toHaveAttribute('href', /github\.com/);
