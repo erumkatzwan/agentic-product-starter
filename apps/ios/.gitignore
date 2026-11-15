@@ -2,6 +2,8 @@
 AgenticApp.xcodeproj/
 AgenticApp/Resources/Info.plist
 AgenticApp/Resources/AgenticApp.entitlements
+# Third-party settings for local builds (make secrets)
+Config/Secrets.xcconfig
 # Build output
 build/
 DerivedData/
