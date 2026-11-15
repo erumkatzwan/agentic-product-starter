@@ -1,7 +1,7 @@
 import Foundation
 import Sentry
 
-/// Sends crashes and captured errors to Sentry. No personal data: user IDs only, never emails or names.
+/// Sends crashes and captured errors to Sentry. Sentry sends no personal data by default; keep it that way.
 struct SentryCrashReporter: CrashReporter {
     let dsn: String
     let environment: String
@@ -10,7 +10,6 @@ struct SentryCrashReporter: CrashReporter {
         SentrySDK.start { options in
             options.dsn = dsn
             options.environment = environment
-            options.sendDefaultPii = false
             options.tracesSampleRate = 0.2
         }
     }
