@@ -19,6 +19,8 @@ final class AccessibilityUITests: XCTestCase {
             // Known platform false positive: a single-line text field scrolls its text horizontally by design,
             // and the audit reports that as clipped. Everything else is recorded.
             if issue.auditType == .textClipped, issue.element?.elementType == .textField { return true }
+            // An element cut off by the screen edge cannot be judged; it is audited once scrolled into view.
+            if let element = issue.element, !self.app.windows.firstMatch.frame.contains(element.frame) { return true }
             let element = issue.element.map { "\($0.elementType) '\($0.identifier.isEmpty ? $0.label : $0.identifier)'" } ?? "screen"
             issues.append("\(screen): \(issue.compactDescription) on \(element)")
             return true
@@ -61,5 +63,8 @@ final class AccessibilityUITests: XCTestCase {
         app.buttons["home.settingsButton"].tap()
         XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 5))
         try audit("settings")
+        // Audit the rows below the fold once they are fully on screen.
+        app.swipeUp()
+        try audit("settings, scrolled")
     }
 }
