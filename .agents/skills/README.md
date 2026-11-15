@@ -19,6 +19,7 @@ These are part of the Agentic Product Starter, not Matt Pocock's set:
 | `setup-integrations` | Setting up a new copy: GitHub settings, and turning on Sentry, Grafana Cloud or store accounts |
 | `dora-metrics` | Reading or changing the delivery dashboard, retros, incidents, and wiring in real deployments |
 | `observability` | Adding metrics, logs or traces to a feature, debugging in any environment, or connecting Grafana Cloud and Sentry |
+| `accessibility` | Building or changing any screen, component or colour; a red accessibility check; before a release |
 
 ## The agentic SDLC, stage by stage
 
