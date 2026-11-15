@@ -65,6 +65,7 @@ Dotted lines are skeletons: the code paths exist but need an account and keys be
 | Documentation | MADR, arc42 and C4, next to the code | [ADR-0006](../adr/0006-architecture-documentation.md) |
 | Dependencies | GitHub security features, an OSV report and Dependabot updates | [ADR-0007](../adr/0007-dependency-security-and-updates.md) |
 | Observability | OpenTelemetry to Grafana for the backend, Sentry for app crashes | [ADR-0008](../adr/0008-observability.md) |
+| Third-party settings | Optional, listed in one file, kept out of the code: `.env.local` locally, GitHub Environments for SYST and Prod | [ADR-0009](../adr/0009-third-party-configuration.md) |
 
 ## 5. Building blocks
 
@@ -249,6 +250,13 @@ Each app has unit, UI and end-to-end tests. Mobile UI and end-to-end tests run o
 * **Product metrics:** `AppMetrics` counts sign-ups and sign-ins by result. New features add their own counters there.
 * **Apps:** crash and error reporting with Sentry, one DSN per environment, off when no DSN is set.
 * **Rule:** no personal data in spans, metric tags or logs.
+
+### 8.9 Third-party settings
+
+* **List:** `config/integrations.json` names every external service, what it is for, whether it is needed now or only to publish, and its settings ([ADR-0009](../adr/0009-third-party-configuration.md)).
+* **Values:** `.env.local` (git-ignored) on a developer's machine; GitHub Environments `Syst` and `Prod` for deployments. Builds read them as environment variables: Vite `define` (web), a Gradle `BuildConfig` field (Android), a generated `Secrets.xcconfig` (iOS), standard `OTEL_*` variables (backend).
+* **Default:** everything is off without a value, so forks, tests and CI never send data anywhere.
+* **New copies:** `node scripts/setup.mjs repo` applies `config/repo-settings.json`, because templates do not copy settings.
 
 ## 9. Decisions
 

@@ -1,8 +1,15 @@
 import react from '@vitejs/plugin-react';
+import { loadEnv } from 'vite';
 import { defineConfig } from 'vitest/config';
 
-export default defineConfig({
+// Third-party settings (config/integrations.json) come from environment variables or .env.local at the repository root.
+const repoRoot = new URL('../..', import.meta.url).pathname;
+
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
+  define: {
+    'import.meta.env.VITE_SENTRY_DSN': JSON.stringify(loadEnv(mode, repoRoot, '').SENTRY_DSN_WEB_APP ?? ''),
+  },
   server: { port: 5173, strictPort: true },
   preview: { port: 4173, strictPort: true },
   test: {
@@ -17,4 +24,4 @@ export default defineConfig({
       thresholds: { lines: 70 },
     },
   },
-});
+}));

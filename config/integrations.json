@@ -1,0 +1,86 @@
+{
+  "$comment": "Every third-party service the starter can use. All are optional: the product builds, runs and passes CI with none of them. Run `node scripts/setup.mjs` to see what is on and how to turn the rest on.",
+  "environments": ["Dev", "Syst", "Prod"],
+  "integrations": [
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "purpose": "Crash and error reports from the iOS, Android, web and back office apps",
+      "when": "optional",
+      "cost": "Free Developer plan",
+      "signUp": "https://sentry.io/signup/",
+      "guide": "observability/README.md#crash-reporting-in-the-apps-sentry",
+      "steps": [
+        "Create an organisation, then one project per app: Apple iOS, Android, and React twice (web app, back office).",
+        "In each project open Settings → Client Keys (DSN) and copy the DSN."
+      ],
+      "settings": [
+        { "key": "SENTRY_DSN_IOS", "app": "iOS", "secret": false, "environments": ["Syst", "Prod"], "label": "iOS project DSN" },
+        { "key": "SENTRY_DSN_ANDROID", "app": "Android", "secret": false, "environments": ["Syst", "Prod"], "label": "Android project DSN" },
+        { "key": "SENTRY_DSN_WEB_APP", "app": "Web app", "secret": false, "environments": ["Syst", "Prod"], "label": "Web app project DSN" },
+        { "key": "SENTRY_DSN_BACK_OFFICE", "app": "Back office", "secret": false, "environments": ["Syst", "Prod"], "label": "Back office project DSN" }
+      ]
+    },
+    {
+      "id": "grafana-cloud",
+      "name": "Grafana Cloud",
+      "purpose": "Backend traces, metrics and logs in SYST and Prod (Dev uses the local stack in observability/)",
+      "when": "optional",
+      "cost": "Free tier",
+      "signUp": "https://grafana.com/auth/sign-up/create-user",
+      "guide": "observability/README.md#syst-and-prod-grafana-cloud",
+      "steps": [
+        "Create a stack, then open Connections → OpenTelemetry (OTLP) and create a token.",
+        "Copy the OTLP endpoint and the Authorization header it shows."
+      ],
+      "settings": [
+        { "key": "OTEL_EXPORTER_OTLP_ENDPOINT", "app": "Backend", "secret": false, "environments": ["Syst", "Prod"], "label": "OTLP endpoint" },
+        { "key": "OTEL_EXPORTER_OTLP_HEADERS", "app": "Backend", "secret": true, "environments": ["Syst", "Prod"], "label": "Authorization=Basic <token> header" }
+      ]
+    },
+    {
+      "id": "apple",
+      "name": "Apple Developer Program",
+      "purpose": "Running the iOS app on a phone, TestFlight, the App Store and push notifications",
+      "when": "publish",
+      "cost": "99 USD a year",
+      "signUp": "https://developer.apple.com/programs/enroll/",
+      "guide": "apps/ios/README.md",
+      "steps": [
+        "Enrol, then note your Team ID (Membership details).",
+        "Register the bundle IDs from apps/ios/Config/*.xcconfig and an APNs key for push.",
+        "Set DEVELOPMENT_TEAM in Xcode (or project.yml) when you first run on a device."
+      ],
+      "settings": []
+    },
+    {
+      "id": "google-play",
+      "name": "Google Play Console and Firebase",
+      "purpose": "Publishing the Android app and sending push notifications",
+      "when": "publish",
+      "cost": "25 USD once (Play); Firebase Cloud Messaging is free",
+      "signUp": "https://play.google.com/console/signup",
+      "guide": "apps/android/README.md",
+      "steps": [
+        "Create the app in Play Console with the application ID from apps/android/app/build.gradle.kts and enrol in Play App Signing.",
+        "For push, create a Firebase project, add the Android app and download google-services.json (keep it out of this public repository)."
+      ],
+      "settings": []
+    },
+    {
+      "id": "hosting",
+      "name": "Backend and web hosting",
+      "purpose": "Running the API, web app and back office for real customers",
+      "when": "publish",
+      "cost": "Depends on the provider",
+      "signUp": "https://learn.microsoft.com/azure/app-service/quickstart-dotnetcore",
+      "guide": "docs/architecture/README.md#7-deployment-and-environments",
+      "steps": [
+        "Pick a host for the .NET API (Azure App Service, Fly.io, Render…) and one for the static web apps.",
+        "Point each app at the deployed API: apps/ios/Config/*.xcconfig, the Android FlavorConfig files and VITE_API_BASE_URL.",
+        "Add a deploy workflow that uses the GitHub Environment (Syst or Prod), so it receives the settings above."
+      ],
+      "settings": []
+    }
+  ]
+}

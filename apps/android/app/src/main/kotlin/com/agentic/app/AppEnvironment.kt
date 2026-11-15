@@ -13,8 +13,8 @@ enum class AppEnvironment(val displayName: String) {
         val current: AppEnvironment get() = FlavorConfig.environment
         val apiBaseUrl: String get() = FlavorConfig.API_BASE_URL
 
-        /** Sentry DSN for crash reporting. Empty means off. */
-        val sentryDsn: String get() = FlavorConfig.SENTRY_DSN
+        /** Sentry DSN for crash reporting, from SENTRY_DSN_ANDROID at build time (config/integrations.json). Empty means off. */
+        val sentryDsn: String get() = BuildConfig.SENTRY_DSN
     }
 }
 

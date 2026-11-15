@@ -56,6 +56,7 @@ node scripts/rename.mjs --check
 * Update the product description in the README intro and `docs/product/` with the real product.
 * Keep `LICENSE` as it is (the MIT licence requires the starter's notice); add your own copyright line under it if you like.
 * Set the real SYST and Prod API URLs later (`apps/ios/Config/*.xcconfig`, `apps/android/app/src/<flavor>/`, web `src/config/env.ts`).
+* If not done yet, apply the GitHub settings a template copy misses: `node scripts/setup.mjs repo` (the `setup-integrations` skill).
 * Suggest the next steps: `security-audit`, then `grill-me` on the first feature.
 
 ## Rules

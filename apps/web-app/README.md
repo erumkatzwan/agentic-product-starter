@@ -55,4 +55,4 @@ e2e/                # Playwright end-to-end tests
 
 ## Environments
 
-`src/config/env.ts` holds the backend URL per environment (`VITE_API_BASE_URL` can override it at build time). `npm run dev` uses Dev, end-to-end tests use SYST, `npm run build` uses Prod. Crash reporting (Sentry) turns on when `VITE_SENTRY_DSN` is set at build time; see [observability](../../observability/README.md#crash-reporting-in-the-apps-sentry).
+`src/config/env.ts` holds the backend URL per environment (`VITE_API_BASE_URL` can override it at build time). `npm run dev` uses Dev, end-to-end tests use SYST, `npm run build` uses Prod. Crash reporting (Sentry) turns on when `SENTRY_DSN_WEB_APP` is set in the environment or in `.env.local` at the repository root; see [observability](../../observability/README.md#crash-reporting-in-the-apps-sentry).

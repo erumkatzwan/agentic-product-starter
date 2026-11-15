@@ -48,7 +48,7 @@ apps/ios/
 │   │   ├── Navigation/      # Route, Router
 │   │   ├── Auth/            # SessionStore (who is signed in), TokenStore (Keychain)
 │   │   ├── Services/        # Repositories, AuthService, push notifications
-│   │   └── Monitoring/      # CrashReporter (Sentry when SENTRY_DSN is set)
+│   │   └── Monitoring/      # CrashReporter (Sentry when SENTRY_DSN_IOS is set)
 │   ├── Features/            # Auth (sign in/up), Home, Detail, Profile, Settings (View + ViewModel)
 │   └── Resources/Fixtures/  # Test data JSON
 ├── AgenticAppTests/            # Unit tests

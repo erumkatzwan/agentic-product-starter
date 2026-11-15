@@ -16,6 +16,7 @@ These are part of the Agentic Product Starter, not Matt Pocock's set:
 | `security-audit` | Setting up a new product, before a release, when a security check is red, or for a vulnerability overview across all apps |
 | `update-dependencies` | Major updates, toolchains, or a failing Dependabot pull request |
 | `rename-product` | Turning the starter into your own named product (name, app ID, repository) |
+| `setup-integrations` | Setting up a new copy: GitHub settings, and turning on Sentry, Grafana Cloud or store accounts |
 | `observability` | Adding metrics, logs or traces to a feature, debugging in any environment, or connecting Grafana Cloud and Sentry |
 
 ## The agentic SDLC, stage by stage

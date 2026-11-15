@@ -28,7 +28,7 @@ Never put personal data (emails, names, tokens) in span attributes, metric tags 
 The backend exports wherever the standard OpenTelemetry variables point. Nothing is hard-coded and no keys live in this repository.
 
 1. Create a free [Grafana Cloud](https://grafana.com/products/cloud/) stack, then **Connections → OpenTelemetry (OTLP)** to get the endpoint and an access token.
-2. Set these on the SYST and Prod hosts (as secrets):
+2. Save them in the GitHub Environments with `node scripts/setup.mjs set OTEL_EXPORTER_OTLP_ENDPOINT --env Prod` (and the others below), and set them on the SYST and Prod hosts:
 
    | Variable | Value |
    |---|---|
@@ -45,17 +45,10 @@ Each data point carries `deployment.environment.name` (Dev, Syst, Prod), so one 
 iOS, Android, the web app and the back office report crashes and unexpected errors to Sentry, much like Firebase Crashlytics. Reporting is **off until you set a DSN**, and always off in UI and end-to-end tests.
 
 1. Create a free [Sentry](https://sentry.io) organisation and one project per app (iOS, Android, React twice).
-2. Set each project's DSN per environment:
+2. Save each project's DSN for SYST and Prod: `node scripts/setup.mjs set SENTRY_DSN_IOS --env Prod` (and `SENTRY_DSN_ANDROID`, `SENTRY_DSN_WEB_APP`, `SENTRY_DSN_BACK_OFFICE`). They go into GitHub Environments, never into the code.
+3. To try it from your machine, put the same keys in `.env.local` at the repository root (copy `.env.example`). Leave them empty for everyday local work.
 
-   | App | Where | Setting |
-   |---|---|---|
-   | iOS | `apps/ios/Config/Syst.xcconfig`, `Prod.xcconfig` | `SENTRY_DSN = https:/$()/<key>@<host>/<project>` (the `$()` stops xcconfig reading `//` as a comment) |
-   | Android | `apps/android/app/src/<flavor>/kotlin/.../FlavorConfig.kt` | `const val SENTRY_DSN = "https://<key>@<host>/<project>"` |
-   | Web app, back office | Build environment | `VITE_SENTRY_DSN=https://<key>@<host>/<project> npm run build` |
-
-3. Leave Dev empty unless you are debugging reporting itself.
-
-A DSN only lets an app *send* events, so it is safe in a client build, but keep Prod DSNs out of this public repository: set them in your own copy or in the build pipeline. The apps send no personal data: no emails, names or IP addresses.
+Each build reads its key from the environment or `.env.local`: the web apps through Vite, Android into `BuildConfig.SENTRY_DSN`, iOS through `Config/Secrets.xcconfig` (written by `make generate`). See [ADR-0009](../docs/adr/0009-third-party-configuration.md). The apps send no personal data: no emails, names or IP addresses.
 
 Where it lives: `CrashReporter` in each app (`Core/Monitoring` on iOS, `core/monitoring` on Android, `src/monitoring` on the web). The web apps also wrap every screen in an `ErrorBoundary` that shows a calm message instead of a blank page. To report a handled error that should never happen, call `capture(error)` (`reportError(error)` on the web).
 

@@ -4,5 +4,7 @@ APP_DISPLAY_NAME = Agentic SYST
 APP_BUNDLE_ID = com.agentic.app.syst
 API_BASE_URL = https:/$()/api-syst.agentic.example
 APS_ENVIRONMENT = development
-// Crash reporting (Sentry). Empty means off. Write the DSN as https:/$()/<key>@<host>/<project>.
+// Crash reporting (Sentry). Empty means off. Set SENTRY_DSN_IOS in .env.local or the environment (config/integrations.json);
+// `make generate` writes it into Secrets.xcconfig, which is never committed.
 SENTRY_DSN =
+#include? "Secrets.xcconfig"
