@@ -1,0 +1,49 @@
+name: Built with it
+description: Share a product you started from the Agentic Product Starter, to be listed in the README.
+title: "[Built with it]: "
+labels: ["showcase"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing! Products are listed in the README's **Built with it** section.
+        Only share what you are happy to make public.
+  - type: input
+    id: name
+    attributes:
+      label: Product name
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link
+      description: Website, app store page or public repository.
+    validations:
+      required: true
+  - type: textarea
+    id: about
+    attributes:
+      label: What it does
+      description: One or two sentences.
+    validations:
+      required: true
+  - type: dropdown
+    id: apps
+    attributes:
+      label: Which parts do you use?
+      multiple: true
+      options:
+        - iOS app
+        - Android app
+        - Web app
+        - Back office
+        - Backend
+        - Website
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Listing
+      options:
+        - label: You may list this product, its link and description in the README.
+          required: true

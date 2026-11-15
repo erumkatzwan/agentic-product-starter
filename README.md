@@ -1,10 +1,31 @@
 # Agentic Product Starter
 
+[![iOS](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/ios.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/ios.yml)
+[![Android](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/android.yml)
+[![Web app](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml)
+[![Backend](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml)
+[![Release](https://img.shields.io/github/v/release/erumkatzwan/agentic-product-starter?label=release)](https://github.com/erumkatzwan/agentic-product-starter/releases)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3F5BD9)](LICENSE)
+[![Use this template](https://img.shields.io/badge/use%20this-template-2EA44F?logo=github)](https://github.com/new?template_name=agentic-product-starter&template_owner=erumkatzwan)
+
 A complete, end-to-end business starter for building a product with AI coding agents: **iOS app, Android app, web app, back office, .NET backend and landing website** in one repository, with one design system, one way of working from idea to retro, and quality gates on every change.
 
-Click **Use this template**, run two setup commands, and start shaping your first feature. See [Make it yours](#make-it-yours).
+Click **Use this template**, run two setup commands, and start shaping your first feature with the coding agent you already use (Claude Code, Codex, Cursor, GitHub Copilot or any agent that reads `AGENTS.md`). Start at [Make it yours](#make-it-yours).
 
 **Live:** [Website](https://erumkatzwan.github.io/agentic-product-starter/) · [Delivery performance dashboard (DORA)](https://erumkatzwan.github.io/agentic-product-starter/dora/)
+
+## Screenshots
+
+| | Sign in | Home | Detail | Profile |
+|---|---|---|---|---|
+| **iOS** | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-sign-in.png" width="170" alt="iOS sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-home.png" width="170" alt="iOS home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-detail.png" width="170" alt="iOS detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-profile.png" width="170" alt="iOS profile"> |
+| **Android** | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-sign-in.png" width="170" alt="Android sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-home.png" width="170" alt="Android home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-detail.png" width="170" alt="Android detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-profile.png" width="170" alt="Android profile"> |
+
+| Web app | Back office |
+|---|---|
+| <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/web-app-home.png" width="420" alt="Web app home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/back-office-customers.png" width="420" alt="Back office customers"> |
+
+Same flow, same palette, every app. The pictures are taken by the [Screenshots workflow](.github/workflows/screenshots.yml) from the SYST builds with test data and refresh automatically whenever an app changes.
 
 ## Production-ready from day one
 
@@ -23,6 +44,95 @@ Click **Use this template**, run two setup commands, and start shaping your firs
 | **Make it yours** | One command applies the GitHub settings a template copy misses, one renames every app, ID, package and folder; CI proves both |
 | **Third-party services** | Sentry, Grafana Cloud and store accounts are all optional and off until you add a key; one list says what each needs and where the values go |
 | **Screenshots** | Taken from the real apps and refreshed automatically |
+
+## Make it yours
+
+Four steps from this starter to your own product. Only the first three are needed to build and run everything; nothing needs an account or a key.
+
+### 1. Copy it
+
+Click **Use this template** on GitHub and create your repository.
+
+### 2. Turn on the GitHub settings
+
+GitHub's **Use this template** copies the files but not the repository's settings, so a new copy starts unprotected: anyone can push to `main` and no check is required. `config/repo-settings.json` is a written copy of this repository's settings, and one command applies it to your copy through the GitHub CLI, signed in as you (GitHub may ask you to confirm with your passkey). It turns on: branch protection with every required check, squash-only merges, auto-merge, CodeQL, Dependabot, secret scanning, private vulnerability reporting, GitHub Pages, the Dev/Syst/Prod environments and the labels the skills use.
+
+```bash
+gh auth login                                   # once, as an admin of your new repository
+node scripts/setup.mjs repo --dry-run           # see what it will change
+node scripts/setup.mjs repo                     # apply (config/repo-settings.json)
+```
+
+Steps GitHub refuses (for example, a feature that needs a paid plan on a private repository) are listed so you can set them by hand in **Settings**. If you later change a setting by hand, update `config/repo-settings.json` too, so the next copy gets it.
+
+### 3. Rename it
+
+One command renames every app, bundle ID, package, namespace and folder, and keeps the credits:
+
+```bash
+node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app --dry-run   # preview
+node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app             # apply
+```
+
+Or ask your agent: "Rename this product to Fashion Girl" (the `rename-product` skill).
+
+### 4. Connect third-party services (optional)
+
+Every service below is **off until you add its key**, and the product builds, runs and passes CI without any of them. Run `node scripts/setup.mjs` to see what is on and how to turn the rest on, or ask your agent to "set up integrations" (the `setup-integrations` skill).
+
+| Service | What it adds | When | Cost | Settings |
+|---|---|---|---|---|
+| [Sentry](https://sentry.io) | Crash and error reports from iOS, Android, web app and back office | Optional | Free plan | `SENTRY_DSN_IOS`, `SENTRY_DSN_ANDROID`, `SENTRY_DSN_WEB_APP`, `SENTRY_DSN_BACK_OFFICE` |
+| [Grafana Cloud](https://grafana.com/products/cloud/) | Backend traces, metrics and logs in SYST and Prod (Dev runs Grafana locally) | Optional | Free tier | `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_HEADERS` |
+| [Apple Developer Program](https://developer.apple.com/programs/) | Running on a phone, TestFlight, App Store, push notifications | When you publish | Yearly fee | Team ID, bundle IDs, APNs key |
+| [Google Play](https://play.google.com/console) and Firebase | Publishing on Android, push notifications | When you publish | One-off fee; push is free | Application ID, `google-services.json` |
+| Hosting | Running the API, web app and back office for customers | When you publish | Depends on the provider | API addresses per environment |
+
+Where the values go (never in the code):
+
+* **Your machine (Dev):** copy `.env.example` to `.env.local` at the repository root. It is git-ignored, and every app reads it when it builds.
+* **SYST and Prod:** GitHub Environments. `node scripts/setup.mjs set SENTRY_DSN_IOS --env Prod` saves a value there (secrets stay hidden); deploy workflows that use the environment receive it as an environment variable.
+
+The full list, with sign-up links and step-by-step instructions, is `config/integrations.json`. The **Setup check** fails if a setting is added to the code without being listed there.
+
+## Run it locally
+
+What to install (the versions CI uses):
+
+| For | Install |
+|---|---|
+| Backend | [.NET 10 SDK](https://dotnet.microsoft.com/download) |
+| Web app, back office, website, scripts | [Node.js 22](https://nodejs.org) |
+| iOS app | Xcode 16 or newer on a Mac, then `make bootstrap` in `apps/ios` (XcodeGen, SwiftLint, Maestro) |
+| Android app | [Android Studio](https://developer.android.com/studio) (latest stable; includes JDK 21 and the SDK) |
+| Dashboards (optional) | [Docker](https://www.docker.com/products/docker-desktop/) |
+
+```bash
+# Backend
+cd backend && dotnet run --project src/AgenticProduct.Api --launch-profile Dev
+
+# Web app (new terminal)
+cd apps/web-app && npm install && npm run dev          # http://localhost:5173
+
+# Back office (new terminal)
+cd apps/back-office && npm install && npm run dev      # http://localhost:5174
+
+# Optional: dashboards at http://localhost:3000
+docker compose -f observability/docker-compose.yml up -d
+
+# iOS: see apps/ios/README.md
+# Android: see apps/android/README.md
+```
+
+Sign in with `customer@example.com` / `Customer123!`. Then open the repository in your coding agent and ask it to grill you on your first idea (the `grill-me` skill; `/grill-me` in Claude Code).
+
+## Delivery performance
+
+How fast and how safely changes reach `main`, measured every Monday with the four [DORA](https://dora.dev) metrics and published on a [live dashboard](https://erumkatzwan.github.io/agentic-product-starter/dora/).
+
+<a href="https://erumkatzwan.github.io/agentic-product-starter/dora/"><img src="docs/images/dora-dashboard.png" width="720" alt="Delivery performance dashboard: deployment frequency, lead time for changes, change failure rate and time to restore service"></a>
+
+The picture is a snapshot; the dashboard shows the latest numbers and their trend. Every copy of the starter gets its own dashboard. See [ADR-0010](docs/adr/0010-dora-metrics.md) and the `dora-metrics` skill.
 
 ## Architecture at a glance
 
@@ -115,27 +225,6 @@ flowchart TB
 
 Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
 
-## Screenshots
-
-| | Sign in | Home | Detail | Profile |
-|---|---|---|---|---|
-| **iOS** | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-sign-in.png" width="170" alt="iOS sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-home.png" width="170" alt="iOS home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-detail.png" width="170" alt="iOS detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/ios-profile.png" width="170" alt="iOS profile"> |
-| **Android** | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-sign-in.png" width="170" alt="Android sign in"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-home.png" width="170" alt="Android home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-detail.png" width="170" alt="Android detail"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/android-profile.png" width="170" alt="Android profile"> |
-
-| Web app | Back office |
-|---|---|
-| <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/web-app-home.png" width="420" alt="Web app home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/back-office-customers.png" width="420" alt="Back office customers"> |
-
-Same flow, same palette, every app. The pictures are taken by the [Screenshots workflow](.github/workflows/screenshots.yml) from the SYST builds with test data and refresh automatically whenever an app changes.
-
-## Delivery performance
-
-How fast and how safely changes reach `main`, measured every Monday with the four [DORA](https://dora.dev) metrics and published on a [live dashboard](https://erumkatzwan.github.io/agentic-product-starter/dora/).
-
-<a href="https://erumkatzwan.github.io/agentic-product-starter/dora/"><img src="docs/images/dora-dashboard.png" width="720" alt="Delivery performance dashboard: deployment frequency, lead time for changes, change failure rate and time to restore service"></a>
-
-The picture is a snapshot; the dashboard shows the latest numbers and their trend. Every copy of the starter gets its own dashboard. See [ADR-0010](docs/adr/0010-dora-metrics.md) and the `dora-metrics` skill.
-
 ## One flow, every app
 
 | | iOS | Android | Web app | Back office |
@@ -188,74 +277,13 @@ Every pull request runs the checks for the parts it touches:
 
 Every component uses **Dev**, **SYST** (system test) and **Prod**. Dev and SYST seed two accounts: `admin@example.com` / `Admin123!` and `customer@example.com` / `Customer123!`.
 
-## Make it yours
+## Built with it
 
-Four steps from this starter to your own product. Only the first three are needed to build and run everything; nothing needs an account or a key.
+Products started from the Agentic Product Starter. Built something with it? [Share it](https://github.com/erumkatzwan/agentic-product-starter/issues/new?template=built-with-it.yml) and it can be listed here.
 
-### 1. Copy it
+*Be the first: nothing listed yet.*
 
-Click **Use this template** on GitHub and create your repository.
-
-### 2. Turn on the GitHub settings
-
-A template copy gets the files but not the repository settings, so its quality gates are off. One command applies them: branch protection with every required check, squash-only merges, auto-merge, CodeQL, Dependabot, secret scanning, private vulnerability reporting, GitHub Pages, the Dev/Syst/Prod environments and the labels the skills use.
-
-```bash
-gh auth login                                   # once, as an admin of your new repository
-node scripts/setup.mjs repo --dry-run           # see what it will change
-node scripts/setup.mjs repo                     # apply (config/repo-settings.json)
-```
-
-### 3. Rename it
-
-One command renames every app, bundle ID, package, namespace and folder, and keeps the credits:
-
-```bash
-node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app --dry-run   # preview
-node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app             # apply
-```
-
-Or ask your agent: "Rename this product to Fashion Girl" (the `rename-product` skill).
-
-### 4. Connect third-party services (optional)
-
-Every service below is **off until you add its key**, and the product builds, runs and passes CI without any of them. Run `node scripts/setup.mjs` to see what is on and how to turn the rest on, or ask your agent to "set up integrations" (the `setup-integrations` skill).
-
-| Service | What it adds | When | Cost | Settings |
-|---|---|---|---|---|
-| [Sentry](https://sentry.io) | Crash and error reports from iOS, Android, web app and back office | Optional | Free plan | `SENTRY_DSN_IOS`, `SENTRY_DSN_ANDROID`, `SENTRY_DSN_WEB_APP`, `SENTRY_DSN_BACK_OFFICE` |
-| [Grafana Cloud](https://grafana.com/products/cloud/) | Backend traces, metrics and logs in SYST and Prod (Dev runs Grafana locally) | Optional | Free tier | `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_HEADERS` |
-| [Apple Developer Program](https://developer.apple.com/programs/) | Running on a phone, TestFlight, App Store, push notifications | When you publish | Yearly fee | Team ID, bundle IDs, APNs key |
-| [Google Play](https://play.google.com/console) and Firebase | Publishing on Android, push notifications | When you publish | One-off fee; push is free | Application ID, `google-services.json` |
-| Hosting | Running the API, web app and back office for customers | When you publish | Depends on the provider | API addresses per environment |
-
-Where the values go (never in the code):
-
-* **Your machine (Dev):** copy `.env.example` to `.env.local` at the repository root. It is git-ignored, and every app reads it when it builds.
-* **SYST and Prod:** GitHub Environments. `node scripts/setup.mjs set SENTRY_DSN_IOS --env Prod` saves a value there (secrets stay hidden); deploy workflows that use the environment receive it as an environment variable.
-
-The full list, with sign-up links and step-by-step instructions, is `config/integrations.json`. The **Setup check** fails if a setting is added to the code without being listed there.
-
-## Getting started
-
-```bash
-# 1. Backend
-cd backend && dotnet run --project src/AgenticProduct.Api --launch-profile Dev
-
-# 2. Web app (new terminal)
-cd apps/web-app && npm install && npm run dev          # http://localhost:5173
-
-# 3. Back office (new terminal)
-cd apps/back-office && npm install && npm run dev      # http://localhost:5174
-
-# Optional: dashboards at http://localhost:3000
-docker compose -f observability/docker-compose.yml up -d
-
-# 4. iOS: see apps/ios/README.md
-# 5. Android: see apps/android/README.md
-```
-
-Then open the repo in Claude Code and run `/grill-me` on your first idea.
+Copies made with `scripts/rename.mjs` carry a small **Built with Agentic Product Starter** badge in their README, so they are easy to find.
 
 ## Credits
 
@@ -276,3 +304,7 @@ Then open the repo in Claude Code and run `/grill-me` on your first idea.
 - 💡 **Have a suggestion?** [Open an issue](https://github.com/erumkatzwan/agentic-product-starter/issues/new/choose) with the **Suggestion** template.
 - 🤝 **Want to contribute or swap ideas?** Say hello in [Discussions](https://github.com/erumkatzwan/agentic-product-starter/discussions). Pull requests are closed for now, so start there and we can take it from there.
 - 👋 **Connect with me** on [LinkedIn](https://www.linkedin.com/in/erumkatzwan/).
+
+## Star history
+
+[![Star history](https://api.star-history.com/svg?repos=erumkatzwan/agentic-product-starter&type=Date)](https://star-history.com/#erumkatzwan/agentic-product-starter&Date)
