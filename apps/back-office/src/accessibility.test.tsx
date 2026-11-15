@@ -12,7 +12,8 @@ const screens: [string, string, boolean, string][] = [
   ['feature flags', '/feature-flags', true, 'Feature flags'],
 ];
 
-describe('accessibility', () => {
+// Off only when the repository variable ACCESSIBILITY_CHECKS is "off" (see ADR-0011).
+describe.skipIf(import.meta.env.ACCESSIBILITY_CHECKS === 'off')('accessibility', () => {
   it.each(screens)('the %s screen has no WCAG 2.2 AA violations', async (_name, path, signedIn, heading) => {
     if (signedIn) localStorage.setItem('agentic.admin.token', 'token');
     window.history.pushState({}, '', path);
