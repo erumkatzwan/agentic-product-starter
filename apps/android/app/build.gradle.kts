@@ -36,6 +36,8 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // Accessibility checks (ADR-0011) run unless ACCESSIBILITY_CHECKS is "off".
+        testInstrumentationRunnerArguments["accessibilityChecks"] = System.getenv("ACCESSIBILITY_CHECKS") ?: "on"
         buildConfigField("String", "SENTRY_DSN", "\"${integration("SENTRY_DSN_ANDROID")}\"")
     }
 
