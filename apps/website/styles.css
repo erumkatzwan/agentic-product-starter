@@ -186,15 +186,21 @@ h3 {
 }
 
 .theme-toggle {
-  font: inherit;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-primary);
-  background: var(--color-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--color-text-secondary);
+  background: transparent;
   border: 1px solid var(--color-control-border);
-  border-radius: var(--radius-m);
-  padding: var(--space-xs) var(--space-m);
-  min-height: 44px;
+  border-radius: 50%;
   cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--color-text-primary);
 }
 
 /* DORA dashboard (dora/index.html) */
