@@ -12,6 +12,9 @@ test('landing page shows every section and the call to action', async ({ page: b
     await expect(browser.getByRole('heading', { level: 2, name: section })).toBeVisible();
   }
   await expect(browser.getByRole('link', { name: 'View on GitHub' })).toHaveAttribute('href', /github\.com/);
+  const overview = browser.getByRole('img', { name: /From an idea on a napkin/ });
+  await expect(overview).toBeVisible();
+  expect(await overview.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
 });
 
 test('uses the shared design tokens', async ({ page: browser }) => {
