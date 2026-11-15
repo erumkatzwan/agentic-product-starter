@@ -19,6 +19,7 @@
     ["wontfix", "FFFFFF", "This will not be worked on"],
     ["accessibility", "F143AB", "Barrier affecting people with disabilities"],
     ["incident", "B60205", "Customers affected in production (feeds the DORA metrics)"],
+    ["showcase", "0E8A16", "A product built with the starter (Built with it)"],
     ["dependencies", "8224D5", "Dependency updates (Dependabot or update-dependencies skill)"],
     ["security", "8F6DAE", "Vulnerability or security fix (security-audit skill)"],
     ["area:ios", "C5DEF5", "iOS app (apps/ios)"],
