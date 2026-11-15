@@ -10,7 +10,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.After
 import org.junit.Rule
@@ -78,7 +77,9 @@ class NavigationUiTest {
         compose.onNodeWithTag("home.item.2").performClick()
         waitFor("detail.title")
 
-        Espresso.pressBack()
+        // System back through the activity's dispatcher, the same path the back gesture takes. Espresso's
+        // pressBack waits for window focus, which the CI emulator sometimes loses.
+        scenario?.onActivity { it.onBackPressedDispatcher.onBackPressed() }
 
         waitFor("home.item.2")
     }
