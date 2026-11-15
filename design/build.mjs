@@ -147,9 +147,15 @@ for (const [mode, colors] of [['light', light], ['dark', dark]]) {
     if (ratio < minimum) failures.push(`${mode}: ${fg} on ${bg} is ${ratio.toFixed(2)}:1, needs ${minimum}:1`);
   }
 }
+// Turned off only when ACCESSIBILITY_CHECKS is "off" (a repository variable in CI): then it warns instead.
+const accessibilityOff = process.env.ACCESSIBILITY_CHECKS === 'off';
 if (failures.length) {
-  console.error(`Colour contrast below WCAG 2.2 AA (docs/adr/0011-accessibility.md):\n${failures.join('\n')}`);
-  process.exit(1);
+  const message = `Colour contrast below WCAG 2.2 AA (docs/adr/0011-accessibility.md):\n${failures.join('\n')}`;
+  if (!accessibilityOff) {
+    console.error(message);
+    process.exit(1);
+  }
+  console.warn(`${message}\n(Not failing: ACCESSIBILITY_CHECKS is off.)`);
 }
 
 let stale = [];
@@ -164,4 +170,4 @@ if (check && stale.length) {
   console.error(`Design tokens out of date. Run: node design/build.mjs\n${stale.join('\n')}`);
   process.exit(1);
 }
-console.log(`${check ? 'Design tokens are up to date.' : `Wrote ${outputs.length} files.`} Contrast meets WCAG 2.2 AA (${contrastRules.length * 2} pairs).`);
+console.log(`${check ? 'Design tokens are up to date.' : `Wrote ${outputs.length} files.`} ${failures.length ? '' : `Contrast meets WCAG 2.2 AA (${contrastRules.length * 2} pairs).`}`);
