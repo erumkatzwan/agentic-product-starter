@@ -4,6 +4,8 @@ A complete, end-to-end business starter for building a product with AI coding ag
 
 Click **Use this template**, run two setup commands, and start shaping your first feature. See [Make it yours](#make-it-yours).
 
+**Live:** [Website](https://erumkatzwan.github.io/agentic-product-starter/) · [Delivery performance dashboard (DORA)](https://erumkatzwan.github.io/agentic-product-starter/dora/)
+
 ## Production-ready from day one
 
 | Area | What you get |
@@ -125,6 +127,14 @@ Each component has its own `README.md`, `AGENTS.md` and `.agents/skills/`.
 | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/web-app-home.png" width="420" alt="Web app home"> | <img src="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/screenshots/back-office-customers.png" width="420" alt="Back office customers"> |
 
 Same flow, same palette, every app. The pictures are taken by the [Screenshots workflow](.github/workflows/screenshots.yml) from the SYST builds with test data and refresh automatically whenever an app changes.
+
+## Delivery performance
+
+How fast and how safely changes reach `main`, measured every Monday with the four [DORA](https://dora.dev) metrics and published on a [live dashboard](https://erumkatzwan.github.io/agentic-product-starter/dora/).
+
+<a href="https://erumkatzwan.github.io/agentic-product-starter/dora/"><img src="docs/images/dora-dashboard.png" width="720" alt="Delivery performance dashboard: deployment frequency, lead time for changes, change failure rate and time to restore service"></a>
+
+The picture is a snapshot; the dashboard shows the latest numbers and their trend. Every copy of the starter gets its own dashboard. See [ADR-0010](docs/adr/0010-dora-metrics.md) and the `dora-metrics` skill.
 
 ## One flow, every app
 
