@@ -13,6 +13,8 @@ A complete, end-to-end business starter for building a product with AI coding ag
 
 Click **Use this template**, run two setup commands, and start shaping your first feature with the coding agent you already use (Claude Code, Codex, Cursor, GitHub Copilot or any agent that reads `AGENTS.md`). Start at [Make it yours](#make-it-yours).
 
+> Built by human experience and AI together: Claude working alongside 18+ years of engineering leadership. Skip the setup, save time and tokens, and put your energy into creating value with the product you are actually building.
+
 **Live:** [Website](https://erumkatzwan.github.io/agentic-product-starter/) · [Delivery performance dashboard (DORA)](https://erumkatzwan.github.io/agentic-product-starter/dora/)
 
 ## Screenshots
@@ -316,3 +318,7 @@ Copies made with `scripts/rename.mjs` carry a small **Built with Agentic Product
 ## Star history
 
 [![Star history](https://api.star-history.com/svg?repos=erumkatzwan/agentic-product-starter&type=Date)](https://star-history.com/#erumkatzwan/agentic-product-starter&Date)
+
+---
+
+*“AI gives you answers. Wisdom knows which questions matter.”*

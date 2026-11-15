@@ -155,6 +155,48 @@ h3 {
   font-size: var(--font-size-sm);
 }
 
+.footer p {
+  margin: 0 0 var(--space-m);
+}
+
+.footer__tagline {
+  color: var(--color-text-primary);
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s) var(--space-l);
+  margin: 0 0 var(--space-m);
+}
+
+.footer__links a {
+  color: var(--color-text-secondary);
+}
+
+.footer__quote {
+  color: var(--color-text-primary);
+}
+
+.made-by {
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+  margin: var(--space-l) 0 0;
+}
+
+.theme-toggle {
+  font: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radius-m);
+  padding: var(--space-xs) var(--space-m);
+  min-height: 44px;
+  cursor: pointer;
+}
+
 /* DORA dashboard (dora/index.html) */
 .hero--compact {
   padding: var(--space-xl) 0 var(--space-m);

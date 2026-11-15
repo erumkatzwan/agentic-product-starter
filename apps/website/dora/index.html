@@ -7,6 +7,7 @@
     <meta name="description" content="DORA metrics for this repository: deployment frequency, lead time for changes, change failure rate and time to restore service.">
     <link rel="stylesheet" href="../tokens.css">
     <link rel="stylesheet" href="../styles.css">
+    <script src="../theme.js"></script>
     <script src="dora.js" defer></script>
   </head>
   <body>
@@ -16,6 +17,7 @@
         <a href="../">Home</a>
         <a href="#how-measured">How it is measured</a>
       </nav>
+      <button class="theme-toggle" type="button" hidden>Dark mode</button>
     </header>
 
     <main id="dora" data-source="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/metrics/dora.json">
@@ -51,7 +53,19 @@
     </main>
 
     <footer class="footer">
-      <p>Agentic Product Starter by Erum Awan.</p>
+      <p class="footer__tagline"><strong>Agentic Product Starter</strong> — the production-ready starter for building products with AI agents.</p>
+      <nav class="footer__links" aria-label="Project">
+        <a href="https://github.com/erumkatzwan/agentic-product-starter">GitHub</a>
+        <a href="https://github.com/erumkatzwan/agentic-product-starter#readme">Docs</a>
+        <a href="../dora/">Delivery dashboard</a>
+        <a href="https://github.com/erumkatzwan/agentic-product-starter/releases">Changelog</a>
+        <a href="https://www.linkedin.com/in/erumkatzwan/">LinkedIn</a>
+      </nav>
+      <p class="footer__quote"><em>“AI gives you answers. Wisdom knows which questions matter.”</em></p>
+      <p class="footer__legal">
+        MIT licensed. Built by <a href="https://www.linkedin.com/in/erumkatzwan/">Erum Awan</a> with Claude. Shared agent skills by
+        <a href="https://www.aihero.dev/skills">Matt Pocock</a> (MIT). © 2026 Erum Awan
+      </p>
     </footer>
   </body>
 </html>
