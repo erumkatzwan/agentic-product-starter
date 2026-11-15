@@ -2,7 +2,7 @@
 
 A complete, end-to-end business starter for building a product with AI coding agents: **iOS app, Android app, web app, back office, .NET backend and landing website** in one repository, with one design system, one way of working from idea to retro, and quality gates on every change.
 
-Click **Use this template**, rename it with one command, and start shaping your first feature.
+Click **Use this template**, run two setup commands, and start shaping your first feature. See [Make it yours](#make-it-yours).
 
 ## Production-ready from day one
 
@@ -10,14 +10,15 @@ Click **Use this template**, rename it with one command, and start shaping your 
 |---|---|
 | **Apps** | iOS, Android, web app, back office, .NET 10 backend and landing website, all on one backend and one sign-in flow |
 | **Design** | One token file generates Swift, Kotlin and CSS; CI blocks any app that drifts from the palette |
-| **Way of working** | 32 shared skills from idea to retro, platform skills for every app, `AGENTS.md` rules for any coding agent |
+| **Way of working** | 33 shared skills from idea to retro, platform skills for every app, `AGENTS.md` rules for any coding agent |
 | **Architecture** | arc42 overview with C4 diagrams and MADR decision records, read before every change |
 | **Quality gates** | Lint, types, spelling, unit, UI and end-to-end tests with 70% coverage on every pull request; `main` only changes through green pull requests |
 | **Environments** | Dev, SYST and Prod in every app, plus feature flags to ship unfinished work safely |
 | **Security** | CodeQL, dependency review, secret push protection, private vulnerability reporting and a weekly vulnerability report across all apps |
 | **Dependencies** | Dependabot every week; patch and minor updates merge themselves when CI is green, major ones are reviewed |
 | **Observability** | OpenTelemetry traces, metrics and logs from the backend into Grafana dashboards, with a one-command local stack; crash reporting in every app with Sentry; CI proves the data arrives |
-| **Make it yours** | One command renames every app, ID, package and folder; CI proves the renamed copy still builds |
+| **Make it yours** | One command applies the GitHub settings a template copy misses, one renames every app, ID, package and folder; CI proves both |
+| **Third-party services** | Sentry, Grafana Cloud and store accounts are all optional and off until you add a key; one list says what each needs and where the values go |
 | **Screenshots** | Taken from the real apps and refreshed automatically |
 | **Coming next** | A DORA metrics dashboard |
 
@@ -84,14 +85,16 @@ flowchart TB
 | [`observability`](observability/README.md) | Local Grafana stack, dashboards, and how to connect Grafana Cloud and Sentry | OpenTelemetry, Grafana, Sentry | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
 | [`docs/`](docs/README.md) | Product context, [architecture overview](docs/architecture/README.md) (arc42 + C4), [decisions](docs/adr/README.md) (MADR), agent setup | Markdown | Ready |
-| `.agents/skills/` | 32 shared skills covering the whole SDLC | Agent Skills | Ready |
+| `.agents/skills/` | 33 shared skills covering the whole SDLC | Agent Skills | Ready |
 
 ```
 /
 ├── AGENTS.md                # Shared agent rules; points to each component's AGENTS.md
+├── .env.example             # Local third-party settings (copy to .env.local)
 ├── CLAUDE.md                # Loads AGENTS.md for Claude Code
 ├── .agents/skills/          # Shared skills: idea → spec → tickets → build → review → retro
 ├── .github/                 # CI workflows, issue templates
+├── config/                  # Third-party services and GitHub settings for new copies
 ├── apps/
 │   ├── ios/                 # Customer app for iPhone (SwiftUI)
 │   ├── android/             # Customer app for Android (Jetpack Compose)
@@ -167,6 +170,7 @@ Every pull request runs the checks for the parts it touches:
 | Website | HTML validation, spelling, smoke tests |
 | Design tokens | Generated files in sync with `design/tokens.json` |
 | Security | Dependency review on every pull request, CodeQL, secret push protection, weekly vulnerability report across all apps ([SECURITY.md](SECURITY.md)) |
+| Setup | Integration list, `.env.example`, repository settings and code agree |
 | Observability | Starts Grafana in CI, sends traffic to the API, and fails if metrics, traces or any dashboard query come back empty |
 | Dependencies | Dependabot: grouped patch and minor updates per app merge automatically when CI is green |
 
@@ -176,14 +180,51 @@ Every component uses **Dev**, **SYST** (system test) and **Prod**. Dev and SYST 
 
 ## Make it yours
 
-Turn the starter into your product in one command. It renames every app, bundle ID, package, namespace and folder, and keeps the credits:
+Four steps from this starter to your own product. Only the first three are needed to build and run everything; nothing needs an account or a key.
+
+### 1. Copy it
+
+Click **Use this template** on GitHub and create your repository.
+
+### 2. Turn on the GitHub settings
+
+A template copy gets the files but not the repository settings, so its quality gates are off. One command applies them: branch protection with every required check, squash-only merges, auto-merge, CodeQL, Dependabot, secret scanning, private vulnerability reporting, GitHub Pages, the Dev/Syst/Prod environments and the labels the skills use.
+
+```bash
+gh auth login                                   # once, as an admin of your new repository
+node scripts/setup.mjs repo --dry-run           # see what it will change
+node scripts/setup.mjs repo                     # apply (config/repo-settings.json)
+```
+
+### 3. Rename it
+
+One command renames every app, bundle ID, package, namespace and folder, and keeps the credits:
 
 ```bash
 node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app --dry-run   # preview
 node scripts/rename.mjs --name "Fashion Girl" --id com.fashiongirl.app             # apply
 ```
 
-Or ask your agent: "Rename this product to Fashion Girl" (the `rename-product` skill). Start from **Use this template** on GitHub to get your own copy first.
+Or ask your agent: "Rename this product to Fashion Girl" (the `rename-product` skill).
+
+### 4. Connect third-party services (optional)
+
+Every service below is **off until you add its key**, and the product builds, runs and passes CI without any of them. Run `node scripts/setup.mjs` to see what is on and how to turn the rest on, or ask your agent to "set up integrations" (the `setup-integrations` skill).
+
+| Service | What it adds | When | Cost | Settings |
+|---|---|---|---|---|
+| [Sentry](https://sentry.io) | Crash and error reports from iOS, Android, web app and back office | Optional | Free plan | `SENTRY_DSN_IOS`, `SENTRY_DSN_ANDROID`, `SENTRY_DSN_WEB_APP`, `SENTRY_DSN_BACK_OFFICE` |
+| [Grafana Cloud](https://grafana.com/products/cloud/) | Backend traces, metrics and logs in SYST and Prod (Dev runs Grafana locally) | Optional | Free tier | `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_HEADERS` |
+| [Apple Developer Program](https://developer.apple.com/programs/) | Running on a phone, TestFlight, App Store, push notifications | When you publish | Yearly fee | Team ID, bundle IDs, APNs key |
+| [Google Play](https://play.google.com/console) and Firebase | Publishing on Android, push notifications | When you publish | One-off fee; push is free | Application ID, `google-services.json` |
+| Hosting | Running the API, web app and back office for customers | When you publish | Depends on the provider | API addresses per environment |
+
+Where the values go (never in the code):
+
+* **Your machine (Dev):** copy `.env.example` to `.env.local` at the repository root. It is git-ignored, and every app reads it when it builds.
+* **SYST and Prod:** GitHub Environments. `node scripts/setup.mjs set SENTRY_DSN_IOS --env Prod` saves a value there (secrets stay hidden); deploy workflows that use the environment receive it as an environment variable.
+
+The full list, with sign-up links and step-by-step instructions, is `config/integrations.json`. The **Setup check** fails if a setting is added to the code without being listed there.
 
 ## Getting started
 

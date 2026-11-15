@@ -6,6 +6,21 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+// Third-party settings (config/integrations.json): an environment variable wins, then .env.local at the repository root.
+// Empty means the integration is off.
+fun integration(key: String): String {
+    providers.environmentVariable(key).orNull?.takeIf { it.isNotBlank() }?.let { return it }
+    val envFile = providers.fileContents(rootProject.layout.projectDirectory.file("../../.env.local")).asText.orNull ?: return ""
+    return envFile
+        .lines()
+        .map { it.trim() }
+        .firstOrNull { it.startsWith("$key=") }
+        ?.substringAfter("=")
+        ?.trim()
+        ?.trim('"', '\'')
+        .orEmpty()
+}
+
 android {
     namespace = "com.agentic.app"
     compileSdk {
@@ -21,6 +36,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "SENTRY_DSN", "\"${integration("SENTRY_DSN_ANDROID")}\"")
     }
 
     // Dev, SYST and Prod side by side on one phone. Per-environment values live in src/<flavor>/.
@@ -59,6 +75,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     testOptions {

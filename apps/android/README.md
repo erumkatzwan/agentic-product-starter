@@ -50,7 +50,7 @@ apps/android/
 │       │   │   ├── navigation/       # Route, Router (Navigation 3 back stack)
 │       │   │   ├── auth/             # SessionStore (who is signed in), TokenStore (Android Keystore)
 │       │   │   ├── services/         # Repositories, AuthService, push notifications
-│       │   │   └── monitoring/       # CrashReporter (Sentry when SENTRY_DSN is set)
+│       │   │   └── monitoring/       # CrashReporter (Sentry when SENTRY_DSN_ANDROID is set)
 │       │   └── features/             # auth, home, detail, profile, settings (Screen + ViewModel)
 │       ├── main/assets/fixtures/     # Test data JSON (same files as iOS)
 │       ├── dev/ syst/ prod/          # Per-environment API URL, app name, network security

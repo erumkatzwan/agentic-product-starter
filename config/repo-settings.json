@@ -1,0 +1,90 @@
+{
+  "$comment": "GitHub settings that \"Use this template\" does not copy. Applied with `node scripts/setup.mjs repo`.",
+  "repository": {
+    "allow_squash_merge": true,
+    "allow_merge_commit": false,
+    "allow_rebase_merge": false,
+    "allow_auto_merge": true,
+    "delete_branch_on_merge": true,
+    "has_discussions": true,
+    "has_wiki": false,
+    "squash_merge_commit_title": "PR_TITLE",
+    "squash_merge_commit_message": "PR_BODY"
+  },
+  "labels": [
+    ["needs-triage", "FBCA04", "Maintainer needs to evaluate this issue"],
+    ["needs-info", "D876E3", "Waiting on the reporter for more information"],
+    ["ready-for-agent", "0E8A16", "Fully specified, ready for an AI agent to pick up"],
+    ["ready-for-human", "1D76DB", "Needs a human to implement or decide"],
+    ["wontfix", "FFFFFF", "This will not be worked on"],
+    ["accessibility", "F143AB", "Barrier affecting people with disabilities"],
+    ["incident", "B60205", "Customers affected in production (feeds the DORA metrics)"],
+    ["dependencies", "8224D5", "Dependency updates (Dependabot or update-dependencies skill)"],
+    ["security", "8F6DAE", "Vulnerability or security fix (security-audit skill)"],
+    ["area:ios", "C5DEF5", "iOS app (apps/ios)"],
+    ["area:android", "7CDC17", "Android app (apps/android)"],
+    ["area:web-app", "C5DEF5", "Web app (apps/web-app)"],
+    ["area:back-office", "C5DEF5", "Back office (apps/back-office)"],
+    ["area:backend", "C5DEF5", ".NET backend (backend)"],
+    ["area:website", "C5DEF5", "Landing website (apps/website)"],
+    ["area:design", "C5DEF5", "Design tokens and shared look (design)"],
+    ["wayfinder:map", "5319E7", "Map of decisions for a large effort (wayfinder skill)"],
+    ["wayfinder:grilling", "BFD4F2", "Wayfinder ticket: settle with a grilling session"],
+    ["wayfinder:research", "BFD4F2", "Wayfinder ticket: answer with research"],
+    ["wayfinder:prototype", "BFD4F2", "Wayfinder ticket: answer with a throwaway prototype"],
+    ["wayfinder:task", "BFD4F2", "Wayfinder ticket: a concrete task"]
+  ],
+  "ruleset": {
+    "name": "Protect main",
+    "target": "branch",
+    "enforcement": "active",
+    "conditions": { "ref_name": { "include": ["~DEFAULT_BRANCH"], "exclude": [] } },
+    "bypass_actors": [],
+    "rules": [
+      { "type": "deletion" },
+      { "type": "non_fast_forward" },
+      { "type": "required_linear_history" },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": false,
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": true,
+          "allowed_merge_methods": ["squash"]
+        }
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            { "context": "iOS lint" },
+            { "context": "iOS spelling" },
+            { "context": "iOS unit tests and coverage" },
+            { "context": "iOS UI tests" },
+            { "context": "iOS end-to-end tests" },
+            { "context": "Android lint" },
+            { "context": "Android spelling" },
+            { "context": "Android unit tests and coverage" },
+            { "context": "Android UI tests" },
+            { "context": "Android end-to-end tests" },
+            { "context": "Web app lint, types and unit tests" },
+            { "context": "Web app end-to-end tests" },
+            { "context": "Back office lint, types and unit tests" },
+            { "context": "Back office end-to-end tests" },
+            { "context": "Backend lint, tests and coverage" },
+            { "context": "Website validation and smoke tests" },
+            { "context": "Design tokens in sync" },
+            { "context": "Dependency review" },
+            { "context": "Rename check" },
+            { "context": "Observability smoke test" },
+            { "context": "Setup check" }
+          ]
+        }
+      }
+    ]
+  }
+}

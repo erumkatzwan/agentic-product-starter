@@ -6,7 +6,7 @@ COVERAGE_MIN ?= 70
 OUT ?= build/screenshots
 XCODEBUILD = xcodebuild -project AgenticApp.xcodeproj -scheme AgenticApp -destination '$(DESTINATION)'
 
-.PHONY: help bootstrap generate open lint typos test-unit test-ui test e2e screenshots ci clean
+.PHONY: help bootstrap secrets generate open lint typos test-unit test-ui test e2e screenshots ci clean
 
 help: ## Show this help
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-10s %s\n", $$1, $$2}'
@@ -15,7 +15,10 @@ bootstrap: ## Install tools (XcodeGen, SwiftLint, typos, Maestro)
 	brew install xcodegen swiftlint typos-cli
 	curl -Ls "https://get.maestro.mobile.dev" | bash
 
-generate: ## Generate AgenticApp.xcodeproj from project.yml
+secrets: ## Write Config/Secrets.xcconfig from .env.local or environment variables (never committed)
+	node ../../scripts/setup.mjs ios-xcconfig > Config/Secrets.xcconfig
+
+generate: secrets ## Generate AgenticApp.xcodeproj from project.yml
 	xcodegen generate
 
 open: generate ## Generate and open in Xcode
