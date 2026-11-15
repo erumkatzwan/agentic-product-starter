@@ -87,3 +87,13 @@ test('the repo settings cover security, labels and the main ruleset', () => {
     .join('\n');
   for (const { context } of checks) assert.ok(workflowText.includes(`name: ${context}`), `"${context}" is a job in a workflow`);
 });
+
+test('accessibility checks are on by default and can be switched off', () => {
+  const repoSettings = loadJson('config/repo-settings.json');
+  const variable = (options) => repoSteps('owner/repo', repoSettings, registry.environments, options).find(([, method]) => method === 'VARIABLE');
+  assert.deepEqual(variable(undefined).slice(2), ['ACCESSIBILITY_CHECKS', 'on']);
+  assert.deepEqual(variable({ accessibility: 'off' }).slice(2), ['ACCESSIBILITY_CHECKS', 'off']);
+  assert.throws(() => variable({ accessibility: 'maybe' }));
+  const checks = repoSettings.ruleset.rules.find((r) => r.type === 'required_status_checks').parameters.required_status_checks;
+  assert.ok(checks.some(({ context }) => context === 'Accessibility checks'));
+});
