@@ -9,6 +9,8 @@
 //   node scripts/security-audit.mjs --out report.md     # also write the report to a file
 //   node scripts/security-audit.mjs --fail-on high      # exit 1 if anything is high or critical
 //   node scripts/security-audit.mjs --list              # only list the packages found, no network
+//   node scripts/security-audit.mjs --json security.json --badge security-badge.json
+//                                                       # results for the security dashboard and README badge
 //
 // Sources: npm lock files (web app, back office, website), NuGet (backend, after `dotnet restore`),
 // Gradle (Android, needs Java), Swift Package Manager (iOS, when packages are added).
@@ -246,6 +248,49 @@ export function report(findings, packages, warnings) {
   return lines.join('\n');
 }
 
+// ---------- dashboard data ----------
+
+const LEVELS = { CRITICAL: 'critical', HIGH: 'high', MODERATE: 'medium', LOW: 'low', UNKNOWN: 'unknown' };
+
+/** Counts per level, overall and per app, plus every finding: the data behind the security dashboard. */
+export function summary(findings, packages, warnings, generatedAt = new Date().toISOString()) {
+  const count = (list) => Object.fromEntries(Object.values(LEVELS).map((level) => [level, list.filter((f) => LEVELS[f.severity] === level).length]));
+  const apps = [...new Set(packages.map((p) => p.app))].sort();
+  return {
+    generatedAt,
+    source: 'OSV (https://osv.dev)',
+    packages: packages.length,
+    counts: count(findings),
+    apps: apps.map((app) => ({
+      app,
+      packages: packages.filter((p) => p.app === app).length,
+      counts: count(findings.filter((f) => f.app === app)),
+    })),
+    findings: findings.map((f) => ({
+      level: LEVELS[f.severity],
+      app: f.app,
+      ecosystem: f.ecosystem,
+      package: f.name,
+      version: f.version,
+      fixed: f.fixed,
+      scope: f.scope,
+      id: f.id,
+      cve: f.cve,
+      summary: f.summary,
+      url: `https://osv.dev/vulnerability/${f.id}`,
+    })),
+    notScanned: warnings,
+  };
+}
+
+/** A shields.io endpoint badge: red for critical or high, amber for medium, green otherwise. */
+export function badge(data) {
+  const { critical, high, medium, low } = data.counts;
+  const color = critical || high ? 'C93636' : medium ? '9A5C00' : '1A7F45';
+  const message = critical || high ? `${critical} critical · ${high} high` : medium || low ? `${medium} medium · ${low} low` : 'none known';
+  return { schemaVersion: 1, label: 'vulnerabilities', message, color: `#${color}` };
+}
+
 // ---------- main ----------
 
 async function main() {
@@ -265,6 +310,11 @@ async function main() {
   const text = report(findings, packages, warnings);
   console.log(text);
   if (option('--out')) writeFileSync(option('--out'), text);
+  if (option('--json') || option('--badge')) {
+    const data = summary(findings, packages, warnings);
+    if (option('--json')) writeFileSync(option('--json'), `${JSON.stringify(data, null, 2)}\n`);
+    if (option('--badge')) writeFileSync(option('--badge'), `${JSON.stringify(badge(data))}\n`);
+  }
 
   const failOn = option('--fail-on')?.toUpperCase();
   if (failOn) {
