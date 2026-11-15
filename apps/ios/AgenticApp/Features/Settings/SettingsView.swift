@@ -39,15 +39,21 @@ struct SettingsView: View {
                         ))
                         .accessibilityIdentifier("settings.flag.\(flag.rawValue)")
                     }
-                    Button("Reset to backend values") {
-                        FeatureFlag.allCases.forEach { featureFlags.setOverride(nil, for: $0) }
-                    }
-                    .buttonStyle(.ds(.secondary))
-                    .listRowBackground(Color.clear)
-                    .accessibilityIdentifier("settings.resetFlags")
                 } header: {
                     header("Feature flags (this device)")
                 }
+            }
+        }
+        // Outside the list: list rows cap Dynamic Type for buttons, which the accessibility audit flags.
+        .safeAreaInset(edge: .bottom) {
+            if viewModel.canEditFeatureFlags {
+                Button("Reset flags to backend values") {
+                    FeatureFlag.allCases.forEach { featureFlags.setOverride(nil, for: $0) }
+                }
+                .buttonStyle(.ds(.secondary))
+                .accessibilityIdentifier("settings.resetFlags")
+                .padding(theme.spacing.m)
+                .background(theme.colors.background)
             }
         }
         .scrollContentBackground(.hidden)
