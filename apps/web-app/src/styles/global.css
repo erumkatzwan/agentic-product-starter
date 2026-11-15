@@ -96,7 +96,7 @@ a {
   font: inherit;
   padding: var(--space-s) var(--space-m);
   border-radius: var(--radius-m);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-control-border);
   background: var(--color-background);
   color: var(--color-text-primary);
 }
@@ -144,7 +144,7 @@ a {
 .ds-button--secondary {
   background: transparent;
   color: var(--color-primary);
-  border-color: var(--color-border);
+  border-color: var(--color-control-border);
 }
 
 .ds-button--danger {

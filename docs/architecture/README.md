@@ -67,6 +67,7 @@ Dotted lines are skeletons: the code paths exist but need an account and keys be
 | Observability | OpenTelemetry to Grafana for the backend, Sentry for app crashes | [ADR-0008](../adr/0008-observability.md) |
 | Third-party settings | Optional, listed in one file, kept out of the code: `.env.local` locally, GitHub Environments for SYST and Prod | [ADR-0009](../adr/0009-third-party-configuration.md) |
 | Delivery metrics | Weekly DORA metrics from GitHub data on a website dashboard | [ADR-0010](../adr/0010-dora-metrics.md) |
+| Accessibility | WCAG 2.2 AA in every app; contrast checked in the tokens, platform audits in the tests | [ADR-0011](../adr/0011-accessibility.md) |
 
 ## 5. Building blocks
 
@@ -266,13 +267,19 @@ Each app has unit, UI and end-to-end tests. Mobile UI and end-to-end tests run o
 * **Where:** the website's `dora/` page shows the four keys, their DORA level and the trend.
 * **Incidents:** opened from the **Incident** issue template and closed when service is restored.
 
+### 8.10 Accessibility
+
+* **Standard:** WCAG 2.2 AA in every app ([ADR-0011](../adr/0011-accessibility.md)).
+* **Colours:** `design/build.mjs` fails when a text or brand colour drops below 4.5:1 or a control border below 3:1, in light or dark mode.
+* **Checks:** axe on every web screen (unit and end-to-end tests), Apple's accessibility audit in the iOS UI tests, Google's Accessibility Test Framework in the Android UI tests. The **Accessibility** workflow gathers the web and token checks behind the README badge.
+
 ## 9. Decisions
 
 All decisions are in [`docs/adr`](../adr/README.md). Each one names the check that enforces it under **Confirmation**.
 
 ## 10. Quality gates
 
-Every pull request runs the checks of the parts it touches, and the `main` ruleset blocks merging until all pass: lint and spelling, unit tests with 70% coverage, UI tests, end-to-end tests, design tokens in sync, dependency review, the rename check, and an observability smoke test that proves telemetry reaches Grafana. See the [README](../../README.md#quality-gates).
+Every pull request runs the checks of the parts it touches, and the `main` ruleset blocks merging until all pass: lint and spelling, unit tests with 70% coverage, UI tests, end-to-end tests, design tokens in sync, dependency review, the rename check, accessibility audits on every platform, and an observability smoke test that proves telemetry reaches Grafana. See the [README](../../README.md#quality-gates).
 
 ## 11. Risks and technical debt
 

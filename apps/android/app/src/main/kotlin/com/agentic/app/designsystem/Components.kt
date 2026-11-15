@@ -142,7 +142,7 @@ fun DSTextField(
             ),
             shape = RoundedCornerShape(AppTheme.radius.m),
             colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = AppTheme.colors.border,
+                unfocusedBorderColor = AppTheme.colors.controlBorder,
                 focusedBorderColor = AppTheme.colors.primary,
                 errorBorderColor = AppTheme.colors.error
             )

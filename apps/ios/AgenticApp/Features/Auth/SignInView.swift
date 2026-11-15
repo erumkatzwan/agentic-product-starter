@@ -39,6 +39,7 @@ struct SignInView: View {
                         SignUpView(viewModel: SignUpViewModel(session: container.session))
                     }
                     .font(theme.typography.body)
+                    .foregroundStyle(theme.colors.primary)
                     .accessibilityIdentifier("signIn.createAccount")
                 }
             }

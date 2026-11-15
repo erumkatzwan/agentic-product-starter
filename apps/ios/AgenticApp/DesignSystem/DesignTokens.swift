@@ -5,13 +5,14 @@ enum DesignTokens {
     static let background = UIColor(light: 0xFFFFFF, dark: 0x0C0E13)
     static let surface = UIColor(light: 0xF7F8FA, dark: 0x14171F)
     static let border = UIColor(light: 0xDDE1E8, dark: 0x262B36)
+    static let controlBorder = UIColor(light: 0x7D8698, dark: 0x5B6475)
     static let textPrimary = UIColor(light: 0x14171F, dark: 0xF7F8FA)
     static let textSecondary = UIColor(light: 0x5B6475, dark: 0x9AA3B2)
     static let primary = UIColor(light: 0x3F5BD9, dark: 0x7C93FF)
     static let primaryHover = UIColor(light: 0x3249B8, dark: 0x9DB0FF)
     static let onPrimary = UIColor(light: 0xFFFFFF, dark: 0x0C0E13)
-    static let success = UIColor(light: 0x1F8A4C, dark: 0x4CC487)
-    static let warning = UIColor(light: 0xB86E00, dark: 0xF2B84B)
+    static let success = UIColor(light: 0x1A7F45, dark: 0x4CC487)
+    static let warning = UIColor(light: 0x9A5C00, dark: 0xF2B84B)
     static let error = UIColor(light: 0xC93636, dark: 0xF27474)
 
     enum Space {

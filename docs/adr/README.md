@@ -14,6 +14,7 @@ Decisions that are hard to reverse, would surprise a future reader, and came fro
 | [0008](0008-observability.md) | Observability with OpenTelemetry, Grafana and Sentry | Accepted | 2026-11-15 |
 | [0009](0009-third-party-configuration.md) | Third-party settings in .env.local and GitHub Environments | Accepted | 2026-11-15 |
 | [0010](0010-dora-metrics.md) | Measure delivery with DORA metrics from GitHub data | Accepted | 2026-11-15 |
+| [0011](0011-accessibility.md) | Meet WCAG 2.2 AA in every app, checked automatically | Accepted | 2026-11-15 |
 
 ## When to write one
 

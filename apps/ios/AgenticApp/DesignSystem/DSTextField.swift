@@ -27,7 +27,7 @@ struct DSTextField: View {
             .padding(theme.spacing.m)
             .background(
                 RoundedRectangle(cornerRadius: theme.radius.m)
-                    .stroke(error == nil ? theme.colors.border : theme.colors.error)
+                    .stroke(error == nil ? theme.colors.controlBorder : theme.colors.error)
             )
             .accessibilityIdentifier(identifier)
             if let error {
