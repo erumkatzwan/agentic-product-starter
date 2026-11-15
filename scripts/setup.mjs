@@ -42,8 +42,12 @@ export function parseEnv(text) {
 /** Sets or replaces one KEY=value line, keeping everything else (comments included). */
 export function upsertEnv(text, key, value) {
   const line = `${key}=${value}`;
-  const pattern = new RegExp(`^\\s*${key}\\s*=.*$`, 'm');
-  if (pattern.test(text)) return text.replace(pattern, line);
+  const lines = text.split('\n');
+  const index = lines.findIndex((l) => l.includes('=') && l.slice(0, l.indexOf('=')).trim() === key);
+  if (index > -1) {
+    lines[index] = line;
+    return lines.join('\n');
+  }
   return `${text}${text && !text.endsWith('\n') ? '\n' : ''}${line}\n`;
 }
 
