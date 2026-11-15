@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Security · Agentic Product Starter</title>
+    <meta name="description" content="Known vulnerabilities in every app of this repository, by level, with the version that fixes each one.">
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../theme.js"></script>
+    <script src="security.js" defer></script>
+  </head>
+  <body>
+    <header class="nav">
+      <a class="brand" href="../">Agentic Product Starter</a>
+      <nav aria-label="Pages">
+        <a href="../">Home</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+      <button class="theme-toggle" type="button" aria-label="Dark mode" hidden></button>
+    </header>
+
+    <main id="security" data-source="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/security/security.json">
+      <section class="hero hero--compact">
+        <p class="eyebrow">Security</p>
+        <h1>Known vulnerabilities</h1>
+        <p class="lead">
+          Every dependency of every app, checked against the OSV vulnerability database every week, with the version that
+          fixes each finding.
+        </p>
+        <p id="security-status" class="muted" role="status">Loading the latest scan…</p>
+      </section>
+
+      <section class="section" aria-labelledby="by-level">
+        <h2 id="by-level">By level</h2>
+        <div class="grid metrics" id="security-levels"></div>
+      </section>
+
+      <section class="section" aria-labelledby="by-app">
+        <h2 id="by-app">By app</h2>
+        <div class="table-wrap"><table id="security-apps"></table></div>
+      </section>
+
+      <section class="section" aria-labelledby="findings">
+        <h2 id="findings">Findings</h2>
+        <div id="security-findings"></div>
+      </section>
+
+      <section id="how-it-works" class="section">
+        <h2>How it works</h2>
+        <ul class="checks">
+          <li><strong>Every week:</strong> the <a href="https://github.com/erumkatzwan/agentic-product-starter/blob/main/.github/workflows/security.yml">Security workflow</a> scans the iOS, Android, web app, back office, backend and website dependencies against <a href="https://osv.dev">OSV</a>.</li>
+          <li><strong>Every pull request:</strong> dependency review blocks new dependencies with known high or critical vulnerabilities; CodeQL checks the code.</li>
+          <li><strong>Every push:</strong> secret push protection blocks known key formats.</li>
+          <li><strong>Fixing:</strong> Dependabot opens updates every week, and the <code>security-audit</code> skill tells agents how to fix a finding.</li>
+        </ul>
+        <p>
+          Found a security problem? Please do not open a public issue: <a href="https://github.com/erumkatzwan/agentic-product-starter/security/advisories/new">report it privately</a>
+          (see <a href="https://github.com/erumkatzwan/agentic-product-starter/blob/main/SECURITY.md">SECURITY.md</a>).
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__tagline"><strong>Agentic Product Starter</strong> — the production-ready starter for building products with AI agents.</p>
+      <nav class="footer__links" aria-label="Project">
+        <a href="https://github.com/erumkatzwan/agentic-product-starter">GitHub</a>
+        <a href="https://github.com/erumkatzwan/agentic-product-starter#readme">Docs</a>
+        <a href="../dora/">Delivery dashboard</a>
+        <a href="../security/">Security</a>
+        <a href="https://github.com/erumkatzwan/agentic-product-starter/releases">Changelog</a>
+        <a href="https://www.linkedin.com/in/erumkatzwan/">LinkedIn</a>
+      </nav>
+      <p class="footer__quote"><em>“AI gives you answers. Wisdom knows which questions matter.”</em></p>
+      <p class="footer__legal">
+        MIT licensed. Built by <a href="https://www.linkedin.com/in/erumkatzwan/">Erum Awan</a> with Claude. Shared agent skills by
+        <a href="https://www.aihero.dev/skills">Matt Pocock</a> (MIT). © 2026 Erum Awan
+      </p>
+    </footer>
+  </body>
+</html>

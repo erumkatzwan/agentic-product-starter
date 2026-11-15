@@ -29,6 +29,7 @@ jobs:
           mkdir -p _site
           cp apps/website/*.html apps/website/*.css apps/website/*.js _site/
           cp -r apps/website/dora _site/dora
+          cp -r apps/website/security _site/security
           cp -r apps/website/assets _site/assets
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5

@@ -23,6 +23,8 @@ gh api "repos/{owner}/{repo}/dependabot/alerts?state=open&per_page=100" \
 
 Show the user one table: severity, app, package, current version, fixed version, runtime or dev, advisory link. Lead with the counts per severity.
 
+The latest weekly result is also on the website's **Security** page (`apps/website/security/`) and the README badge, both published by the Security workflow to the `security` branch. After fixing, run the **Security** workflow on `main` (Actions → Security → Run workflow) so the dashboard updates. For a private product, the `SECURITY_DASHBOARD` repository variable set to `off` stops publishing.
+
 ## 2. Triage
 
 | Severity | Fix within | Notes |

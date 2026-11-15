@@ -14,7 +14,7 @@ Include what you found, where (app, file or endpoint), and how to reproduce it.
 | Dependency review | Every pull request | Blocks pull requests that add a dependency with a high or critical vulnerability |
 | CodeQL | Every pull request and weekly | Static analysis of Swift, Kotlin, C#, TypeScript, Python and the workflows |
 | Secret scanning with push protection | Every push | Blocks commits that contain keys or tokens |
-| Vulnerability report (`scripts/security-audit.mjs`) | Weekly and on demand | One report across all apps with the version that fixes each finding |
+| Vulnerability report (`scripts/security-audit.mjs`) | Weekly and on demand | One report across all apps with the version that fixes each finding, published to the [security dashboard](https://erumkatzwan.github.io/agentic-product-starter/security/) and the README badge (turn off with the `SECURITY_DASHBOARD` variable) |
 
 How to triage and fix findings: `.agents/skills/security-audit/SKILL.md`.
 

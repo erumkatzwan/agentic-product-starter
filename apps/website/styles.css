@@ -262,6 +262,49 @@ h3 {
   border-color: var(--color-error);
 }
 
+/* Security dashboard (security/index.html) */
+.sev--critical,
+.sev--high {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.sev--medium {
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.sev {
+  text-transform: capitalize;
+}
+
+.sev--clear {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-sm);
+}
+
+.table-wrap th,
+.table-wrap td {
+  text-align: left;
+  padding: var(--space-s) var(--space-m);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-wrap thead th {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
 .sparkline {
   display: block;
   width: 100%;

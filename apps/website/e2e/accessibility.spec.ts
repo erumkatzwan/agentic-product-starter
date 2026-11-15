@@ -2,6 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
+import { securitySample } from './security-sample';
 
 // Both pages meet WCAG 2.2 AA in light and dark mode, colour contrast included (ADR-0011).
 test.skip(process.env.ACCESSIBILITY_CHECKS === 'off', 'Accessibility checks are off (repository variable ACCESSIBILITY_CHECKS)');
@@ -40,5 +41,10 @@ for (const colorScheme of ['light', 'dark'] as const) {
     await page.goto(url('dora/index.html'));
     await expect(page.locator('#time-to-restore')).toContainText('30 h');
     await expectAccessible(page, 'dashboard');
+
+    await page.route('**/security/security.json', (route) => route.fulfill({ json: securitySample }));
+    await page.goto(url('security/index.html'));
+    await expect(page.locator('#level-critical')).toContainText('Fix needed');
+    await expectAccessible(page, 'security dashboard');
   });
 }
