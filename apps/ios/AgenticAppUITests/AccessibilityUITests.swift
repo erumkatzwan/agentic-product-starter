@@ -14,6 +14,9 @@ final class AccessibilityUITests: XCTestCase {
     private func audit(_ screen: String) throws {
         var issues: [String] = []
         try app.performAccessibilityAudit { issue in
+            // Known platform false positive: a single-line text field scrolls its text horizontally by design,
+            // and the audit reports that as clipped. Everything else is recorded.
+            if issue.auditType == .textClipped, issue.element?.elementType == .textField { return true }
             let element = issue.element.map { "\($0.elementType) '\($0.identifier.isEmpty ? $0.label : $0.identifier)'" } ?? "screen"
             issues.append("\(screen): \(issue.compactDescription) on \(element)")
             return true
