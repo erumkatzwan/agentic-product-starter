@@ -17,6 +17,8 @@ Click **Use this template**, run two setup commands, and start shaping your firs
 
 **Live:** [Website](https://erumkatzwan.github.io/agentic-product-starter/) · [Delivery performance dashboard (DORA)](https://erumkatzwan.github.io/agentic-product-starter/dora/)
 
+![From an idea on a napkin, to spec and tickets, to web and mobile apps, to Dev, SYST and Prod, with the agentic SDLC underneath: Shape, Refine, Specify, Plan, Build, Review, Fix and Learn.](docs/images/agentic-product-starter.png)
+
 ## Built for
 
 What is ready today, and what you add on top for your business model.
