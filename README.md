@@ -264,7 +264,7 @@ Platform skills tell the agent how to build on each platform: `apps/ios/.agents/
 
 ## Quality gates
 
-Every pull request runs the checks for the parts it touches:
+Every pull request runs only the checks for the parts it touches: Markdown-only changes (READMEs, `AGENTS.md`, skills) never start a build, a backend change re-runs only the web end-to-end tests, and the slow simulator and emulator jobs run side by side. A check that has nothing to do reports as skipped, which counts as passed, so `main` stays protected.
 
 | Component | Checks |
 |---|---|

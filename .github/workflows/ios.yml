@@ -26,17 +26,31 @@ jobs:
     name: iOS changes
     runs-on: ubuntu-latest
     outputs:
-      run: ${{ steps.filter.outputs.run }}
+      # Code (not Markdown) in the app, or this workflow. Docs-only changes never start a build.
+      run: ${{ steps.code.outputs.run == 'true' || steps.ci.outputs.run == 'true' }}
+      docs: ${{ steps.docs.outputs.run }}
     steps:
       - uses: actions/checkout@v7
       - uses: dorny/paths-filter@v4
-        id: filter
+        id: code
         with:
+          predicate-quantifier: every
           filters: |
             run:
               - 'apps/ios/**'
-              - 'design/**'
+              - '!**/*.md'
+      - uses: dorny/paths-filter@v4
+        id: ci
+        with:
+          filters: |
+            run:
               - '.github/workflows/ios.yml'
+      - uses: dorny/paths-filter@v4
+        id: docs
+        with:
+          filters: |
+            run:
+              - 'apps/ios/**/*.md'
 
   lint:
     needs: changes
@@ -50,7 +64,7 @@ jobs:
 
   typos:
     needs: changes
-    if: needs.changes.outputs.run == 'true'
+    if: needs.changes.outputs.run == 'true' || needs.changes.outputs.docs == 'true'
     name: iOS spelling
     runs-on: ubuntu-latest
     steps:
@@ -90,7 +104,8 @@ jobs:
 
   e2e:
     name: iOS end-to-end tests
-    needs: [unit-tests, ui-tests]
+    # Runs alongside the unit and UI tests instead of after them, so the pipeline finishes sooner.
+    needs: [lint, typos]
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v7

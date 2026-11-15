@@ -25,18 +25,38 @@ jobs:
     name: Back office changes
     runs-on: ubuntu-latest
     outputs:
-      run: ${{ steps.filter.outputs.run }}
+      # Code (not Markdown) in the app, or this workflow. Docs-only changes never start a build.
+      run: ${{ steps.code.outputs.run == 'true' || steps.ci.outputs.run == 'true' }}
+      docs: ${{ steps.docs.outputs.run }}
+      backend: ${{ steps.backend.outputs.run }}
     steps:
       - uses: actions/checkout@v7
       - uses: dorny/paths-filter@v4
-        id: filter
+        id: code
         with:
+          predicate-quantifier: every
           filters: |
             run:
               - 'apps/back-office/**'
-              - 'backend/**'
-              - 'design/**'
+              - '!**/*.md'
+      - uses: dorny/paths-filter@v4
+        id: ci
+        with:
+          filters: |
+            run:
               - '.github/workflows/back-office.yml'
+      - uses: dorny/paths-filter@v4
+        id: docs
+        with:
+          filters: |
+            run:
+              - 'apps/back-office/**/*.md'
+      - uses: dorny/paths-filter@v4
+        id: backend
+        with:
+          filters: |
+            run:
+              - 'backend/**'
 
   checks:
     needs: changes
@@ -61,7 +81,11 @@ jobs:
 
   e2e:
     name: Back office end-to-end tests
-    needs: checks
+    # Also runs for backend changes, because it tests against the real backend; the unit tests do not need to.
+    needs: [changes, checks]
+    if: >-
+      !cancelled() && (needs.checks.result == 'success' || needs.checks.result == 'skipped') &&
+      (needs.changes.outputs.run == 'true' || needs.changes.outputs.backend == 'true')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

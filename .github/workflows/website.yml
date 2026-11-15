@@ -21,17 +21,31 @@ jobs:
     name: Website changes
     runs-on: ubuntu-latest
     outputs:
-      run: ${{ steps.filter.outputs.run }}
+      # Code (not Markdown) in the app, or this workflow. Docs-only changes never start a build.
+      run: ${{ steps.code.outputs.run == 'true' || steps.ci.outputs.run == 'true' }}
+      docs: ${{ steps.docs.outputs.run }}
     steps:
       - uses: actions/checkout@v7
       - uses: dorny/paths-filter@v4
-        id: filter
+        id: code
         with:
+          predicate-quantifier: every
           filters: |
             run:
               - 'apps/website/**'
-              - 'design/**'
+              - '!**/*.md'
+      - uses: dorny/paths-filter@v4
+        id: ci
+        with:
+          filters: |
+            run:
               - '.github/workflows/website.yml'
+      - uses: dorny/paths-filter@v4
+        id: docs
+        with:
+          filters: |
+            run:
+              - 'apps/website/**/*.md'
 
   checks:
     needs: changes
