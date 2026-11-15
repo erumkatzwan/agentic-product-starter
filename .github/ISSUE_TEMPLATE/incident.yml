@@ -1,0 +1,36 @@
+name: Incident
+description: Something is broken for customers in production. Feeds the DORA metrics.
+title: "[Incident]: "
+labels: ["incident"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Open this as soon as customers are affected and close it when service is restored.
+        The time between the two is the **time to restore** on the Delivery performance dashboard.
+  - type: dropdown
+    id: area
+    attributes:
+      label: What is affected?
+      multiple: true
+      options:
+        - iOS app
+        - Android app
+        - Web app
+        - Back office
+        - Backend
+        - Website
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Who is affected and how? No customer names or emails.
+    validations:
+      required: true
+  - type: input
+    id: cause
+    attributes:
+      label: Change that caused it (if known)
+      description: Pull request or commit link.

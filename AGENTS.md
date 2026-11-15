@@ -47,6 +47,7 @@ When a shared skill and a platform skill disagree on *how to build*, the platfor
 - Never commit secrets, keys or customer data. This repository is public. Secret push protection blocks known key formats.
 - Third-party services: every key or ID is optional and listed in `config/integrations.json` and `.env.example`. Apps read them from environment variables or `.env.local`, never from code. Add a new one there first (the **Setup check** fails otherwise); use the `setup-integrations` skill.
 - Observability: new user-facing behaviour gets a metric and a dashboard panel (`observability` skill). No personal data in logs, traces or metric tags.
+- Incidents: when customers are affected in production, open an issue from the **Incident** template and close it when service is restored; it feeds the DORA metrics (`dora-metrics` skill).
 - Dependencies: new ones must pass **Dependency review**; fix vulnerabilities with the `security-audit` skill and update with the `update-dependencies` skill. Stable versions only.
 
 ## Agent skills

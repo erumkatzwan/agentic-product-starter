@@ -17,6 +17,7 @@ These are part of the Agentic Product Starter, not Matt Pocock's set:
 | `update-dependencies` | Major updates, toolchains, or a failing Dependabot pull request |
 | `rename-product` | Turning the starter into your own named product (name, app ID, repository) |
 | `setup-integrations` | Setting up a new copy: GitHub settings, and turning on Sentry, Grafana Cloud or store accounts |
+| `dora-metrics` | Reading or changing the delivery dashboard, retros, incidents, and wiring in real deployments |
 | `observability` | Adding metrics, logs or traces to a feature, debugging in any environment, or connecting Grafana Cloud and Sentry |
 
 ## The agentic SDLC, stage by stage
