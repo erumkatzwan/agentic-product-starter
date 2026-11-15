@@ -66,6 +66,7 @@ Dotted lines are skeletons: the code paths exist but need an account and keys be
 | Dependencies | GitHub security features, an OSV report and Dependabot updates | [ADR-0007](../adr/0007-dependency-security-and-updates.md) |
 | Observability | OpenTelemetry to Grafana for the backend, Sentry for app crashes | [ADR-0008](../adr/0008-observability.md) |
 | Third-party settings | Optional, listed in one file, kept out of the code: `.env.local` locally, GitHub Environments for SYST and Prod | [ADR-0009](../adr/0009-third-party-configuration.md) |
+| Delivery metrics | Weekly DORA metrics from GitHub data on a website dashboard | [ADR-0010](../adr/0010-dora-metrics.md) |
 
 ## 5. Building blocks
 
@@ -257,6 +258,13 @@ Each app has unit, UI and end-to-end tests. Mobile UI and end-to-end tests run o
 * **Values:** `.env.local` (git-ignored) on a developer's machine; GitHub Environments `Syst` and `Prod` for deployments. Builds read them as environment variables: Vite `define` (web), a Gradle `BuildConfig` field (Android), a generated `Secrets.xcconfig` (iOS), standard `OTEL_*` variables (backend).
 * **Default:** everything is off without a value, so forks, tests and CI never send data anywhere.
 * **New copies:** `node scripts/setup.mjs repo` applies `config/repo-settings.json`, because templates do not copy settings.
+
+### 8.8 Delivery metrics (DORA)
+
+* **What:** deployment frequency, lead time for changes, change failure rate and time to restore service ([ADR-0010](../adr/0010-dora-metrics.md)).
+* **How:** `scripts/dora-metrics.mjs` reads merged pull requests, deploy workflow runs and `incident` issues; the **DORA metrics** workflow publishes `dora.json` to the `metrics` branch every Monday.
+* **Where:** the website's `dora/` page shows the four keys, their DORA level and the trend.
+* **Incidents:** opened from the **Incident** issue template and closed when service is restored.
 
 ## 9. Decisions
 

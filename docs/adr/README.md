@@ -13,6 +13,7 @@ Decisions that are hard to reverse, would surprise a future reader, and came fro
 | [0007](0007-dependency-security-and-updates.md) | Dependency security and updates with GitHub, OSV and Dependabot | Accepted | 2026-11-14 |
 | [0008](0008-observability.md) | Observability with OpenTelemetry, Grafana and Sentry | Accepted | 2026-11-15 |
 | [0009](0009-third-party-configuration.md) | Third-party settings in .env.local and GitHub Environments | Accepted | 2026-11-15 |
+| [0010](0010-dora-metrics.md) | Measure delivery with DORA metrics from GitHub data | Accepted | 2026-11-15 |
 
 ## When to write one
 

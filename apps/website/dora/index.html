@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delivery performance · Agentic Product Starter</title>
+    <meta name="description" content="DORA metrics for this repository: deployment frequency, lead time for changes, change failure rate and time to restore service.">
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../styles.css">
+    <script src="dora.js" defer></script>
+  </head>
+  <body>
+    <header class="nav">
+      <a class="brand" href="../">Agentic Product Starter</a>
+      <nav aria-label="Pages">
+        <a href="../">Home</a>
+        <a href="#how-measured">How it is measured</a>
+      </nav>
+    </header>
+
+    <main id="dora" data-source="https://raw.githubusercontent.com/erumkatzwan/agentic-product-starter/metrics/dora.json">
+      <section class="hero hero--compact">
+        <p class="eyebrow">DORA metrics</p>
+        <h1>Delivery performance</h1>
+        <p class="lead">
+          How fast and how safely changes reach customers, measured from this repository every week. The four keys come from
+          Google's DevOps Research and Assessment (DORA) programme.
+        </p>
+        <p id="dora-status" class="muted" role="status">Loading the latest numbers…</p>
+      </section>
+
+      <section class="section" aria-labelledby="dora-keys">
+        <h2 id="dora-keys">The four keys</h2>
+        <div class="grid metrics" id="dora-metrics"></div>
+      </section>
+
+      <section id="how-measured" class="section">
+        <h2>How it is measured</h2>
+        <ul class="checks">
+          <li><strong>Deployment frequency:</strong> how often a change reaches production. Until every app deploys automatically, each pull request merged into main counts.</li>
+          <li><strong>Lead time for changes:</strong> median time from a pull request's first commit to its merge.</li>
+          <li><strong>Change failure rate:</strong> issues labelled <code>incident</code> plus reverted changes, divided by deployments.</li>
+          <li><strong>Time to restore service:</strong> median time from opening an <code>incident</code> issue to closing it.</li>
+        </ul>
+        <p>
+          The <a href="https://github.com/erumkatzwan/agentic-product-starter/blob/main/.github/workflows/dora.yml">DORA metrics workflow</a>
+          updates the numbers every Monday. See
+          <a href="https://github.com/erumkatzwan/agentic-product-starter/blob/main/docs/adr/0010-dora-metrics.md">ADR-0010</a> for the reasoning.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Agentic Product Starter by Erum Awan.</p>
+    </footer>
+  </body>
+</html>
