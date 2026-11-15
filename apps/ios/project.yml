@@ -9,6 +9,10 @@ configs:
   Dev: debug
   Syst: debug
   Prod: release
+packages:
+  Sentry:
+    url: https://github.com/getsentry/sentry-cocoa
+    from: 9.32.0
 configFiles:
   Dev: Config/Dev.xcconfig
   Syst: Config/Syst.xcconfig
@@ -25,12 +29,15 @@ targets:
     platform: iOS
     sources:
       - path: AgenticApp
+    dependencies:
+      - package: Sentry
     info:
       path: AgenticApp/Resources/Info.plist
       properties:
         CFBundleDisplayName: $(APP_DISPLAY_NAME)
         APP_ENVIRONMENT: $(APP_ENVIRONMENT)
         API_BASE_URL: $(API_BASE_URL)
+        SENTRY_DSN: $(SENTRY_DSN)
         UILaunchScreen: {}
         UIBackgroundModes: [remote-notification]
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]

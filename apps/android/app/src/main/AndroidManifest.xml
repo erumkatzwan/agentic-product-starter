@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgenticApp"
         tools:targetApi="31">
+        <!-- Crash reporting starts in AppContainer, and only when the flavor has a Sentry DSN (ADR-0008). -->
+        <meta-data
+            android:name="io.sentry.auto-init"
+            android:value="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

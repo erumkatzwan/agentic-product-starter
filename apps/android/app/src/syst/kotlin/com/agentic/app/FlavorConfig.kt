@@ -4,4 +4,7 @@ package com.agentic.app
 object FlavorConfig {
     val environment = AppEnvironment.SYST
     const val API_BASE_URL = "https://api-syst.agentic.example"
+
+    /** Crash reporting (Sentry). Empty means off; see observability/README.md. */
+    const val SENTRY_DSN = ""
 }

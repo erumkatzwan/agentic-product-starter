@@ -4,3 +4,5 @@ APP_DISPLAY_NAME = Agentic
 APP_BUNDLE_ID = com.agentic.app
 API_BASE_URL = https:/$()/api.agentic.example
 APS_ENVIRONMENT = production
+// Crash reporting (Sentry). Empty means off. Write the DSN as https:/$()/<key>@<host>/<project>.
+SENTRY_DSN =

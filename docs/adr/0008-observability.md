@@ -40,9 +40,9 @@ Chosen options: "OpenTelemetry to Grafana" for the backend, because OTLP is a st
 ### Confirmation
 
 * The **Observability** workflow starts the local stack, sends traffic to the API and fails if metrics, traces or any dashboard query are empty.
-* Unit tests check the product metrics and that export stays off without an endpoint.
+* Unit tests in every app check that crash reporting stays off without a DSN and in UI tests, and backend tests check the product metrics and that export stays off without an endpoint.
 * Reviews check that telemetry carries no personal data (the `observability` skill has the checklist).
 
 ## More Information
 
-`observability/README.md` (how to run and connect Grafana Cloud), the `observability` skill, and [Architecture overview](../architecture/README.md#87-observability). Crash reporting in the apps is added in a follow-up pull request under this decision.
+`observability/README.md` (how to run and connect Grafana Cloud), the `observability` skill, and [Architecture overview](../architecture/README.md#87-observability).
