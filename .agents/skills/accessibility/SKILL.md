@@ -25,6 +25,8 @@ The standard is **WCAG 2.2 AA** in every app ([ADR-0011](../../../docs/adr/0011-
 * **iOS:** visit the new screen in `AgenticAppUITests/AccessibilityUITests.swift` and call `audit("screen")`.
 * **Android:** visit it in `AccessibilityUiTest.kt` and call `showsThenCheck("tag")`.
 
+All of these run unless the repository variable `ACCESSIBILITY_CHECKS` is `off`. Never turn it off to make a pull request green; only the product owner decides that, for the whole product.
+
 A failing check prints the rule and the element. Fix the app; only skip a rule for a known platform false positive, with a comment saying why.
 
 ## 3. By hand, before a release
