@@ -4,6 +4,7 @@
 [![Android](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/android.yml)
 [![Web app](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml)
 [![Backend](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml)
+[![Accessibility: WCAG 2.2 AA](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/accessibility.yml/badge.svg?branch=main)](docs/adr/0011-accessibility.md)
 [![Release](https://img.shields.io/github/v/release/erumkatzwan/agentic-product-starter?label=release&cacheSeconds=3600)](https://github.com/erumkatzwan/agentic-product-starter/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3F5BD9)](LICENSE)
 [![Use this template](https://img.shields.io/badge/use%20this-template-2EA44F?logo=github)](https://github.com/new?template_name=agentic-product-starter&template_owner=erumkatzwan)
@@ -33,12 +34,13 @@ Same flow, same palette, every app. The pictures are taken by the [Screenshots w
 |---|---|
 | **Apps** | iOS, Android, web app, back office, .NET 10 backend and landing website, all on one backend and one sign-in flow |
 | **Design** | One token file generates Swift, Kotlin and CSS; CI blocks any app that drifts from the palette |
-| **Way of working** | 34 shared skills from idea to retro, platform skills for every app, `AGENTS.md` rules for any coding agent |
+| **Way of working** | 35 shared skills from idea to retro, platform skills for every app, `AGENTS.md` rules for any coding agent |
 | **Architecture** | arc42 overview with C4 diagrams and MADR decision records, read before every change |
 | **Quality gates** | Lint, types, spelling, unit, UI and end-to-end tests with 70% coverage on every pull request; `main` only changes through green pull requests |
 | **Environments** | Dev, SYST and Prod in every app, plus feature flags to ship unfinished work safely |
 | **Security** | CodeQL, dependency review, secret push protection, private vulnerability reporting and a weekly vulnerability report across all apps |
 | **Dependencies** | Dependabot every week; patch and minor updates merge themselves when CI is green, major ones are reviewed |
+| **Accessibility** | WCAG 2.2 AA in every app: colour contrast checked in the design tokens (light and dark), axe on every web screen, Apple's and Google's accessibility audits in the iOS and Android UI tests |
 | **Observability** | OpenTelemetry traces, metrics and logs from the backend into Grafana dashboards, with a one-command local stack; crash reporting in every app with Sentry; CI proves the data arrives |
 | **Delivery metrics** | The four DORA keys measured weekly from GitHub and shown on a [live dashboard](https://erumkatzwan.github.io/agentic-product-starter/dora/) |
 | **Make it yours** | One command applies the GitHub settings a template copy misses, one renames every app, ID, package and folder; CI proves both |
@@ -197,7 +199,7 @@ flowchart TB
 | [`observability`](observability/README.md) | Local Grafana stack, dashboards, and how to connect Grafana Cloud and Sentry | OpenTelemetry, Grafana, Sentry | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
 | [`docs/`](docs/README.md) | Product context, [architecture overview](docs/architecture/README.md) (arc42 + C4), [decisions](docs/adr/README.md) (MADR), agent setup | Markdown | Ready |
-| `.agents/skills/` | 34 shared skills covering the whole SDLC | Agent Skills | Ready |
+| `.agents/skills/` | 35 shared skills covering the whole SDLC | Agent Skills | Ready |
 
 ```
 /
@@ -243,6 +245,8 @@ All of them talk to the same backend endpoints and read the same feature flags.
 
 ## The agentic SDLC
 
+The stages follow the ideas in Anthropic's [AI-native SDLC playbook](https://claude.com/resources/articles/the-ai-native-sdlc-playbook): written intent before code, skills for repeatable work, an agent guide (`AGENTS.md` / `CLAUDE.md`), layered review by agents and people, and automated checks as the gate to `main`.
+
 | Stage | Shared skills | Where it lands |
 |---|---|---|
 | 1. Shape the idea | `grill-me`, `wayfinder`, `research`, `prototype` | `docs/product/`, decision notes |
@@ -270,6 +274,7 @@ Every pull request runs the checks for the parts it touches:
 | Design tokens | Generated files in sync with `design/tokens.json` |
 | Security | Dependency review on every pull request, CodeQL, secret push protection, weekly vulnerability report across all apps ([SECURITY.md](SECURITY.md)) |
 | Setup | Integration list, `.env.example`, repository settings and code agree |
+| Accessibility | WCAG 2.2 AA: token contrast, axe on every web screen (unit and end-to-end, light and dark), iOS accessibility audit, Android Accessibility Test Framework ([ADR-0011](docs/adr/0011-accessibility.md)) |
 | Observability | Starts Grafana in CI, sends traffic to the API, and fails if metrics, traces or any dashboard query come back empty |
 | Dependencies | Dependabot: grouped patch and minor updates per app merge automatically when CI is green |
 
@@ -287,6 +292,7 @@ Copies made with `scripts/rename.mjs` carry a small **Built with Agentic Product
 
 ## Credits
 
+- **The way of working** builds on Anthropic's [The AI-native SDLC playbook](https://claude.com/resources/articles/the-ai-native-sdlc-playbook) (August 2026), which describes how teams plan, design, build, test, deploy and maintain software with AI agents. This starter is an independent, ready-to-use implementation of those ideas; it is not made or endorsed by Anthropic.
 - **Agentic Product Starter** by [Erum Awan](https://github.com/erumkatzwan): the product starter, apps, backend, design system, quality gates and how they fit together.
 - **Shared agent skills** by [Matt Pocock](https://github.com/mattpocock), from [mattpocock/skills](https://github.com/mattpocock/skills) ([aihero.dev/skills](https://www.aihero.dev/skills)), used under the MIT licence. See `.agents/skills/LICENSE-mattpocock-skills`.
 - **iOS community skills** by [Antoine van der Lee](https://github.com/AvdLee) (SwiftUI, Swift Concurrency, Swift Testing), used under the MIT licence.
