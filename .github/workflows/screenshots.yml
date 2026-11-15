@@ -39,6 +39,8 @@ jobs:
           curl -Ls "https://get.maestro.mobile.dev" | bash
           echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
       - run: make screenshots OUT="$GITHUB_WORKSPACE/shots"
+        env:
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: '180000'
       - uses: actions/upload-artifact@v7
         with:
           name: screenshots-ios

@@ -1,0 +1,34 @@
+name: Setup
+
+# Keeps the setup tooling honest: config/integrations.json, .env.example, config/repo-settings.json
+# and scripts/setup.mjs must agree with each other and with the code and workflows.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: setup-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Setup check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node --test scripts/setup.test.mjs
+      - name: Integration status (nothing is required)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/setup.mjs
+      - name: Repository settings (dry run)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/setup.mjs repo --dry-run
