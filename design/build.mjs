@@ -121,6 +121,37 @@ const outputs = [
   ['apps/android/app/src/main/kotlin/com/agentic/app/designsystem/DesignTokens.kt', kotlin],
 ];
 
+// Accessibility (ADR-0011): WCAG 2.2 AA contrast for every text colour, and 3:1 for control borders,
+// in light and dark mode, on both background and surface. Fails generation and the CI check.
+const luminance = (value) => {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(value.slice(i, i + 2), 16) / 255)
+    .map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+export const contrast = (a, b) => {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+};
+const contrastRules = [
+  ...['textPrimary', 'textSecondary', 'primary', 'primaryHover', 'success', 'warning', 'error']
+    .flatMap((fg) => ['background', 'surface'].map((bg) => [fg, bg, 4.5])),
+  ['onPrimary', 'primary', 4.5],
+  ['onPrimary', 'primaryHover', 4.5],
+  ['controlBorder', 'background', 3],
+  ['controlBorder', 'surface', 3],
+];
+const failures = [];
+for (const [mode, colors] of [['light', light], ['dark', dark]]) {
+  for (const [fg, bg, minimum] of contrastRules) {
+    const ratio = contrast(colors[fg], colors[bg]);
+    if (ratio < minimum) failures.push(`${mode}: ${fg} on ${bg} is ${ratio.toFixed(2)}:1, needs ${minimum}:1`);
+  }
+}
+if (failures.length) {
+  console.error(`Colour contrast below WCAG 2.2 AA (docs/adr/0011-accessibility.md):\n${failures.join('\n')}`);
+  process.exit(1);
+}
+
 let stale = [];
 for (const [rel, content] of outputs) {
   const file = join(root, rel);
@@ -133,4 +164,4 @@ if (check && stale.length) {
   console.error(`Design tokens out of date. Run: node design/build.mjs\n${stale.join('\n')}`);
   process.exit(1);
 }
-console.log(check ? 'Design tokens are up to date.' : `Wrote ${outputs.length} files.`);
+console.log(`${check ? 'Design tokens are up to date.' : `Wrote ${outputs.length} files.`} Contrast meets WCAG 2.2 AA (${contrastRules.length * 2} pairs).`);
