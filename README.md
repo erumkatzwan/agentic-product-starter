@@ -4,7 +4,7 @@
 [![Android](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/android.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/android.yml)
 [![Web app](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/web-app.yml)
 [![Backend](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml/badge.svg?branch=main)](https://github.com/erumkatzwan/agentic-product-starter/actions/workflows/backend.yml)
-[![Release](https://img.shields.io/github/v/release/erumkatzwan/agentic-product-starter?label=release)](https://github.com/erumkatzwan/agentic-product-starter/releases)
+[![Release](https://img.shields.io/github/v/release/erumkatzwan/agentic-product-starter?label=release&cacheSeconds=3600)](https://github.com/erumkatzwan/agentic-product-starter/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-3F5BD9)](LICENSE)
 [![Use this template](https://img.shields.io/badge/use%20this-template-2EA44F?logo=github)](https://github.com/new?template_name=agentic-product-starter&template_owner=erumkatzwan)
 
