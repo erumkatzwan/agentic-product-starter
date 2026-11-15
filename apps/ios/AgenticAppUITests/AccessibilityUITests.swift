@@ -5,7 +5,10 @@ import XCTest
 final class AccessibilityUITests: XCTestCase {
     private let app = XCUIApplication()
 
-    override func setUp() {
+    override func setUpWithError() throws {
+        // Off only when the repository variable ACCESSIBILITY_CHECKS is "off" (CI passes it as
+        // TEST_RUNNER_ACCESSIBILITY_CHECKS; see ADR-0011).
+        try XCTSkipIf(ProcessInfo.processInfo.environment["ACCESSIBILITY_CHECKS"] == "off", "Accessibility checks are off")
         continueAfterFailure = false
         app.launchArguments = ["-uiTesting"]
     }
