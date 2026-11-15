@@ -16,6 +16,7 @@ struct Theme {
             background: Color(uiColor: DesignTokens.background),
             surface: Color(uiColor: DesignTokens.surface),
             border: Color(uiColor: DesignTokens.border),
+            controlBorder: Color(uiColor: DesignTokens.controlBorder),
             textPrimary: Color(uiColor: DesignTokens.textPrimary),
             textSecondary: Color(uiColor: DesignTokens.textSecondary),
             success: Color(uiColor: DesignTokens.success),
@@ -44,6 +45,8 @@ struct ColorTokens {
     var background: Color
     var surface: Color
     var border: Color
+    /// Outline of inputs and other controls: 3:1 contrast (WCAG 2.2 AA, ADR-0011). `border` is for decoration only.
+    var controlBorder: Color
     var textPrimary: Color
     var textSecondary: Color
     var success: Color
