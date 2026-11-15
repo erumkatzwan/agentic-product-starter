@@ -82,7 +82,8 @@
             { "context": "Dependency review" },
             { "context": "Rename check" },
             { "context": "Observability smoke test" },
-            { "context": "Setup check" }
+            { "context": "Setup check" },
+            { "context": "Accessibility checks" }
           ]
         }
       }
