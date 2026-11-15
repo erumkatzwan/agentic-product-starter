@@ -39,13 +39,12 @@ struct SettingsView: View {
                         ))
                         .accessibilityIdentifier("settings.flag.\(flag.rawValue)")
                     }
-                    Button {
+                    Button("Reset to backend values") {
                         FeatureFlag.allCases.forEach { featureFlags.setOverride(nil, for: $0) }
-                    } label: {
-                        Text("Reset to backend values")
-                            .font(theme.typography.body)
-                            .fixedSize(horizontal: false, vertical: true)
                     }
+                    .buttonStyle(.ds(.secondary))
+                    .listRowBackground(Color.clear)
+                    .accessibilityIdentifier("settings.resetFlags")
                 } header: {
                     header("Feature flags (this device)")
                 }
