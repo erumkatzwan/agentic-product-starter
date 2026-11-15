@@ -26,7 +26,9 @@ const OLD_ID = 'com.agentic.app';
 const SKIP_DIRS = new Set(['.git', 'node_modules', 'bin', 'obj', 'build', 'dist', 'coverage', '.gradle', '.kotlin', 'DerivedData', 'test-results', 'playwright-report', '.archify']);
 const TEXT = /\.(md|json|mjs|js|ts|tsx|css|html|yml|yaml|toml|xml|kts|kt|swift|xcconfig|plist|entitlements|cs|csproj|slnx|sln|props|py|sh|txt|pro|properties)$|^(Makefile|Dockerfile|\.gitignore|\.editorconfig|_typos\.toml)$/;
 // Lines that credit the starter keep its name and links.
-const CREDIT = /Erum Awan|Built from the \[Agentic Product Starter\]/;
+const CREDIT = /Erum Awan|Built from the \[Agentic Product Starter\]|Built with Agentic Product Starter/;
+// Added under the title of a renamed copy's README: credit to the starter, and a way to find copies on GitHub.
+export const BADGE = `[![Built with Agentic Product Starter](https://img.shields.io/badge/built%20with-Agentic%20Product%20Starter-3F5BD9)](https://github.com/${STARTER_REPO})`;
 
 export function deriveNames(rawName, id) {
   const name = rawName.trim().replace(/\s+/g, ' ');
@@ -78,6 +80,9 @@ export function repoRules(repo) {
     [`raw.githubusercontent.com/${STARTER_REPO}/`, `raw.githubusercontent.com/${repo}/`],
     [`erumkatzwan.github.io/agentic-product-starter`, `${owner}.github.io/${name}`],
     [`github.com/${STARTER_REPO}`, `github.com/${repo}`],
+    [`template_name=agentic-product-starter&template_owner=erumkatzwan`, `template_name=${name}&template_owner=${owner}`],
+    // Badges and charts (shields.io, star-history) name the repository on its own.
+    [STARTER_REPO, repo],
   ];
 }
 
@@ -125,10 +130,10 @@ function detectRepo() {
 }
 
 export function addCredit(readme) {
-  if (readme.includes('Built from the [Agentic Product Starter]')) return readme;
+  if (readme.includes('Built with Agentic Product Starter](') || readme.includes('Built from the [Agentic Product Starter]')) return readme;
   const lines = readme.split('\n');
   const title = lines.findIndex((l) => l.startsWith('# '));
-  lines.splice(title + 1, 0, '', `Built from the [Agentic Product Starter](https://github.com/${STARTER_REPO}).`);
+  lines.splice(title + 1, 0, '', BADGE);
   return lines.join('\n');
 }
 
