@@ -12,6 +12,8 @@ final class AccessibilityUITests: XCTestCase {
 
     /// Fails with one readable line per issue, so the report says what to fix and where.
     private func audit(_ screen: String) throws {
+        // Let navigation animations finish so the audit sees the settled screen, not a half-pushed one.
+        _ = XCTWaiter.wait(for: [XCTestExpectation(description: "screen settles")], timeout: 1.0)
         var issues: [String] = []
         try app.performAccessibilityAudit { issue in
             // Known platform false positive: a single-line text field scrolls its text horizontally by design,
