@@ -4,6 +4,8 @@ import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
 
 // Both pages meet WCAG 2.2 AA in light and dark mode, colour contrast included (ADR-0011).
+test.skip(process.env.ACCESSIBILITY_CHECKS === 'off', 'Accessibility checks are off (repository variable ACCESSIBILITY_CHECKS)');
+
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22a', 'wcag22aa'];
 const url = (file: string) => pathToFileURL(resolve(import.meta.dirname, '..', file)).href;
 const sample = {
