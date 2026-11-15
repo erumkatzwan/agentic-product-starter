@@ -41,5 +41,6 @@ struct SignUpView: View {
         }
         .background(theme.colors.background)
         .navigationTitle("Create an account")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
