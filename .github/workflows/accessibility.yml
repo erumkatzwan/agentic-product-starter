@@ -18,6 +18,10 @@ concurrency:
   group: accessibility-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # Accessibility checks (ADR-0011) run unless the repository variable ACCESSIBILITY_CHECKS is "off".
+  ACCESSIBILITY_CHECKS: ${{ vars.ACCESSIBILITY_CHECKS || 'on' }}
+
 jobs:
   changes:
     name: Accessibility changes
@@ -39,7 +43,8 @@ jobs:
 
   checks:
     needs: changes
-    if: needs.changes.outputs.run == 'true' || github.event_name != 'pull_request'
+    # Skipped (so it never blocks) when the repository variable ACCESSIBILITY_CHECKS is "off".
+    if: vars.ACCESSIBILITY_CHECKS != 'off' && (needs.changes.outputs.run == 'true' || github.event_name != 'pull_request')
     name: Accessibility checks
     runs-on: ubuntu-latest
     steps:

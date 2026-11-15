@@ -12,7 +12,9 @@ import androidx.compose.ui.test.tryPerformAccessibilityChecks
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.After
+import org.junit.Assume.assumeFalse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,6 +34,8 @@ class AccessibilityUiTest {
 
     @Before
     fun setUp() {
+        // Off only when the repository variable ACCESSIBILITY_CHECKS is "off" (see ADR-0011).
+        assumeFalse(InstrumentationRegistry.getArguments().getString("accessibilityChecks") == "off")
         compose.enableAccessibilityChecks()
         val intent = Intent(ApplicationProvider.getApplicationContext(), MainActivity::class.java)
             .putExtra(LaunchOptions.UI_TESTING, true)

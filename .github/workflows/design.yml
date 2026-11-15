@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+env:
+  # Accessibility checks (ADR-0011) run unless the repository variable ACCESSIBILITY_CHECKS is "off".
+  ACCESSIBILITY_CHECKS: ${{ vars.ACCESSIBILITY_CHECKS || 'on' }}
+
 jobs:
   changes:
     name: Design tokens changes

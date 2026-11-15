@@ -35,6 +35,8 @@ Chosen option: "WCAG 2.2 AA with automated checks", because it is the level laws
 | iOS | Apple's `performAccessibilityAudit()` in `AccessibilityUITests` | Every pull request (**iOS UI tests**) |
 | Android | Google's Accessibility Test Framework through Compose `enableAccessibilityChecks()` in `AccessibilityUiTest` | Every pull request (**Android UI tests**) |
 
+Every check reads one switch, the repository variable `ACCESSIBILITY_CHECKS`. It is `on` by default (set by `node scripts/setup.mjs repo`); a product that cannot meet the standard yet sets it to `off`, and the checks skip instead of failing. **Accessibility checks** is a required check on `main`, and a skipped check does not block merging.
+
 ### Consequences
 
 * Good, because a pull request that makes a screen inaccessible fails like any other bug.

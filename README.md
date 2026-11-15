@@ -65,6 +65,8 @@ node scripts/setup.mjs repo --dry-run           # see what it will change
 node scripts/setup.mjs repo                     # apply (config/repo-settings.json)
 ```
 
+**Accessibility checks are on by default** (WCAG 2.2 AA, [ADR-0011](docs/adr/0011-accessibility.md)). If you cannot meet them yet, run `node scripts/setup.mjs repo --accessibility off`, or set the repository variable `ACCESSIBILITY_CHECKS` to `off` in **Settings → Secrets and variables → Actions**. The checks then skip instead of blocking merges; set it back to `on` when you are ready.
+
 Steps GitHub refuses (for example, a feature that needs a paid plan on a private repository) are listed so you can set them by hand in **Settings**. If you later change a setting by hand, update `config/repo-settings.json` too, so the next copy gets it.
 
 ### 3. Rename it
@@ -274,7 +276,7 @@ Every pull request runs the checks for the parts it touches:
 | Design tokens | Generated files in sync with `design/tokens.json` |
 | Security | Dependency review on every pull request, CodeQL, secret push protection, weekly vulnerability report across all apps ([SECURITY.md](SECURITY.md)) |
 | Setup | Integration list, `.env.example`, repository settings and code agree |
-| Accessibility | WCAG 2.2 AA: token contrast, axe on every web screen (unit and end-to-end, light and dark), iOS accessibility audit, Android Accessibility Test Framework ([ADR-0011](docs/adr/0011-accessibility.md)) |
+| Accessibility | WCAG 2.2 AA: token contrast, axe on every web screen (unit and end-to-end, light and dark), iOS accessibility audit, Android Accessibility Test Framework ([ADR-0011](docs/adr/0011-accessibility.md)); on by default, switch off with the `ACCESSIBILITY_CHECKS` variable |
 | Observability | Starts Grafana in CI, sends traffic to the API, and fails if metrics, traces or any dashboard query come back empty |
 | Dependencies | Dependabot: grouped patch and minor updates per app merge automatically when CI is green |
 

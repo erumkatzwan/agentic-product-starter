@@ -16,6 +16,11 @@ defaults:
   run:
     working-directory: apps/ios
 
+env:
+  # Accessibility checks (ADR-0011) run unless the repository variable ACCESSIBILITY_CHECKS is "off".
+  ACCESSIBILITY_CHECKS: ${{ vars.ACCESSIBILITY_CHECKS || 'on' }}
+  TEST_RUNNER_ACCESSIBILITY_CHECKS: ${{ vars.ACCESSIBILITY_CHECKS || 'on' }}
+
 jobs:
   changes:
     name: iOS changes

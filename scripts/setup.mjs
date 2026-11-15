@@ -4,6 +4,7 @@
  *
  *   node scripts/setup.mjs                      What is configured, what is optional, how to turn it on
  *   node scripts/setup.mjs repo [--dry-run]     Apply the GitHub settings a template copy does not inherit
+ *        [--accessibility off]                  ... with the WCAG 2.2 AA checks off (on by default; see ADR-0011)
  *   node scripts/setup.mjs set <KEY> --env Syst Save a setting (Dev: .env.local; Syst/Prod: GitHub Environment)
  *   node scripts/setup.mjs ios-xcconfig         Print apps/ios/Config/Secrets.xcconfig (used by `make generate`)
  *
@@ -176,8 +177,13 @@ async function ask(question) {
   return answer.trim();
 }
 
-/** The GitHub API calls behind `setup.mjs repo`, as [description, method, path, body]. */
-export function repoSteps(repo, settings, environments) {
+/**
+ * The GitHub API calls behind `setup.mjs repo`, as [description, method, path, body].
+ * Accessibility checks are on unless `accessibility` is "off": the ACCESSIBILITY_CHECKS repository variable
+ * switches them in every workflow, and the required **Accessibility checks** job is then skipped, not blocking.
+ */
+export function repoSteps(repo, settings, environments, { accessibility = 'on' } = {}) {
+  if (!['on', 'off'].includes(accessibility)) throw new Error('--accessibility must be on or off');
   return [
     ['Merge options, auto-merge, Discussions', 'PATCH', `repos/${repo}`, settings.repository],
     ['Secret scanning and push protection', 'PATCH', `repos/${repo}`, {
@@ -193,6 +199,7 @@ export function repoSteps(repo, settings, environments) {
     ['GitHub Pages from Actions', 'POST', `repos/${repo}/pages`, { build_type: 'workflow' }],
     ...environments.map((environment) => [`Environment ${environment}`, 'PUT', `repos/${repo}/environments/${environment}`, null]),
     ...settings.labels.map(([name, color, description]) => [`Label ${name}`, 'LABEL', name, { color, description }]),
+    [`Accessibility checks ${accessibility}`, 'VARIABLE', 'ACCESSIBILITY_CHECKS', accessibility],
     ['Ruleset "Protect main"', 'RULESET', `repos/${repo}/rulesets`, settings.ruleset],
   ];
 }
@@ -200,6 +207,9 @@ export function repoSteps(repo, settings, environments) {
 function applyStep(repo, [description, method, path, body]) {
   if (method === 'LABEL') {
     return gh(['label', 'create', path, '--repo', repo, '--force', '--color', body.color, '--description', body.description]);
+  }
+  if (method === 'VARIABLE') {
+    return gh(['variable', 'set', path, '--repo', repo, '--body', body]);
   }
   if (method === 'RULESET') {
     const existing = gh(['api', path, '--jq', `.[] | select(.name == "${body.name}") | .id`]);
@@ -210,14 +220,14 @@ function applyStep(repo, [description, method, path, body]) {
   return body ? gh([...args, '--input', '-'], JSON.stringify(body)) : gh(args);
 }
 
-function repo(dryRun) {
+function repo(dryRun, options) {
   const name = repository() ?? (dryRun ? '<owner>/<repo>' : null);
   if (!name) throw new Error('Sign in with `gh auth login` (as an admin of the repository) first.');
   const settings = loadJson('config/repo-settings.json');
   const { environments } = loadJson('config/integrations.json');
   let failed = 0;
   console.log(`${dryRun ? 'Would apply' : 'Applying'} GitHub settings to ${name}:`);
-  for (const step of repoSteps(name, settings, environments)) {
+  for (const step of repoSteps(name, settings, environments, options)) {
     if (dryRun) {
       console.log(`  - ${step[0]}`);
       continue;
@@ -238,7 +248,7 @@ async function main() {
   const [command = 'status', ...rest] = process.argv.slice(2);
   const option = (name) => (rest.includes(`--${name}`) ? rest[rest.indexOf(`--${name}`) + 1] : undefined);
   if (command === 'status') return status();
-  if (command === 'repo') return repo(rest.includes('--dry-run'));
+  if (command === 'repo') return repo(rest.includes('--dry-run'), { accessibility: option('accessibility') ?? 'on' });
   if (command === 'set') return set(rest[0], option('env') ?? 'Dev', option('value'));
   if (command === 'ios-xcconfig') return process.stdout.write(iosXcconfig(localValues()));
   console.log(readFileSync(fileURLToPath(import.meta.url), 'utf8').split('*/')[0]);
