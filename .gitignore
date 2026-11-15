@@ -1,3 +1,7 @@
+# Local third-party settings (copy .env.example). Never commit real values.
+.env.local
+.env.*.local
+
 # Optional Archify skill and its output (see .agents/skills/architecture-decisions)
 .archify/
 .agents/skills/archify/
