@@ -16,10 +16,10 @@ Click **Use this template**, rename it with one command, and start shaping your 
 | **Environments** | Dev, SYST and Prod in every app, plus feature flags to ship unfinished work safely |
 | **Security** | CodeQL, dependency review, secret push protection, private vulnerability reporting and a weekly vulnerability report across all apps |
 | **Dependencies** | Dependabot every week; patch and minor updates merge themselves when CI is green, major ones are reviewed |
-| **Observability** | OpenTelemetry traces, metrics and logs from the backend into Grafana dashboards, with a one-command local stack; CI proves the data arrives |
+| **Observability** | OpenTelemetry traces, metrics and logs from the backend into Grafana dashboards, with a one-command local stack; crash reporting in every app with Sentry; CI proves the data arrives |
 | **Make it yours** | One command renames every app, ID, package and folder; CI proves the renamed copy still builds |
 | **Screenshots** | Taken from the real apps and refreshed automatically |
-| **Coming next** | Crash reporting in the apps (Sentry) and a DORA metrics dashboard |
+| **Coming next** | A DORA metrics dashboard |
 
 ## Architecture at a glance
 
@@ -81,7 +81,7 @@ flowchart TB
 | [`apps/back-office`](apps/back-office/README.md) | Admin and customer support: find, edit, disable, delete customers; feature flags | React, TypeScript, Vite | Ready |
 | [`backend`](backend/README.md) | Accounts, profiles, admin and feature flag APIs | .NET 10, ASP.NET Core | Ready |
 | [`apps/website`](apps/website/README.md) | One-page landing site ([live](https://erumkatzwan.github.io/agentic-product-starter/)) | HTML, CSS | Ready |
-| [`observability`](observability/README.md) | Local Grafana stack, dashboards and how to connect Grafana Cloud | OpenTelemetry, Grafana | Ready |
+| [`observability`](observability/README.md) | Local Grafana stack, dashboards, and how to connect Grafana Cloud and Sentry | OpenTelemetry, Grafana, Sentry | Ready |
 | [`design`](design/README.md) | One colour palette and set of tokens for every app, Figma-ready | Design tokens (JSON) | Ready |
 | [`docs/`](docs/README.md) | Product context, [architecture overview](docs/architecture/README.md) (arc42 + C4), [decisions](docs/adr/README.md) (MADR), agent setup | Markdown | Ready |
 | `.agents/skills/` | 32 shared skills covering the whole SDLC | Agent Skills | Ready |

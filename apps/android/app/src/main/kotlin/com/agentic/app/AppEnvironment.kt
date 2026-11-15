@@ -12,6 +12,9 @@ enum class AppEnvironment(val displayName: String) {
     companion object {
         val current: AppEnvironment get() = FlavorConfig.environment
         val apiBaseUrl: String get() = FlavorConfig.API_BASE_URL
+
+        /** Sentry DSN for crash reporting. Empty means off. */
+        val sentryDsn: String get() = FlavorConfig.SENTRY_DSN
     }
 }
 

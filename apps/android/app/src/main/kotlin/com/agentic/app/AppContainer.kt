@@ -7,6 +7,8 @@ import com.agentic.app.core.auth.SessionStore
 import com.agentic.app.core.flags.FeatureFlagService
 import com.agentic.app.core.flags.InMemoryFlagOverrideStore
 import com.agentic.app.core.flags.SharedPreferencesFlagOverrideStore
+import com.agentic.app.core.monitoring.CrashReporter
+import com.agentic.app.core.monitoring.CrashReporting
 import com.agentic.app.core.network.ApiClient
 import com.agentic.app.core.network.FixtureApiClient
 import com.agentic.app.core.network.OkHttpApiClient
@@ -23,11 +25,14 @@ class AppContainer(
     val session: SessionStore,
     val itemsRepository: ItemsRepository,
     val push: PushNotificationService,
-    val environment: AppEnvironment
+    val environment: AppEnvironment,
+    val crashReporter: CrashReporter
 ) {
     companion object {
         fun create(context: Context, options: LaunchOptions): AppContainer {
             val appContext = context.applicationContext
+            val crashReporter = CrashReporting.create(appContext, AppEnvironment.sentryDsn, AppEnvironment.current, options.isUiTesting)
+            crashReporter.start()
             val apiClient: ApiClient = if (options.isUiTesting) {
                 FixtureApiClient { name -> appContext.assets.open("fixtures/$name.json").bufferedReader().use { it.readText() } }
             } else {
@@ -42,7 +47,8 @@ class AppContainer(
                 session = SessionStore(RemoteAuthService(apiClient), tokenStore),
                 itemsRepository = RemoteItemsRepository(apiClient),
                 push = AndroidPushNotificationService(appContext),
-                environment = AppEnvironment.current
+                environment = AppEnvironment.current,
+                crashReporter = crashReporter
             )
         }
     }

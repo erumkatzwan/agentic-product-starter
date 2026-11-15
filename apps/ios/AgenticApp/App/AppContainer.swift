@@ -11,13 +11,15 @@ final class AppContainer {
     let session: SessionStore
     let pushService: PushNotificationService
     let theme: Theme
+    let crashReporter: CrashReporter
 
     init(
         apiClient: APIClient,
         featureFlags: FeatureFlagService,
         session: SessionStore,
         pushService: PushNotificationService,
-        theme: Theme
+        theme: Theme,
+        crashReporter: CrashReporter = NoOpCrashReporter()
     ) {
         self.apiClient = apiClient
         self.itemsRepository = RemoteItemsRepository(apiClient: apiClient)
@@ -25,10 +27,17 @@ final class AppContainer {
         self.session = session
         self.pushService = pushService
         self.theme = theme
+        self.crashReporter = crashReporter
     }
 
     static func make() -> AppContainer {
         let isUITesting = LaunchArguments.isUITesting
+        let crashReporter = CrashReporting.make(
+            dsn: AppEnvironment.sentryDSN,
+            environment: AppEnvironment.current,
+            isUITesting: isUITesting
+        )
+        crashReporter.start()
         let apiClient: APIClient = isUITesting
             ? FixtureAPIClient()
             : URLSessionAPIClient(baseURL: AppEnvironment.apiBaseURL)
@@ -38,7 +47,8 @@ final class AppContainer {
             featureFlags: FeatureFlagService(apiClient: apiClient),
             session: SessionStore(authService: RemoteAuthService(apiClient: apiClient), tokenStore: tokenStore),
             pushService: .shared,
-            theme: .standard
+            theme: .standard,
+            crashReporter: crashReporter
         )
     }
 }

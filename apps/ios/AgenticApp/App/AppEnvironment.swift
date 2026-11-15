@@ -15,6 +15,11 @@ enum AppEnvironment: String {
         let value = Bundle.main.object(forInfoDictionaryKey: "API_BASE_URL") as? String ?? ""
         return URL(string: value) ?? URL(fileURLWithPath: "/")
     }
+
+    /// Sentry DSN for crash reporting, set per configuration. Empty means off.
+    static var sentryDSN: String {
+        Bundle.main.object(forInfoDictionaryKey: "SENTRY_DSN") as? String ?? ""
+    }
 }
 
 /// Launch arguments used by UI tests and end-to-end tests.

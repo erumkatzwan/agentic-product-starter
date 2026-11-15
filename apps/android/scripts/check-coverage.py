@@ -23,6 +23,7 @@ EXCLUDED = [
     r"^KeystoreTokenStore\.kt$",
     r"^SharedPreferencesFlagOverrideStore\.kt$",
     r"^PushNotificationService\.kt$",
+    r"^SentryCrashReporter\.kt$",
 ]
 EXCLUDED_PACKAGES = ["com/agentic/app/designsystem"]
 

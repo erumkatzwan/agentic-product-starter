@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Fails when unit-test line coverage of the app's logic is below the minimum.
 # SwiftUI views, the design system and app wiring are excluded: UI tests and end-to-end tests cover those.
+# Third-party packages (Sentry) and the Sentry adapter are excluded too.
 # Usage: scripts/check-coverage.sh build/Unit.xcresult 70
 set -euo pipefail
 RESULT="${1:?path to .xcresult}"
@@ -10,7 +11,7 @@ import json, re, sys
 minimum = float(sys.argv[1])
 report = json.load(sys.stdin)
 target = next(t for t in report["targets"] if t["name"].startswith("AgenticApp.app"))
-excluded = re.compile(r"(View\.swift$|/DesignSystem/|/App/|FeatureGate\.swift$)")
+excluded = re.compile(r"(View\.swift$|/DesignSystem/|/App/|FeatureGate\.swift$|SentryCrashReporter\.swift$|/SourcePackages/|/checkouts/)")
 covered = executable = 0
 for f in target["files"]:
     if excluded.search(f["path"]):
