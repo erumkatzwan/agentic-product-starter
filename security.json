@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-11-16T22:17:33.270Z",
+  "source": "OSV (https://osv.dev)",
+  "packages": 752,
+  "counts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "unknown": 0
+  },
+  "apps": [
+    {
+      "app": "android",
+      "packages": 117,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "unknown": 0
+      }
+    },
+    {
+      "app": "back-office",
+      "packages": 282,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "unknown": 0
+      }
+    },
+    {
+      "app": "backend",
+      "packages": 53,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "unknown": 0
+      }
+    },
+    {
+      "app": "web-app",
+      "packages": 282,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "unknown": 0
+      }
+    },
+    {
+      "app": "website",
+      "packages": 18,
+      "counts": {
+        "critical": 0,
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "unknown": 0
+      }
+    }
+  ],
+  "findings": [],
+  "notScanned": []
+}
