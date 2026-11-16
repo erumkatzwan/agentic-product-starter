@@ -23,12 +23,12 @@ test('the dashboard data counts findings per level, overall and per app', () => 
   assert.deepEqual(data.notScanned, ['iOS: no packages']);
 });
 
-test('the badge is red for critical or high, amber for medium and green when clear', () => {
+test('the badge shows every level, critical first; red for critical or high, amber for medium, green when clear', () => {
   const at = (counts) => badge({ counts: { critical: 0, high: 0, medium: 0, low: 0, unknown: 0, ...counts } });
-  assert.deepEqual(at({ critical: 1 }), { schemaVersion: 1, label: 'vulnerabilities', message: '1 critical · 0 high', color: '#C93636' });
+  assert.deepEqual(at({ critical: 1 }), { schemaVersion: 1, label: 'vulnerabilities', message: '1 critical · 0 high · 0 medium · 0 low', color: '#C93636' });
   assert.equal(at({ high: 2 }).color, '#C93636');
-  assert.deepEqual([at({ medium: 3 }).message, at({ medium: 3 }).color], ['3 medium · 0 low', '#9A5C00']);
-  assert.deepEqual([at({}).message, at({}).color], ['none known', '#1A7F45']);
+  assert.deepEqual([at({ medium: 3 }).message, at({ medium: 3 }).color], ['0 critical · 0 high · 3 medium · 0 low', '#9A5C00']);
+  assert.deepEqual([at({}).message, at({}).color], ['0 critical · 0 high · 0 medium · 0 low', '#1A7F45']);
 });
 
 test('severity comes from the advisory label, or else the CVSS score', () => {

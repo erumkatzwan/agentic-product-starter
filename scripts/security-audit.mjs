@@ -283,11 +283,11 @@ export function summary(findings, packages, warnings, generatedAt = new Date().t
   };
 }
 
-/** A shields.io endpoint badge: red for critical or high, amber for medium, green otherwise. */
+/** A shields.io endpoint badge: every level always shown (critical first), red for critical or high, amber for medium, green otherwise. */
 export function badge(data) {
   const { critical, high, medium, low } = data.counts;
   const color = critical || high ? 'C93636' : medium ? '9A5C00' : '1A7F45';
-  const message = critical || high ? `${critical} critical · ${high} high` : medium || low ? `${medium} medium · ${low} low` : 'none known';
+  const message = `${critical} critical · ${high} high · ${medium} medium · ${low} low`;
   return { schemaVersion: 1, label: 'vulnerabilities', message, color: `#${color}` };
 }
 
