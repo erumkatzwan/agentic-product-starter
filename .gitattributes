@@ -1,0 +1,4 @@
+# GitHub language stats: the agent skills bundled from other authors (with their helper scripts)
+# are vendored, so the repository shows the languages of the apps themselves.
+.agents/skills/** linguist-vendored
+**/.agents/skills/** linguist-vendored
