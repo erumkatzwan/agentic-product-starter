@@ -1,0 +1,53 @@
+{
+  "repository": "erumkatzwan/agentic-product-starter",
+  "generatedAt": "2026-11-23T18:32:28.207Z",
+  "windowDays": 30,
+  "deploymentSource": "pull requests merged into main",
+  "metrics": {
+    "deploymentFrequency": {
+      "total": 42,
+      "perWeek": 9.8,
+      "level": "elite"
+    },
+    "leadTime": {
+      "medianHours": 0.1,
+      "changes": 42,
+      "level": "elite"
+    },
+    "changeFailureRate": {
+      "percent": 0,
+      "failures": 0,
+      "deployments": 42,
+      "level": "elite"
+    },
+    "timeToRestore": {
+      "medianHours": null,
+      "incidents": 0,
+      "open": 0,
+      "level": null
+    }
+  },
+  "history": [
+    {
+      "date": "2026-11-15",
+      "deploymentsPerWeek": 5.4,
+      "leadTimeHours": 0.1,
+      "changeFailurePercent": 0,
+      "timeToRestoreHours": null
+    },
+    {
+      "date": "2026-11-16",
+      "deploymentsPerWeek": 8.6,
+      "leadTimeHours": 0.1,
+      "changeFailurePercent": 0,
+      "timeToRestoreHours": null
+    },
+    {
+      "date": "2026-11-23",
+      "deploymentsPerWeek": 9.8,
+      "leadTimeHours": 0.1,
+      "changeFailurePercent": 0,
+      "timeToRestoreHours": null
+    }
+  ]
+}
